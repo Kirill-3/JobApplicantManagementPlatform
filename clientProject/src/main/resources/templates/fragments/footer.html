@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer test</title>
+</head>
+<body>
+<div class="container">
+    <footer class="text-center" th:fragment="footer-links">
+        <a>Last updated: November 2024  </a>
+        <a href="https://www.nhs.wales/">NHS Wales</a>
+        <a href="https://www.england.nhs.uk/">NHS England</a>
+        <a href="https://www.nhsinform.scot/">NHS Scotland</a>
+        <a href="https://www.hscni.net/">HSC Northern Ireland</a>
+        <img src="/images/NhsWales.JPEG" alt="NHS Wales Logo" style="width:100px; height:auto;">
+
+    </footer>
+    <script th:fragment="bootstrap-js"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous">
+    </script>
+</div>
+</body>
+</html>
