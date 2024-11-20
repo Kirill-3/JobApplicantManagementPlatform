@@ -16,5 +16,7 @@
     </table>
     <button th:if="${userID != null}">email <span th:text="${userID}"></span></button>
 
+    <div th:replace="~{fragments/footer :: footer-links}"></div>
+    <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 </body>
 </html>
