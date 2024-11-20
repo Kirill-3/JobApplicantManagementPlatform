@@ -14,28 +14,28 @@ values
     ('user10', SHA2('password10', 256), 'Jack', 'Anderson', 'recruiter', NOW());
 
 -- Populate the Applicants table
-insert into applicants (firstName, lastName, email, phoneNumber, eventAttended, skill)
+insert into applicants (firstName, lastName, location, email, phoneNumber, eventAttended, skill)
 values
-    ('Sarah', 'Connor', 'sconnor@example.com', '1234567890', 'Tech Expo', 'Java, Python'),
-    ('John', 'Doe', 'jdoe@example.com', '2345678901', 'Career Fair', 'HTML, CSS, JavaScript'),
-    ('Jane', 'Smith', 'jsmith@example.com', '3456789012', 'Hackathon', 'Python, Machine Learning'),
-    ('Mike', 'Ross', 'mross@example.com', '4567890123', 'Job Fair', 'Project Management, Agile'),
-    ('Emily', 'Blunt', 'eblunt@example.com', '5678901234', 'Tech Conference', 'DevOps, Cloud Computing'),
-    ('Chris', 'Evans', 'cevans@example.com', '6789012345', 'Recruitment Drive', 'JavaScript, React'),
-    ('Anna', 'Taylor', 'ataylor@example.com', '7890123456', 'Tech Expo', 'C++, Embedded Systems'),
-    ('Tom', 'Hanks', 'thanks@example.com', '8901234567', 'Career Fair', 'Python, AI'),
-    ('Sophia', 'Brown', 'sbrown@example.com', '9012345678', 'Hackathon', 'Data Analysis, SQL'),
-    ('Max', 'Steel', 'msteel@example.com', '1234567899', 'Job Fair', 'Cybersecurity, Networking'),
-    ('Eva', 'Longoria', 'elongoria@example.com', '2345678902', 'Career Fair', 'Ruby, Rails'),
-    ('Jake', 'Gyllenhaal', 'jgyllenhaal@example.com', '3456789013', 'Tech Expo', 'Java, Spring'),
-    ('Liam', 'Hemsworth', 'lhemsworth@example.com', '4567890124', 'Tech Conference', 'AWS, Docker'),
-    ('Emma', 'Stone', 'estone@example.com', '5678901235', 'Recruitment Drive', 'JavaScript, Angular'),
-    ('Olivia', 'Wilde', 'owilde@example.com', '6789012346', 'Hackathon', 'Kotlin, Android'),
-    ('Noah', 'Centineo', 'ncentineo@example.com', '7890123457', 'Tech Expo', 'Flutter, Dart'),
-    ('Lily', 'Collins', 'lcollins@example.com', '8901234568', 'Job Fair', 'PHP, Laravel'),
-    ('Ethan', 'Hawke', 'ehawke@example.com', '9012345679', 'Career Fair', 'Rust, Systems Programming'),
-    ('Ava', 'DuVernay', 'aduvernay@example.com', '1234567898', 'Hackathon', 'Go, Blockchain'),
-    ('Jack', 'Black', 'jblack@example.com', '2345678903', 'Recruitment Drive', 'Scala, Functional Programming');
+    ('Sarah', 'Connor', 'Cardiff', 'sconnor@example.com', '1234567890', 'Tech Expo', 'Java, Python'),
+    ('John', 'Doe', 'Swansea', 'jdoe@example.com', '2345678901', 'Career Fair', 'HTML, CSS, JavaScript'),
+    ('Jane', 'Smith', 'Newport', 'jsmith@example.com', '3456789012', 'Hackathon', 'Python, Machine Learning'),
+    ('Mike', 'Ross', 'Wrexham', 'mross@example.com', '4567890123', 'Job Fair', 'Project Management, Agile'),
+    ('Emily', 'Blunt', 'Bangor', 'eblunt@example.com', '5678901234', 'Tech Conference', 'DevOps, Cloud Computing'),
+    ('Chris', 'Evans', 'Llandudno', 'cevans@example.com', '6789012345', 'Recruitment Drive', 'JavaScript, React'),
+    ('Anna', 'Taylor', 'Aberystwyth', 'ataylor@example.com', '7890123456', 'Tech Expo', 'C++, Embedded Systems'),
+    ('Tom', 'Hanks', 'Carmarthen', 'thanks@example.com', '8901234567', 'Career Fair', 'Python, AI'),
+    ('Sophia', 'Brown', 'Holyhead', 'sbrown@example.com', '9012345678', 'Hackathon', 'Data Analysis, SQL'),
+    ('Max', 'Steel', 'Merthyr Tydfil', 'msteel@example.com', '1234567899', 'Job Fair', 'Cybersecurity, Networking'),
+    ('Eva', 'Longoria', 'Bridgend', 'elongoria@example.com', '2345678902', 'Career Fair', 'Ruby, Rails'),
+    ('Jake', 'Gyllenhaal', 'Pontypridd', 'jgyllenhaal@example.com', '3456789013', 'Tech Expo', 'Java, Spring'),
+    ('Liam', 'Hemsworth', 'Barry', 'lhemsworth@example.com', '4567890124', 'Tech Conference', 'AWS, Docker'),
+    ('Emma', 'Stone', 'Neath', 'estone@example.com', '5678901235', 'Recruitment Drive', 'JavaScript, Angular'),
+    ('Olivia', 'Wilde', 'Caerphilly', 'owilde@example.com', '6789012346', 'Hackathon', 'Kotlin, Android'),
+    ('Noah', 'Centineo', 'Rhyl', 'ncentineo@example.com', '7890123457', 'Tech Expo', 'Flutter, Dart'),
+    ('Lily', 'Collins', 'Abergavenny', 'lcollins@example.com', '8901234568', 'Job Fair', 'PHP, Laravel'),
+    ('Ethan', 'Hawke', 'Llanelli', 'ehawke@example.com', '9012345679', 'Career Fair', 'Rust, Systems Programming'),
+    ('Ava', 'DuVernay', 'Conwy', 'aduvernay@example.com', '1234567898', 'Hackathon', 'Go, Blockchain'),
+    ('Jack', 'Black', 'Chepstow', 'jblack@example.com', '2345678903', 'Recruitment Drive', 'Scala, Functional Programming');
 
 -- Populate the Applicant Preferences table
 insert into applicantPreferences (applicationId, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates)

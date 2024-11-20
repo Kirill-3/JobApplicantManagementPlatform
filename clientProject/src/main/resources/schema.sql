@@ -27,6 +27,7 @@ create table if not exists applicants(
     Id             int auto_increment primary key,
     firstName       varchar(128) not null ,
     lastName        varchar(128) not null ,
+    location        varchar(100) not null ,
     email           varchar(100) not null unique,
     phoneNumber     varchar(15),
     eventAttended   varchar(100) not null,
