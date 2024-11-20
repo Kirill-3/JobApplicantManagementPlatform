@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:replace="fragments/header :: bootstrap-css"/>
 </head>
 <body>
+
+    <div th:replace="~{fragments/header :: header}"/>
     <h1> this is the profile page</h1>
     <table>
         <tr th:each="profile : ${profileList}">
@@ -12,7 +15,6 @@
         </tr>
     </table>
     <button th:if="${userID != null}">email <span th:text="${userID}"></span></button>
-
 
 </body>
 </html>
