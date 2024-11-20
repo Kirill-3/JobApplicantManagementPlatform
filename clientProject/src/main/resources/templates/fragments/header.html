@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thmyleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <link th:fragment = "bootstrap-css"
 
@@ -11,12 +11,13 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light"
          th:fragment = "header">
-        <div class = container">
+        <div class = "container">
+            <span> <img height = "100px" alt = "Digital Health Care Wales"
+                        src = "/images/dhcw.png">
+                </span>
             <span class = "header"> Digital Health Care Wales </span>
             <a class = "navbar-brand" href = "/">
-                <span> <img height = "100px" alt = "Digital Health Care Wales"
-                            src = "/images/dhcw.png">
-                </span>
+
             </a>
         </div>
     </nav>
@@ -28,7 +29,5 @@ Add to <head>:
 <link th:replace="fragments/header :: bootstrap-css"/>
 
 add to top of <body>:
-<div class="container">
-
     <div th:replace="~{fragments/header :: header}"/>
 -->
