@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Digital Health and Care Wales</title>
+    <link th:replace="fragments/header :: bootstrap-css"/>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"/>
 <h1>Digital Health and Care Wales</h1>
 
 <div>
@@ -103,6 +105,9 @@
         </tbody>
     </table>
 </div>
+
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 
 </body>
 </html>
