@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:replace="fragments/header :: bootstrap-css"/>
+</head>
+<body>
+
+    <div th:replace="~{fragments/header :: header}"/>
+    <h1> this is the profile page</h1>
+    <table>
+        <tr th:each="profile : ${profileList}">
+            <td><a th:if="${userID == null}" th:href="@{/profile/{id}(id=${profile})}" th:text="${profile}"></a></td>
+        </tr>
+    </table>
+    <button th:if="${userID != null}">email <span th:text="${userID}"></span></button>
+
+    <div th:replace="~{fragments/footer :: footer-links}"></div>
+    <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+</body>
+</html>
