@@ -11,7 +11,7 @@
     <h1> this is the profile page</h1>
     <table>
         <tr th:each="profile : ${profileList}">
-            <td><a th:if="${userID == null}" th:href="@{/profile/{id}(id=${profile})}" th:text="${profile}"></a></td>
+            <td><a th:if="${userID == null}" th:href="@{/profile/{id}(id=${profile.getId()})}" th:text="${profile.getFirstName()}"></a></td>
         </tr>
     </table>
     <button th:if="${userID != null}">email <span th:text="${userID}"></span></button>

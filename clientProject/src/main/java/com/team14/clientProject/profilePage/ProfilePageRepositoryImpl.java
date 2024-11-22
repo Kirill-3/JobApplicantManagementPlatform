@@ -29,6 +29,7 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
             );
     }
+    @Override
     public List<Profile> getProfiles() {
         String sql = "select * from applicants";
         return jdbcTemplate.query(sql, ProfileRowMapper);
