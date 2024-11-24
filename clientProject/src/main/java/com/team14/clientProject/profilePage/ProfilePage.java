@@ -46,12 +46,15 @@ public class ProfilePage {
         return modelAndView;
     }
 
-    @PostMapping("/sendEmail")
-    public String sendEmail() throws MessagingException {
-        String emailAddress = "kirill.spam1@gmail.com";
-        String subject = "Test Subject from Button";
-        String htmlBody = "<html><body><h1>An email has been sent by clicking the email button. </h1><img src='cid:logo'></body></html>";
+    @PostMapping("/sendEmail/{userID}")
+    public String sendEmail(@PathVariable String userID) throws MessagingException {
+        String query = "SELECT email FROM applicants WHERE id = ?";
+        String emailAddress = jdbcTemplate.queryForObject(query, new Object[]{userID}, String.class);
+
+        String subject = "Test Subject to Your Specific Email";
+        String htmlBody = "<html><body><h1>An email has been sent to your specific email address. </h1><img src='cid:logo'></body></html>";
         String logoPath = "src/main/resources/static/images/dhcw.png";
+
         emailService.sendHtmlMessageWithLogo(emailAddress, subject, htmlBody, logoPath);
         return "redirect:/profile";
     }
