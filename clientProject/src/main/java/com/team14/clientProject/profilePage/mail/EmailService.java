@@ -5,7 +5,9 @@ import java.util.Map;
 import jakarta.mail.MessagingException;
 
 public interface EmailService {
-    void sendSimpleMessage(String to,
-                           String subject,
-                           String text);
+    void sendHtmlMessageWithLogo(String to,
+                                 String subject,
+                                 String htmlBody,
+                                 String logoPath)
+            throws MessagingException;
 }
