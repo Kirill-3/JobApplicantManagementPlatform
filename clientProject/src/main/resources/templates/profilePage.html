@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:replace="fragments/header :: bootstrap-css"/>
+    <script>
+        function showAlert(){
+            alert("Email has been sent successfully!");
+        }
+    </script>
 </head>
 <body>
 
@@ -14,7 +19,9 @@
             <td><a th:if="${userID == null}" th:href="@{/profile/{id}(id=${profile.getId()})}" th:text="${profile.getFirstName()}"></a></td>
         </tr>
     </table>
-    <button th:if="${userID != null}">email <span th:text="${userID}"></span></button>
+    <form th:if="${userID != null}" th:action="@{/profile/sendEmail}" method="post" onsubmit="showAlert()">
+        <button type = "submit"> Email <span th:text="${userID}"></span></button>
+    </form>
 
     <div th:replace="~{fragments/footer :: footer-links}"></div>
     <div th:replace="~{fragments/footer :: bootstrap-js}"></div>

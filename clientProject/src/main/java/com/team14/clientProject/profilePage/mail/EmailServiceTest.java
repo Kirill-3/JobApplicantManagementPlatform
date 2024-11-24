@@ -1,4 +1,4 @@
-
+/*
 package com.team14.clientProject.profilePage.mail;
 
 import jakarta.mail.MessagingException;
@@ -25,3 +25,4 @@ public class EmailServiceTest implements CommandLineRunner {
         }
     }
 }
+*/

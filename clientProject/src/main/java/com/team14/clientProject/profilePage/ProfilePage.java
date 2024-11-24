@@ -1,4 +1,6 @@
 package com.team14.clientProject.profilePage;
+import com.team14.clientProject.profilePage.mail.EmailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.*;
@@ -14,6 +16,9 @@ public class ProfilePage {
     //private ArrayList<String> profileList;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private EmailService emailService;
 
     public static ArrayList createProfiles() {
         ArrayList<String> profileList = new ArrayList<>();
@@ -39,6 +44,16 @@ public class ProfilePage {
         ModelAndView modelAndView = new ModelAndView("profilePage");
         modelAndView.addObject("userID", userID);
         return modelAndView;
+    }
+
+    @PostMapping("/sendEmail")
+    public String sendEmail() throws MessagingException {
+        String emailAddress = "kirill.spam1@gmail.com";
+        String subject = "Test Subject from Button";
+        String htmlBody = "<html><body><h1>An email has been sent by clicking the email button. </h1><img src='cid:logo'></body></html>";
+        String logoPath = "src/main/resources/static/images/dhcw.png";
+        emailService.sendHtmlMessageWithLogo(emailAddress, subject, htmlBody, logoPath);
+        return "redirect:/profile";
     }
 
 }
