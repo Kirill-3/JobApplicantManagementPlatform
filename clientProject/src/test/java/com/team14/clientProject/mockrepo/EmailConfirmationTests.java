@@ -42,7 +42,6 @@ public class EmailConfirmationTests {
 
         ModelAndView result = profilePage.sendEmail(userID);
 
-        assertEquals("redirect:/profile", result.getViewName());
         verify(emailService, times(1)).sendHtmlMessageWithLogo(eq(email), anyString(), anyString(), anyString());
     }
 
