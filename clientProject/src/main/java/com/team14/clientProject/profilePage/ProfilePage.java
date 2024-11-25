@@ -38,7 +38,8 @@ public class ProfilePage {
             //throw new ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "User not found");
             return new ModelAndView("redirect:/profile");
         } else {
-            modelAndView.addObject("userID", userId);
+            Profile profile = this.profilePageRepository.getProfileById(userId);
+            modelAndView.addObject("profile", profile);
             return modelAndView;
         }
     }

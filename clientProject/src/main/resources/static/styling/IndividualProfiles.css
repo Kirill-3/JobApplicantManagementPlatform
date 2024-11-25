@@ -15,13 +15,13 @@
     padding-left: 20px;
 }
 
-table {
+.tableApplicant {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-table th, table td {
+.tableApplicant th, .tableApplicant td {
     text-align: left;
     padding: 8px;
     border-bottom: 1px solid #ddd;

@@ -4,7 +4,7 @@
     align-content: center;
 
 }
-.tableClickable th, td {
+.tableClickable th, .tableClickable td {
     border: 1px solid black;
     border-collapse: collapse;
 }
