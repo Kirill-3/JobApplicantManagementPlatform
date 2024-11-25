@@ -1,0 +1,32 @@
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.profile-details {
+    flex: 2;
+    margin-right: 20px;
+}
+
+.resume-section {
+    flex: 1;
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+}
+
+.tableApplicant {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tableApplicant th, .tableApplicant td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+h2 {
+    margin-top: 0;
+}
