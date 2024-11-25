@@ -10,7 +10,11 @@ public class Profile {
     private String eventAttended;
     private String skill;
 
-    public Profile(int id, String firstName, String lastName, String location, String email, String phoneNumber, String eventAttended, String skill) {
+
+    private applicantPreferences preferences;
+
+    public Profile(int id, String firstName, String lastName, String location, String email, String phoneNumber,
+                   String eventAttended, String skill) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,12 +56,18 @@ public class Profile {
         return skill;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+
+    public void setPreferences(applicantPreferences preferences) {
+        this.preferences = preferences;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public applicantPreferences getPreferences() {
+        return preferences;
+    }
+
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setLocation(String location) {
@@ -80,4 +90,6 @@ public class Profile {
         this.skill = skill;
     }
 
+
 }
+

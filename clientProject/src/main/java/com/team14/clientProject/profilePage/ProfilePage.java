@@ -36,9 +36,11 @@ public class ProfilePage {
 
     @GetMapping("/{userID}")
     public ModelAndView profilePage(@PathVariable String userID) {
+        ProfilePageRepositoryImpl profilePageRepository = new ProfilePageRepositoryImpl(jdbcTemplate);
+        Profile profile = profilePageRepository.getProfileById(Integer.parseInt(userID));
         ModelAndView modelAndView = new ModelAndView("profilePage");
-        modelAndView.addObject("userID", userID);
+        modelAndView.addObject("profile", profile);
         return modelAndView;
     }
-
 }
+
