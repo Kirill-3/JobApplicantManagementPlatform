@@ -1,5 +1,25 @@
-.homeTable{
+/*Table CSS adapated from https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l*/
 
+.homeTable{
+    display: table;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+}
+
+.homeTable thead {
+    background: #2D366C;
+    color: white;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.homeTable td tr {
+    border-collapse: collapse;
+}
+
+.captionFix {
+    caption-side: top;
+    font-size: 20px;
 }
 
 .homeButton {
@@ -9,6 +29,13 @@
     border: none;
     color: white;
     font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.homeButton:hover {
+    background-color: #22519C;
+    transition: all 0.1s ease-in-out;
 }
 
 body {
@@ -21,13 +48,22 @@ body {
 .homeContainer {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-
+    justify-content: space-evenly;
+    /*border: 8px solid lawngreen;*/
 }
 
 .buttonContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 35px;
+    justify-content: space-between;
+    /*border: 8px solid lawngreen;*/
+    width: 500px;
+}
+
+.tableContainer {
+    min-width: 400px;
+    display: flex;
+    /*border: 8px solid lawngreen;*/
 }
