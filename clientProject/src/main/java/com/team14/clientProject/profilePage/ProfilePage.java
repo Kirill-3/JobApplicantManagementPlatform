@@ -21,6 +21,8 @@ public class ProfilePage {
     private JdbcTemplate jdbcTemplate;
     private ProfilePageRepositoryImpl profilePageRepository;
     private List<Profile> profileList;
+    @Autowired
+    private EmailService emailService;
 
     public ProfilePage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

@@ -12,11 +12,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-// Code adapted from https://javanexus.com/blog/handling-email-testing-spring-boot
-// and https://www.baeldung.com/mockito-annotations
 
 public class EmailConfirmationTests {
 
@@ -30,8 +29,12 @@ public class EmailConfirmationTests {
     private ProfilePage profilePage;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
+        profilePage = new ProfilePage(jdbcTemplate);
+        Field emailServiceField = ProfilePage.class.getDeclaredField("emailService");
+        emailServiceField.setAccessible(true);
+        emailServiceField.set(profilePage, emailService);
     }
 
     @Test
@@ -57,8 +60,6 @@ public class EmailConfirmationTests {
         assertEquals("Email not found for user ID " + userID, result.getModel().get("alertMessage"));
     }
 
-    //Code obtained from https://www.baeldung.com/java-email-validation-regex
-    //Testing the email validation regex pattern - RFC 5322 - Does not allow the pipe character (|) and single quote (‘)
     @Test
     public void testRFC5322Validation() {
         String emailAddress = "username'@domain.com";
