@@ -36,8 +36,13 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
     }
 
     public Profile getProfileById(int id) {
-        String sql = "select * from applicants where Id = ?";
-        return jdbcTemplate.queryForObject(sql, ProfileRowMapper, id);
+        try {
+            String sql = "select * from applicants where Id = ?";
+            return jdbcTemplate.queryForObject(sql, ProfileRowMapper, id);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
     public void addProfile(Profile profile) {
         String sql = "insert into applicants (firstName, lastName, location, email, phoneNumber, eventAttended, skill) values (?, ?, ?, ?, ?, ?, ?)";
