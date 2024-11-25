@@ -49,6 +49,34 @@ public class ProfilePage {
             return modelAndView;
         }
     }
+    @GetMapping("/firstNameAscending")
+    public ModelAndView getProfilesByFirstNameAscending() {
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        List<Profile> profileList = this.profilePageRepository.getProfilesByFirstNameAscending();
+        modelAndView.addObject("profileList", profileList);
+        return modelAndView;
+    }
+    @GetMapping("/firstNameDescending")
+    public ModelAndView getProfilesByFirstNameDescending() {
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        List<Profile> profileList = this.profilePageRepository.getProfilesByFirstNameDescending();
+        modelAndView.addObject("profileList", profileList);
+        return modelAndView;
+    }
+    @GetMapping("/lastNameAscending")
+    public ModelAndView getProfilesByLastNameAscending() {
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        List<Profile> profileList = this.profilePageRepository.getProfilesByLastNameAscending();
+        modelAndView.addObject("profileList", profileList);
+        return modelAndView;
+    }
+    @GetMapping("/lastNameDescending")
+    public ModelAndView getProfilesByLastNameDescending() {
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        List<Profile> profileList = this.profilePageRepository.getProfilesByLastNameDescending();
+        modelAndView.addObject("profileList", profileList);
+        return modelAndView;
+    }
 
     @PostMapping("/sendEmail/{userID}")
     public ModelAndView sendEmail(@PathVariable String userID) throws MessagingException {

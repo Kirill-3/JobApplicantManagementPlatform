@@ -76,4 +76,45 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
         String sql = "insert into applicants (firstName, lastName, location, email, phoneNumber, eventAttended, skill) values (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, profile.getFirstName(), profile.getLastName(), profile.getLocation(), profile.getEmail(), profile.getPhoneNumber(), profile.getEventAttended(), profile.getSkill());
     }
+    @Override
+    public List<Profile> getProfilesByFirstNameAscending() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "ORDER BY a.firstName ASC";
+        return jdbcTemplate.query(sql, ProfileRowMapper);
+    }
+    @Override
+    public List<Profile> getProfilesByFirstNameDescending() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "ORDER BY a.firstName DESC";
+        return jdbcTemplate.query(sql, ProfileRowMapper);
+    }
+    @Override
+    public List<Profile> getProfilesByLastNameAscending() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "ORDER BY a.lastName ASC";
+        return jdbcTemplate.query(sql, ProfileRowMapper);
+    }
+    @Override
+    public List<Profile> getProfilesByLastNameDescending() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "ORDER BY a.lastName DESC";
+        return jdbcTemplate.query(sql, ProfileRowMapper);
+    }
+
 }
