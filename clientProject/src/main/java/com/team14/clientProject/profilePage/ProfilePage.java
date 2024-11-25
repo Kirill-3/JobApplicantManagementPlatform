@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -14,31 +15,33 @@ public class ProfilePage {
     //private ArrayList<String> profileList;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    private ProfilePageRepositoryImpl profilePageRepository;
+    private List<Profile> profileList;
 
-    public static ArrayList createProfiles() {
-        ArrayList<String> profileList = new ArrayList<>();
-        profileList.add("Freddy");
-        profileList.add("Kirill");
-        profileList.add("Ayush");
-        profileList.add("Mohammed");
-        profileList.add("Oscar");
-        return profileList;
+    public ProfilePage(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.profilePageRepository = new ProfilePageRepositoryImpl(jdbcTemplate);
+        this.profileList = profilePageRepository.getProfiles();
     }
 
     @GetMapping()
     public ModelAndView profilePage() {
-        ProfilePageRepositoryImpl profilePageRepository = new ProfilePageRepositoryImpl(jdbcTemplate);
-        List<Profile> profileList = profilePageRepository.getProfiles();
         ModelAndView modelAndView = new ModelAndView("profilePage");
-        modelAndView.addObject("profileList", profileList);
+        modelAndView.addObject("profileList", this.profileList);
         return modelAndView;
     }
 
-    @GetMapping("/{userID}")
-    public ModelAndView profilePage(@PathVariable String userID) {
+    @GetMapping("/{userId}")
+    public ModelAndView profilePage(@PathVariable Integer userId) {
         ModelAndView modelAndView = new ModelAndView("profilePage");
-        modelAndView.addObject("userID", userID);
-        return modelAndView;
+        if (this.profilePageRepository.getProfileById(userId) == null) {
+            //throw new ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "User not found");
+            return new ModelAndView("redirect:/profile");
+        } else {
+            Profile profile = this.profilePageRepository.getProfileById(userId);
+            modelAndView.addObject("profile", profile);
+            return modelAndView;
+        }
     }
-
 }
+
