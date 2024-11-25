@@ -80,6 +80,6 @@ public class ProfilePage {
         emailService.sendHtmlMessageWithLogo(emailAddress, subject, htmlBody, logoPath);
         // Set a success alert message
         modelAndView.addObject("alertMessage", "Email sent successfully to " + emailAddress);
-        return modelAndView;
+        return new ModelAndView("redirect:/profile");
     }
 }
