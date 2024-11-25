@@ -1,9 +1,11 @@
 package com.team14.clientProject.profilePage;
+
 import com.team14.clientProject.profilePage.mail.EmailService;
+import com.team14.clientProject.profilePage.mail.EmailValidation;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,14 +15,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/profile")
 public class ProfilePage {
-    //private ArrayList<String> profileList;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private EmailService emailService;
 
-    public static ArrayList createProfiles() {
+    public static ArrayList<String> createProfiles() {
         ArrayList<String> profileList = new ArrayList<>();
         profileList.add("Freddy");
         profileList.add("Kirill");
@@ -47,16 +49,37 @@ public class ProfilePage {
     }
 
     @PostMapping("/sendEmail/{userID}")
-    public String sendEmail(@PathVariable String userID) throws MessagingException {
+    public ModelAndView sendEmail(@PathVariable String userID) throws MessagingException {
+        // Query to fetch the email address of the applicant based on userID
         String query = "SELECT email FROM applicants WHERE id = ?";
         String emailAddress = jdbcTemplate.queryForObject(query, new Object[]{userID}, String.class);
 
+        // Initialize the ModelAndView object with the profilePage view
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+
+        // Check if the email address is null and set an alert message if true
+        if (emailAddress == null) {
+            modelAndView.addObject("alertMessage", "Email not found for user ID " + userID);
+            return modelAndView;
+        }
+
+        // Define the regex pattern for email validation
+        String regexPattern = "^[a-zA-Z0-9_!#$%&*+/=?`{}~^.-]+@[a-zA-Z0-9.-]+$";
+        // Validate the email address format and set an alert message if invalid
+        if (!EmailValidation.patternMatches(emailAddress, regexPattern)) {
+            modelAndView.addObject("alertMessage", "Invalid email format for user ID " + userID);
+            return modelAndView;
+        }
+
+        // Define the email subject and HTML body content
         String subject = "Test Subject to Your Specific Email";
         String htmlBody = "<html><body><h1>An email has been sent to your specific email address. </h1><img src='cid:logo'></body></html>";
         String logoPath = "src/main/resources/static/images/dhcw.png";
 
+        // Send the email with the specified subject, body, and logo
         emailService.sendHtmlMessageWithLogo(emailAddress, subject, htmlBody, logoPath);
-        return "redirect:/profile";
+        // Set a success alert message
+        modelAndView.addObject("alertMessage", "Email sent successfully to " + emailAddress);
+        return modelAndView;
     }
-
 }

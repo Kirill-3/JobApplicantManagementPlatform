@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:replace="fragments/header :: bootstrap-css"/>
-    <script>
-        function showAlert(){
-            alert("Email has been sent successfully!");
+    <script th:inline="javascript">
+        const alertMessage = [[${alertMessage}]];
+        if (alertMessage) {
+            alert(alertMessage);
         }
     </script>
 </head>
 <body>
 
-    <div th:replace="~{fragments/header :: header}"/>
-    <h1> this is the profile page</h1>
-    <table>
-        <tr th:each="profile : ${profileList}">
-            <td><a th:if="${userID == null}" th:href="@{/profile/{id}(id=${profile.getId()})}" th:text="${profile.getFirstName()}"></a></td>
-        </tr>
-    </table>
-    <form th:if="${userID != null}" th:action="@{/profile/sendEmail/{userID}(userID=${userID})}" method="post" onsubmit="showAlert()">
-        <button type = "submit"> Email <span th:text="${userID}"></span></button>
-    </form>
+<div th:replace="~{fragments/header :: header}"/>
+<h1> this is the profile page</h1>
+<table>
+    <tr th:each="profile : ${profileList}">
+        <td><a th:if="${userID == null}" th:href="@{/profile/{id}(id=${profile.getId()})}" th:text="${profile.getFirstName()}"></a></td>
+    </tr>
+</table>
+<form th:if="${userID != null}" th:action="@{/profile/sendEmail/{userID}(userID=${userID})}" method="post" onsubmit="showAlert()">
+    <button type="submit"> Email <span th:text="${userID}"></span></button>
+</form>
 
-    <div th:replace="~{fragments/footer :: footer-links}"></div>
-    <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 </body>
 </html>
