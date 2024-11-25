@@ -2,28 +2,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Applicant Profile</title>
+    <link rel="stylesheet" href="/styling/IndividualProfiles.css">
     <link th:replace="fragments/header :: bootstrap-css"/>
-    <script th:inline="javascript">
-        const alertMessage = [[${alertMessage}]];
-        if (alertMessage) {
-            alert(alertMessage);
-        }
+    <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tableRows = document.querySelectorAll(".tableClickable tbody tr");
+            for (const tableRow of tableRows) {
+                tableRow.addEventListener("click", function () {
+                    window.location.href = this.getAttribute("data-href");
+                });
+            }
+        });
     </script>
 </head>
 <body>
 
-<div th:replace="~{fragments/header :: header}"/>
-<h1> this is the profile page</h1>
-<table>
-    <tr th:each="profile : ${profileList}">
-        <td><a th:if="${userID == null}" th:href="@{/profile/{id}(id=${profile.getId()})}" th:text="${profile.getFirstName()}"></a></td>
-    </tr>
-</table>
-<form th:if="${userID != null}" th:action="@{/profile/sendEmail/{userID}(userID=${userID})}" method="post" onsubmit="showAlert()">
-    <button type="submit"> Email <span th:text="${userID}"></span></button>
-</form>
+    <div th:replace="~{fragments/header :: header}"/>
+    <h1> this is the profile page</h1>
+    <table id="table1" class="tableClickable">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Location</th>
+            <th>Event Attended</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}">
+            <td th:text="${profile.getFirstName()}"></td>
+            <td th:text="${profile.getLastName()}"></td>
+            <td th:text="${profile.getLocation()}"></td>
+            <td th:text="${profile.getEventAttended()}"></td>
 
+
+        </tr>
+        </tbody>
+    </table>
+    <button th:if="${userId != null}">email <span th:text="${userId}"></span></button>
+
+<div th:if="${profile != null}" class="profile-container">
+    <div class = "profile-details">
+        <h2>Personal Details</h2>
+        <table class="tableApplicant">
+            <tr>
+                <th>First Name</th>
+                <td th:text="${profile.firstName}"></td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td th:text="${profile.lastName}"></td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td th:text="${profile.location}"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td th:text="${profile.email}"></td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td th:text="${profile.phoneNumber != null ? profile.phoneNumber : 'N/A'}"></td>
+            </tr>
+
+        </table>
+        <br>
+
+        <h2>Applicant Experience</h2>
+        <table class="tableApplicant">
+            <tr>
+                <th>Current Position</th>
+                <td th:text="${profile.jobDetails?.currentPosition != null ? profile.jobDetails.currentPosition : 'N/A'}"></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td th:text="${profile.jobDetails?.status != null ? profile.jobDetails.status : 'N/A'}"></td>
+            </tr>
+            <tr>
+                <th>Skills</th>
+                <td th:text="${profile.skill != null ? profile.skill : 'N/A'}"></td>
+            </tr>
+            <tr>
+                <th>Event Attended</th>
+                <td th:text="${profile.eventAttended}"></td>
+            </tr>
+        </table>
+
+        <br>
+
+        <h2>Applicant Preferences</h2>
+
+        <table class="tableApplicant">
+            <tr>
+                <th>Subscribed to newsletter?</th>
+                <td th:text="${profile.preferences?.subscribeToNewsletter} ? 'Yes' : 'No'"></td>
+            </tr>
+            <tr>
+                <th>Subscribed to bulletins?</th>
+                <td th:text="${profile.preferences?.subscribeToBulletins} ? 'Yes' : 'No'"></td>
+            </tr>
+            <tr>
+                <th>Subscribed to job updates?</th>
+                <td th:text="${profile.preferences?.subscribeToJobUpdates} ? 'Yes' : 'No'"></td>
+            </tr>
+        </table>
+
+        <a th:href="@{/profile}">Back to Profiles</a>
+
+    </div>
+
+    <div class = resume-section>
+        <h2>Applicant Resume</h2>
+
+    </div>
+
+
+</div>
+
+<!-- Footer -->
 <div th:replace="~{fragments/footer :: footer-links}"></div>
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 </body>

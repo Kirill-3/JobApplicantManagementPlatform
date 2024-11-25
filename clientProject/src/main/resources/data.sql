@@ -13,6 +13,7 @@ values
     ('user9', SHA2('password9', 256), 'Ivy', 'Taylor', 'recruiter', NOW()),
     ('user10', SHA2('password10', 256), 'Jack', 'Anderson', 'recruiter', NOW());
 
+
 -- Populate the Applicants table with NHS-related data
 insert into applicants (firstName, lastName, location, email, phoneNumber, eventAttended, skill)
 values
