@@ -34,20 +34,32 @@
                 <th>Phone Number</th>
                 <td th:text="${profile.phoneNumber != null ? profile.phoneNumber : 'N/A'}"></td>
             </tr>
+
+        </table>
+        <br>
+
+        <h2>Applicant Experience</h2>
+        <table>
             <tr>
-                <th>Event Attended</th>
-                <td th:text="${profile.eventAttended}"></td>
+                <th>Current Position</th>
+                <td th:text="${profile.jobDetails?.currentPosition != null ? profile.jobDetails.currentPosition : 'N/A'}"></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td th:text="${profile.jobDetails?.status != null ? profile.jobDetails.status : 'N/A'}"></td>
             </tr>
             <tr>
                 <th>Skills</th>
                 <td th:text="${profile.skill != null ? profile.skill : 'N/A'}"></td>
             </tr>
+            <tr>
+                <th>Event Attended</th>
+                <td th:text="${profile.eventAttended}"></td>
+            </tr>
         </table>
-        <br>
-
-        <h2>Applicant Experience</h2>
 
         <br>
+
         <h2>Applicant Preferences</h2>
 
         <table>

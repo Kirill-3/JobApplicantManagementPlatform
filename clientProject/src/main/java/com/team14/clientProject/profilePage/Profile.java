@@ -12,6 +12,7 @@ public class Profile {
 
 
     private applicantPreferences preferences;
+    private applicantJobDetails jobDetails;
 
     public Profile(int id, String firstName, String lastName, String location, String email, String phoneNumber,
                    String eventAttended, String skill) {
@@ -63,6 +64,14 @@ public class Profile {
 
     public applicantPreferences getPreferences() {
         return preferences;
+    }
+
+    public void setJobDetails(applicantJobDetails jobDetails) {
+        this.jobDetails = jobDetails;
+    }
+
+    public applicantJobDetails getJobDetails() {
+        return jobDetails;
     }
 
 

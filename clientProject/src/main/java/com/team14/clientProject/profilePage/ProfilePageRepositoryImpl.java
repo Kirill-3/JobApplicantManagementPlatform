@@ -37,31 +37,38 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
             );
             profile.setPreferences(preferences);
 
+            applicantJobDetails jobDetails = new applicantJobDetails(
+                    rs.getInt("id"),
+                    rs.getString("currentPosition"),
+                    rs.getString("status")
+            );
+            profile.setJobDetails(jobDetails);
+
             return profile;
         };
 
     }
 
-//    @Override
-//    public List<Profile> getProfiles() {
-//        String sql = "select * from applicants";
-//        return jdbcTemplate.query(sql, ProfileRowMapper);
-//    }
 
     @Override
     public List<Profile> getProfiles(){
-        String sql =  "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates " +
+        String sql =  "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
                 "FROM applicants a " +
-                "LEFT JOIN applicantpreferences p ON a.Id = p.Id";
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id";
+
         return jdbcTemplate.query(sql, ProfileRowMapper);
     }
 
     @Override
     public Profile getProfileById(int id) {
         // SQL query to fetch profile and preferences for a specific applicant
-        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates " +
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
                 "FROM applicants a " +
                 "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
                 "WHERE a.id = ?";
         return jdbcTemplate.queryForObject(sql, ProfileRowMapper, id);
     }
