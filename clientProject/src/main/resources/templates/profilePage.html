@@ -16,11 +16,21 @@
             }
         });
     </script>
+    <script th:inline="javascript">
+        const alertMessage = [[${alertMessage}]];
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    </script>
+
 </head>
 <body>
 
     <div th:replace="~{fragments/header :: header}"/>
     <h1> this is the profile page</h1>
+    <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
+        <button type="submit"> Email <span th:text="${userId}"></span></button>
+    </form>
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
@@ -41,9 +51,10 @@
         </tr>
         </tbody>
     </table>
-    <button th:if="${userId != null}">email <span th:text="${userId}"></span></button>
 
-<div th:if="${profile != null}" class="profile-container">
+
+
+    <div th:if="${profile != null}" class="profile-container">
     <div class = "profile-details">
         <h2>Personal Details</h2>
         <table class="tableApplicant">
@@ -127,4 +138,3 @@
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 </body>
 </html>
-

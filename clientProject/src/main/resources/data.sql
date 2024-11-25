@@ -17,10 +17,10 @@ values
 -- Populate the Applicants table with NHS-related data
 insert into applicants (firstName, lastName, location, email, phoneNumber, eventAttended, skill)
 values
-    ('Sarah', 'Connor', 'Cardiff', 'sconnor@example.com', '1234567890', 'NHS Careers Fair', 'Healthcare, Nursing'),
-    ('John', 'Doe', 'Swansea', 'jdoe@example.com', '2345678901', 'NHS Recruitment Day', 'Healthcare, Public Health'),
-    ('Jane', 'Smith', 'Newport', 'jsmith@example.com', '3456789012', 'Health Conference', 'Nursing, Midwifery'),
-    ('Mike', 'Ross', 'Wrexham', 'mross@example.com', '4567890123', 'NHS Recruitment', 'Clinical Research, Pharmacy'),
+    ('Sarah', 'Connor', 'Cardiff', 'kirill.akbulatov@pm.me', '1234567890', 'NHS Careers Fair', 'Healthcare, Nursing'),
+    ('John', 'Doe', 'Swansea', 'kirill.spam1@gmail.com', '2345678901', 'NHS Recruitment Day', 'Healthcare, Public Health'),
+    ('Jane', 'Smith', 'Newport', '', '3456789012', 'Health Conference', 'Nursing, Midwifery'),
+    ('Mike', 'Ross', 'Wrexham', 'mross|@example.com', '4567890123', 'NHS Recruitment', 'Clinical Research, Pharmacy'),
     ('Emily', 'Blunt', 'Bangor', 'eblunt@example.com', '5678901234', 'Health Conference', 'Physiotherapy, Occupational Therapy'),
     ('Chris', 'Evans', 'Llandudno', 'cevans@example.com', '6789012345', 'NHS Careers Fair', 'Healthcare, Radiology'),
     ('Anna', 'Taylor', 'Aberystwyth', 'ataylor@example.com', '7890123456', 'Medical Career Day', 'Healthcare, Emergency Medicine'),
