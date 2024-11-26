@@ -85,3 +85,6 @@ values
     (18, 'Surgical Assistant', 'External', NULL, NULL),
     (19, 'Healthcare Administrator', 'Internal', NULL, NULL),
     (20, 'Health Coordinator', 'External', NULL, NULL);
+
+
+DESCRIBE users;
