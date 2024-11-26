@@ -1,5 +1,6 @@
 package com.team14.clientProject.adminPage;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -46,7 +47,11 @@ public class AdminRepositoryImpl implements AdminRepository {
     @Override
     public User findUserById(int id) {
         String sql = "SELECT * FROM users WHERE ID = ?";
-        return jdbcTemplate.queryForObject(sql, userMapper, id);
+       try {
+           return jdbcTemplate.queryForObject(sql, userMapper, id);
+       } catch (EmptyResultDataAccessException e) {
+           return null; // Return null if the user is not found
+       }
     }
 
     @Override

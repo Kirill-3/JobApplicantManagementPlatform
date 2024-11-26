@@ -2,15 +2,16 @@ package com.team14.clientProject;
 
 import com.team14.clientProject.adminPage.AdminService;
 import com.team14.clientProject.adminPage.User;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 
 @SpringBootTest
+@Transactional
 public class AddUserTest {
 
     @Autowired
@@ -26,7 +27,7 @@ public class AddUserTest {
         //Create a new user object
         User newUser = new User();
         newUser.setUsername("testUser");
-        newUser.setPassword("password123"); // Ideally, you should hash the password
+        newUser.setPassword("password123");
         newUser.setFirstName("Test");
         newUser.setLastName("User");
         newUser.setRole(User.Role.recruiter);
@@ -47,7 +48,7 @@ public class AddUserTest {
         // Create a new user object
         User newUser = new User();
         newUser.setUsername("testUser");
-        newUser.setPassword("password123"); // Ideally, you should hash the password
+        newUser.setPassword("password123");
         newUser.setFirstName("Test");
         newUser.setLastName("User");
         newUser.setRole(User.Role.recruiter);
@@ -64,7 +65,7 @@ public class AddUserTest {
         // Delete the user
         adminService.deleteUser(savedUser.getId());
 
-        // Try retrieving the user to ensure it was deleted (assuming a `getUserById` method exists)
+        // Try retrieving the user to ensure it was deleted
         User deletedUser = adminService.getUserById(savedUser.getId());
         Assert.isNull(deletedUser, "Deleted user should be null");
     }
