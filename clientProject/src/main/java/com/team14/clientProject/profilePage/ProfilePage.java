@@ -34,6 +34,7 @@ public class ProfilePage {
     public ModelAndView profilePage() {
         ModelAndView modelAndView = new ModelAndView("profilePage");
         modelAndView.addObject("profileList", this.profileList);
+        modelAndView.addObject("uniqueLocations", this.profilePageRepository.getProfilesByUniqueLocation());
         return modelAndView;
     }
 
@@ -77,6 +78,15 @@ public class ProfilePage {
         modelAndView.addObject("profileList", profileList);
         return modelAndView;
     }
+    @GetMapping("/location")
+    public ModelAndView getProfilesByLocation() {
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        List<Profile> profileList = this.profilePageRepository.getProfiles();
+        modelAndView.addObject("profileList", profileList);
+        modelAndView.addObject("uniqueLocations", this.profilePageRepository.getProfilesByUniqueLocation());
+        return modelAndView;
+    }
+
 
     @PostMapping("/sendEmail/{userID}")
     public ModelAndView sendEmail(@PathVariable String userID) throws MessagingException {

@@ -30,7 +30,7 @@ values
     ('Eva', 'Longoria', 'Bridgend', 'elongoria@example.com', '2345678902', 'Health Careers Event', 'Healthcare, Surgery'),
     ('Jake', 'Gyllenhaal', 'Pontypridd', 'jgyllenhaal@example.com', '3456789013', 'Medical Recruitment Day', 'Nursing, Emergency Care'),
     ('Liam', 'Hemsworth', 'Barry', 'lhemsworth@example.com', '4567890124', 'Health Careers Expo', 'Clinical Psychologist, Healthcare'),
-    ('Emma', 'Stone', 'Neath', 'estone@example.com', '5678901235', 'NHS Recruitment Fair', 'Pediatrics, Nursing'),
+    ('Emma', 'Stone', 'Barry', 'estone@example.com', '5678901235', 'NHS Recruitment Fair', 'Pediatrics, Nursing'),
     ('Olivia', 'Wilde', 'Caerphilly', 'owilde@example.com', '6789012346', 'Health Conference', 'Medical Research, Healthcare'),
     ('Noah', 'Centineo', 'Rhyl', 'ncentineo@example.com', '7890123457', 'NHS Career Expo', 'Pharmacy, Medical Laboratory Technician'),
     ('Lily', 'Collins', 'Abergavenny', 'lcollins@example.com', '8901234568', 'Healthcare Job Fair', 'Nursing, General Medicine'),
