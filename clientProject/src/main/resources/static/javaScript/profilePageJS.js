@@ -1,50 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tableRows = document.querySelectorAll(".tableClickable tbody tr");
+    var tableRowArray = Array.from(tableRows);
     for (const tableRow of tableRows) {
         tableRow.addEventListener("click", function () {
             window.location.href = this.getAttribute("data-href");
         });
     }
-});
-document.addEventListener("DOMContentLoaded", function() {
-    const tableRows = document.querySelectorAll(".tableClickable thead th");
-    for (const tableRow of tableRows) {
-        tableRow.addEventListener("click", function () {
-            if (window.location.href.includes(this.getAttribute("data1-href"))) {
-                if (window.location.href.includes("Ascending")) {
-                    window.location.href = this.getAttribute("data1-href") + "Descending";
-                } else if (this.getAttribute("data2-href") === "Descending" || window.location.href.includes("Descending")){
-                    window.location.href = "/profile";
-                } else
-                {
-                    window.location.href = this.getAttribute("data1-href") + "Ascending";
-                }
-            } else if (this.getAttribute("data1-href").includes("Name")) {
-                window.location.href = this.getAttribute("data1-href") + this.getAttribute("data2-href");
-            }
-
-        }
-    )}
-});
-
-document.addEventListener("DOMContentLoaded", function() {
+    // name sort
     const tableHeaders = document.querySelectorAll(".tableClickable thead th");
-    for (const tableHeader of tableHeaders) {
-        tableHeader.addEventListener("click", function (event) {
-            if (this.textContent === "Location") {
-                event.preventDefault();
-                const rows = document.querySelectorAll(".tableClickable tbody tr");
-                rows.forEach(row => {
-                    if (row.getAttribute("data-location").includes("a")) {
-                        console.log(row);
-                        row.style.display = "table-row";
-                    } else {
-                        row.style.display = "none";
-                    }
-                });
-            }
-        });
-    }
+    var sorted = {firstName: 0, lastName: 0};
+    tableHeaders[0].addEventListener("click", function() {
+        sortTable("data-firstName", "firstName");
+    });
+
+    tableHeaders[1].addEventListener("click", function() {
+        sortTable("data-lastName", "lastName");
+    });
+
+
+
+    // Location filter
     const locationDropdown = document.getElementById("locationDropdown");
     locationDropdown.addEventListener("change", function () {
         const selectedLocation = this.value;
@@ -57,4 +32,25 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+    function sortTable(attribute, key) {
+        if (sorted[key] === 0) {
+            tableRowArray.sort((a, b) => {
+                const aValue = a.getAttribute(attribute);
+                const bValue = b.getAttribute(attribute);
+                return aValue.localeCompare(bValue);
+            });
+            sorted[key] = 1;
+        } else if (sorted[key] === 1) {
+            tableRowArray.reverse();
+            sorted[key] = 2;
+        } else {
+            tableRowArray = Array.from(tableRows);
+            sorted[key] = 0;
+        }
+        const tableBody = document.querySelector(".tableClickable tbody");
+        tableBody.innerHTML = "";
+        tableRowArray.forEach(row => {
+            tableBody.appendChild(row);
+        });
+    }
 });

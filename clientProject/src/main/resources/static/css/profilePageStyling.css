@@ -34,3 +34,18 @@
     color: white;
     background: #2D366C;
 }
+#locationDropdown {
+    background-color: #2D366C;
+    color: white;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    cursor: crosshair;
+    border: #2D366C;
+}
+#locationDropdown option {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-size: 0.4em;
+}
+
