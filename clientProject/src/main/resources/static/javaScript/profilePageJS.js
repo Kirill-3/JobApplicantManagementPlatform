@@ -5,6 +5,13 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = this.getAttribute("data-href");
         });
     }
+
+    const checkboxes = document.querySelectorAll(".tableClickable tbody input[type='checkbox']");
+    for (const checkbox of checkboxes) {
+        checkbox.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+    }
 });
 document.addEventListener("DOMContentLoaded", function() {
     const tableRows = document.querySelectorAll(".tableClickable thead th");

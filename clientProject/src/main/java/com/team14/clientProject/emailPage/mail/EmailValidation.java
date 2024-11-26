@@ -1,4 +1,4 @@
-package com.team14.clientProject.profilePage.mail;
+package com.team14.clientProject.emailPage.mail;
 
 //Code obtained from https://www.baeldung.com/java-email-validation-regex
 public class EmailValidation {

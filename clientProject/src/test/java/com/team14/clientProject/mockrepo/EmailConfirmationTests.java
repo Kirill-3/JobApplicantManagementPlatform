@@ -1,8 +1,8 @@
 package com.team14.clientProject.mockrepo;
 
 import com.team14.clientProject.profilePage.ProfilePage;
-import com.team14.clientProject.profilePage.mail.EmailService;
-import com.team14.clientProject.profilePage.mail.EmailValidation;
+import com.team14.clientProject.emailPage.mail.EmailService;
+import com.team14.clientProject.emailPage.mail.EmailValidation;
 import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

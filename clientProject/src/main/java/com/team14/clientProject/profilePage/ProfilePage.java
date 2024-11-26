@@ -1,16 +1,14 @@
 package com.team14.clientProject.profilePage;
 
-import com.team14.clientProject.profilePage.mail.EmailService;
-import com.team14.clientProject.profilePage.mail.EmailValidation;
+import com.team14.clientProject.emailPage.mail.EmailService;
+import com.team14.clientProject.emailPage.mail.EmailValidation;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
