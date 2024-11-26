@@ -19,10 +19,42 @@ document.addEventListener("DOMContentLoaded", function() {
                 {
                     window.location.href = this.getAttribute("data1-href") + "Ascending";
                 }
-            } else {
+            } else if (this.getAttribute("data1-href").includes("Name")) {
                 window.location.href = this.getAttribute("data1-href") + this.getAttribute("data2-href");
             }
 
         }
     )}
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const tableHeaders = document.querySelectorAll(".tableClickable thead th");
+    for (const tableHeader of tableHeaders) {
+        tableHeader.addEventListener("click", function (event) {
+            if (this.textContent === "Location") {
+                event.preventDefault();
+                const rows = document.querySelectorAll(".tableClickable tbody tr");
+                rows.forEach(row => {
+                    if (row.getAttribute("data-location").includes("a")) {
+                        console.log(row);
+                        row.style.display = "table-row";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+        });
+    }
+    const locationDropdown = document.getElementById("locationDropdown");
+    locationDropdown.addEventListener("change", function () {
+        const selectedLocation = this.value;
+        const rows = document.querySelectorAll(".tableClickable tbody tr");
+        rows.forEach(row => {
+            if (selectedLocation === "" || row.getAttribute("data-location") === selectedLocation) {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
 });
