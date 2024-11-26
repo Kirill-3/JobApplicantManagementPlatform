@@ -5,11 +5,11 @@
     <title>Digital Health and Care Wales</title>
     <link th:replace="fragments/header :: bootstrap-css"/>
     <link rel="stylesheet" type="text/css" href="css/homeStyle.css"/>
-    <link rel="stylesheet" type="text/css" href="css/profilePageStyling.css"
+    <link rel="stylesheet" type="text/css" href="css/profilePageStyling.css">
 </head>
 <body>
+<script th:src="@{js/homeJs.js}"></script>
 <div th:replace="~{fragments/header :: header}"/>
-<h1>Digital Health and Care Wales</h1>
 
 <div class="homeContainer">
 
@@ -33,7 +33,7 @@
     </div>
 
     <div class="buttonContainer">
-        <button class="homeButton">View Applicants</button>
+        <button class="homeButton" onclick="goProfile()">View Applicants</button>
         <button class="homeButton">Activity Log</button>
         <button class="homeButton">Statistics</button>
     </div>

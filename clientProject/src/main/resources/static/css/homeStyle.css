@@ -1,20 +1,30 @@
-/*Table CSS adapated from https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l*/
+/*Table CSS design adapted from https://www.youtube.com/watch?v=uMtyxRSqxIk*/
 
 .homeTable{
     display: table;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
     width: 100%;
+    border: 2px solid black;
 }
 
 .homeTable thead {
     background: #2D366C;
     color: white;
     text-align: left;
+    padding: 6px 8px;
     text-transform: uppercase;
 }
 
-.homeTable td tr {
+.homeTable tbody tr:nth-of-type(even) {
+    background-color: #dddddd;
+}
+
+.homeTable td, .homeTable tr {
     border-collapse: collapse;
+}
+
+.homeTable tbody tr:hover {
+    background: #f3f3f3;
 }
 
 .captionFix {
@@ -30,7 +40,7 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
 }
 
 .homeButton:hover {
@@ -46,6 +56,7 @@ body {
 
 
 .homeContainer {
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
