@@ -24,12 +24,13 @@
 }
 
 .homeTable tbody tr:hover {
-    background: #f3f3f3;
+    background: #d4e1f4;
 }
 
 .captionFix {
     caption-side: top;
     font-size: 20px;
+    cursor: default;
 }
 
 .homeButton {

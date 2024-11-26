@@ -75,4 +75,28 @@ class ProfilePageTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
+    @Test void testProfilePageDisplaysProfilesAscending() throws Exception {
+        MvcResult result = mvc
+                .perform(get("/profile/firstNameAscending"))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
+    @Test void testProfilePageDisplaysProfilesDescending() throws Exception {
+        MvcResult result = mvc
+                .perform(get("/profile/firstNameDescending"))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
+    @Test void testProfilePageDisplaysProfilesByLastNameAscending() throws Exception {
+        MvcResult result = mvc
+                .perform(get("/profile/lastNameAscending"))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
+    @Test void testProfilePageDisplaysProfilesByLastNameDescending() throws Exception {
+        MvcResult result = mvc
+                .perform(get("/profile/lastNameDescending"))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
 }
