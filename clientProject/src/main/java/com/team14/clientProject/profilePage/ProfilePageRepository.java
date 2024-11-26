@@ -5,4 +5,8 @@ public interface ProfilePageRepository {
     List<Profile> getProfiles();
     Profile getProfileById(int id);
     void addProfile(Profile profile);
+    List<Profile> getProfilesByFirstNameAscending();
+    List<Profile> getProfilesByFirstNameDescending();
+    List<Profile> getProfilesByLastNameAscending();
+    List<Profile> getProfilesByLastNameDescending();
 }
