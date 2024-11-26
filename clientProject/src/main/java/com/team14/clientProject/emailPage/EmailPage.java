@@ -2,6 +2,7 @@ package com.team14.clientProject.emailPage;
 
 
 import com.team14.clientProject.emailPage.mail.EmailService;
+import com.team14.clientProject.emailPage.mail.EmailValidation;
 import com.team14.clientProject.profilePage.Profile;
 import com.team14.clientProject.profilePage.ProfilePageRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,20 +52,36 @@ public class EmailPage {
         String subject = "Test Subject to Your Specific Email";
         String htmlBody = "<html><body><h1>An email has been sent to your specific email address.</h1><img src='cid:logo'></body></html>";
         String logoPath = "src/main/resources/static/images/dhcw.png";
+        StringBuilder alertMessages = new StringBuilder();
 
         for (String emailId : emailIds) {
             int profileId = Integer.parseInt(emailId);
             Profile profile = profilePageRepository.getProfileById(profileId);
             if (profile != null) {
+                String emailAddress = profile.getEmail();
+                if (emailAddress == null || emailAddress.isEmpty()) {
+                    alertMessages.append("Email address is empty for user ID ").append(profileId).append(". ");
+                    continue;
+                }
+                String regexPattern = "^[a-zA-Z0-9_!#$%&*+/=?`{}~^.-]+@[a-zA-Z0-9.-]+$";
+                if (!EmailValidation.patternMatches(emailAddress, regexPattern)) {
+                    alertMessages.append("Invalid email format for user ID ").append(profileId).append(". ");
+                    continue;
+                }
                 try {
-                    emailService.sendHtmlMessageWithLogo(profile.getEmail(), subject, htmlBody, logoPath);
+                    emailService.sendHtmlMessageWithLogo(emailAddress, subject, htmlBody, logoPath);
                 } catch (MessagingException e) {
                     e.printStackTrace();
+                    alertMessages.append("Failed to send email to user ID ").append(profileId).append(". ");
                 }
             }
         }
 
-        modelAndView.addObject("alertMessage", "Emails sent successfully to selected addresses.");
+        if (alertMessages.length() > 0) {
+            modelAndView.addObject("alertMessage", alertMessages.toString());
+        } else {
+            modelAndView.addObject("alertMessage", "Emails sent successfully to selected addresses.");
+        }
         modelAndView.addObject("profileList", this.profileList);
         return modelAndView;
     }
