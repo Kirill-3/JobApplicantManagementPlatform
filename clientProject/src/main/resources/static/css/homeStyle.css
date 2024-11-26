@@ -1,0 +1,81 @@
+/*Table CSS design adapted from https://www.youtube.com/watch?v=uMtyxRSqxIk*/
+
+.homeTable{
+    display: table;
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
+    width: 100%;
+    border: 2px solid black;
+}
+
+.homeTable thead {
+    background: #2D366C;
+    color: white;
+    text-align: left;
+    padding: 6px 8px;
+    text-transform: uppercase;
+}
+
+.homeTable tbody tr:nth-of-type(even) {
+    background-color: #dddddd;
+}
+
+.homeTable td, .homeTable tr {
+    border-collapse: collapse;
+}
+
+.homeTable tbody tr:hover {
+    background: #d4e1f4;
+}
+
+.captionFix {
+    caption-side: top;
+    font-size: 20px;
+    cursor: default;
+}
+
+.homeButton {
+    background-color: #2c69c9;
+    width: 200px;
+    aspect-ratio: 1 / 1;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
+}
+
+.homeButton:hover {
+    background-color: #22519C;
+    transition: all 0.1s ease-in-out;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+
+
+.homeContainer {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    /*border: 8px solid lawngreen;*/
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 35px;
+    justify-content: space-between;
+    /*border: 8px solid lawngreen;*/
+    width: 500px;
+}
+
+.tableContainer {
+    min-width: 400px;
+    display: flex;
+    /*border: 8px solid lawngreen;*/
+}
