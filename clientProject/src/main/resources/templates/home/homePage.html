@@ -4,106 +4,40 @@
     <meta charset="UTF-8">
     <title>Digital Health and Care Wales</title>
     <link th:replace="fragments/header :: bootstrap-css"/>
+    <link rel="stylesheet" type="text/css" href="css/homeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="css/profilePageStyling.css">
 </head>
 <body>
+<script th:src="@{js/homeJs.js}"></script>
 <div th:replace="~{fragments/header :: header}"/>
-<h1>Digital Health and Care Wales</h1>
 
-<div>
-    <input type="search" name="search" placeholder="Search">
-</div>
+<div class="homeContainer">
 
-<!--In future these options should be stored in a database and then populate the dropdown options with Springboot-->
-<div>
-    <select id="location" name="location">
-        <option value="" disabled selected>Location</option>
-        <option value="Aberdare">Aberdare</option>
-        <option value="Aberystwyth">Aberystwyth</option>
-        <option value="Abertillery">Abertillery</option>
-        <option value="Ammanford">Ammanford</option>
-        <option value="Barry">Barry</option>
-        <option value="Bargoed">Bargoed</option>
-        <option value="Bangor">Bangor</option>
-        <option value="Brecon">Brecon</option>
-        <option value="Bridgend">Bridgend</option>
-        <option value="Caerphilly">Caerphilly</option>
-        <option value="Cardiff">Cardiff</option>
-        <option value="Carmarthen">Carmarthen</option>
-        <option value="Cerrigydrudion">Cerrigydrudion</option>
-        <option value="Colwyn Bay">Colwyn Bay</option>
-        <option value="Cowbridge">Cowbridge</option>
-        <option value="Cwmbran">Cwmbran</option>
-        <option value="Dinas Powys">Dinas Powys</option>
-        <option value="Ebbw Vale">Ebbw Vale</option>
-        <option value="Fishguard">Fishguard</option>
-        <option value="Gorseinon">Gorseinon</option>
-        <option value="Haverfordwest">Haverfordwest</option>
-        <option value="Holyhead">Holyhead</option>
-        <option value="Llanelli">Llanelli</option>
-        <option value="Llandeilo">Llandeilo</option>
-        <option value="Llandudno">Llandudno</option>
-        <option value="Llanidloes">Llanidloes</option>
-        <option value="Llangollen">Llangollen</option>
-        <option value="Llanrwst">Llanrwst</option>
-        <option value="Merthyr Tydfil">Merthyr Tydfil</option>
-        <option value="Mountain Ash">Mountain Ash</option>
-        <option value="Neath">Neath</option>
-        <option value="Newport">Newport</option>
-        <option value="Pembroke">Pembroke</option>
-        <option value="Penarth">Penarth</option>
-        <option value="Pontypridd">Pontypridd</option>
-        <option value="Porthcawl">Porthcawl</option>
-        <option value="Port Talbot">Port Talbot</option>
-        <option value="Prestatyn">Prestatyn</option>
-        <option value="Porth">Porth</option>
-        <option value="Rhyl">Rhyl</option>
-        <option value="Swansea">Swansea</option>
-        <option value="Tonypandy">Tonypandy</option>
-        <option value="Tredegar">Tredegar</option>
-        <option value="Wrexham">Wrexham</option>
-    </select>
-
-    <select id="skills" name="skills">
-        <option value="" disabled selected>Skills</option>
-        <option value="Problem Solving">Problem Solving</option>
-        <option value="Teamwork">Teamwork</option>
-        <option value="Communication">Communication</option>
-        <option value="Critical Thinking">Critical Thinking</option>
-        <option value="Adaptability">Adaptability</option>
-        <option value="Collaboration">Collaboration</option>
-        <option value="Leadership">Leadership</option>
-        <option value="Time Management">Time Management</option>
-        <option value="Attention to Detail">Attention to Detail</option>
-        <option value="Project Management">Project Management</option>
-        <option value="Decision Making">Decision Making</option>
-        <option value="Creativity">Creativity</option>
-        <option value="Customer Service">Customer Service</option>
-    </select>
-
-    <select id="job" name="job">
-        <option value="" disabled selected>Job Role</option>
-        <option value="Problem Solving">Role 1</option>
-        <option value="Teamwork">Role 2</option>
-        <option value="Communication">Role 3</option>
-    </select>
-</div>
-
-<div style="border: 2px solid black; padding: 2px">
-    <table>
-        <thead>
-            <th>Name</th>
+    <div class="tableContainer">
+        <table class="homeTable">
+            <caption class="captionFix">Recent Applicants</caption>
+            <thead>
+            <th>First Name</th>
             <th>Job Role</th>
             <th>Location</th>
             <th>Skills</th>
-        </thead>
-        <tbody>
-        <tr th:each="applicants : ${applicants}">
-            <td th:text="${applicants.name}"></td>
-            <td th:text="${applicants.jobRole}"></td>
-            <td th:text="${applicants.location}"></td>
-            <td th:text="${applicants.skills}"></td>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <tr th:each="applicants : ${applicants}">
+                <td th:text="${applicants.name}"></td>
+                <td th:text="${applicants.jobRole}"></td>
+                <td th:text="${applicants.location}"></td>
+                <td th:text="${applicants.skills}"></td>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="buttonContainer">
+        <button class="homeButton" onclick="goProfile()">View Applicants</button>
+        <button class="homeButton">Activity Log</button>
+        <button class="homeButton">Statistics</button>
+    </div>
+
 </div>
 
 <div th:replace="~{fragments/footer :: footer-links}"></div>

@@ -24,4 +24,10 @@ public class HomePage {
         return modelAndView;
     }
 
+    @GetMapping("/menu/profile")
+    public ModelAndView displayProfile() {
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        return modelAndView;
+    }
+
 }
