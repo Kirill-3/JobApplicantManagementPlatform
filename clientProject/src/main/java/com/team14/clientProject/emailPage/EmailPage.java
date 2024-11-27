@@ -1,8 +1,6 @@
 package com.team14.clientProject.emailPage;
 
-
-import com.team14.clientProject.emailPage.mail.EmailService;
-import com.team14.clientProject.emailPage.mail.EmailValidation;
+import com.team14.clientProject.emailPage.mail.EmailServiceHandler;
 import com.team14.clientProject.profilePage.Profile;
 import com.team14.clientProject.profilePage.ProfilePageRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,32 +11,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import jakarta.mail.MessagingException;
 
 import java.util.List;
+
+// Controller class to handle email-related requests.
 
 @Controller
 @RequestMapping("/email")
 public class EmailPage {
 
     @Autowired
-    EmailService emailService;
+    private EmailServiceHandler emailServiceHandler;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private ProfilePageRepositoryImpl profilePageRepository;
     private List<Profile> profileList;
 
+    // Constructor to initialize the EmailPage with JdbcTemplate.
     public EmailPage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.profilePageRepository = new ProfilePageRepositoryImpl(jdbcTemplate);
         this.profileList = profilePageRepository.getProfiles();
     }
 
+    // Handles GET requests to the /email endpoint
     @GetMapping
     public ModelAndView showEmailPage() {
         return new ModelAndView("email/emailPage");
     }
 
+    // Handles GET requests to the /email/selector endpoint.
     @GetMapping("/selector")
     public ModelAndView redirectToAnotherPage() {
         ModelAndView modelAndView = new ModelAndView("email/selector");
@@ -46,44 +49,19 @@ public class EmailPage {
         return modelAndView;
     }
 
+    // Handles POST requests to the /email/sendEmails endpoint.
+    // Sends emails to the selected email IDs.
     @PostMapping("/sendEmails")
     public ModelAndView sendEmails(@RequestParam("emailIds") List<String> emailIds) {
         ModelAndView modelAndView = new ModelAndView("email/selector");
-        String subject = "Test Subject to Your Specific Email";
-        String htmlBody = "<html><body><h1>An email has been sent to your specific email address.</h1><img src='cid:logo'></body></html>";
+        String subject = "Test Subject to Your Multiple Emails";
+        String htmlBody = "<html><body><h1>An email has been sent to multiple email addresses.</h1><img src='cid:logo'></body></html>";
         String logoPath = "src/main/resources/static/images/dhcw.png";
-        StringBuilder alertMessages = new StringBuilder();
 
-        for (String emailId : emailIds) {
-            int profileId = Integer.parseInt(emailId);
-            Profile profile = profilePageRepository.getProfileById(profileId);
-            if (profile != null) {
-                String emailAddress = profile.getEmail();
-                if (emailAddress == null || emailAddress.isEmpty()) {
-                    alertMessages.append("Email address is empty for user ID ").append(profileId).append(". ");
-                    continue;
-                }
-                String regexPattern = "^[a-zA-Z0-9_!#$%&*+/=?`{}~^.-]+@[a-zA-Z0-9.-]+$";
-                if (!EmailValidation.patternMatches(emailAddress, regexPattern)) {
-                    alertMessages.append("Invalid email format for user ID ").append(profileId).append(". ");
-                    continue;
-                }
-                try {
-                    emailService.sendHtmlMessageWithLogo(emailAddress, subject, htmlBody, logoPath);
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                    alertMessages.append("Failed to send email to user ID ").append(profileId).append(". ");
-                }
-            }
-        }
-
-        if (alertMessages.length() > 0) {
-            modelAndView.addObject("alertMessage", alertMessages.toString());
-        } else {
-            modelAndView.addObject("alertMessage", "Emails sent successfully to selected addresses.");
-        }
+        // Send emails and get alert messages
+        String alertMessage = emailServiceHandler.sendEmails(emailIds, subject, htmlBody, logoPath);
+        modelAndView.addObject("alertMessage", alertMessage);
         modelAndView.addObject("profileList", this.profileList);
         return modelAndView;
     }
 }
-

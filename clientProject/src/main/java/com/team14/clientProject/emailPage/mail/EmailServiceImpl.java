@@ -15,6 +15,8 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
+    // Send an email with a logo
+    // Define where the email is sent from
     @Override
     public void sendHtmlMessageWithLogo(String to, String subject, String htmlBody, String logoPath) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
