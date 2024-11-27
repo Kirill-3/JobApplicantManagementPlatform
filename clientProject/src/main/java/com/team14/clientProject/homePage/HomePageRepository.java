@@ -3,5 +3,5 @@ import java.util.List;
 import com.team14.clientProject.profilePage.Profile;
 
 public interface HomePageRepository {
-    List<Profile> get10MostRecentProfiles();
+    List<Applicants> get10MostRecentProfiles();
 }

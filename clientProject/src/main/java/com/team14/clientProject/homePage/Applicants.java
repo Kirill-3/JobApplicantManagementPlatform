@@ -18,5 +18,8 @@ public class Applicants {
     private String phoneNumber;
     private String eventAttended;
     private String skill;
+    private String createdAt;
+    private String updatedAt;
+
 }
 

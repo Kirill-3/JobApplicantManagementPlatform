@@ -77,5 +77,6 @@ body {
 .tableContainer {
     min-width: 400px;
     display: flex;
+    padding-right: 10px;
     /*border: 8px solid lawngreen;*/
 }
