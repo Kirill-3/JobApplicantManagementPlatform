@@ -21,6 +21,7 @@
 
 .homeTable td, .homeTable tr {
     border-collapse: collapse;
+    padding: 1px;
 }
 
 .homeTable tbody tr:hover {
