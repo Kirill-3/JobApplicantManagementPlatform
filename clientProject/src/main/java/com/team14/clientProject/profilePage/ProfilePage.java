@@ -1,5 +1,6 @@
 package com.team14.clientProject.profilePage;
 
+import org.springframework.ui.Model;
 import com.team14.clientProject.profilePage.mail.EmailService;
 import com.team14.clientProject.profilePage.mail.EmailValidation;
 import jakarta.mail.MessagingException;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -111,6 +113,27 @@ public class ProfilePage {
         // Set a success alert message
         modelAndView.addObject("alertMessage", "Email sent successfully to " + emailAddress);
         return modelAndView;
+    }
+
+    @PostMapping("/uploadCV/{userID}")
+    public String uploadCv(@PathVariable int userID, @RequestParam("cvUpload") MultipartFile file, Model model){
+        if(file.isEmpty()){
+            model.addAttribute("message", "Please select a file to upload");
+            return "profilePage";
+        }
+        try{
+            if(!file.getContentType().equals("application/pdf")){
+                model.addAttribute("message", "Please upload a PDF file");
+                return "profilePage";
+            }
+
+            byte[] cvPath = file.getBytes();
+            profilePageRepository.updateCvPath(userID, cvPath);
+            model.addAttribute("message", "File uploaded successfully");
+        } catch (Exception e){
+            model.addAttribute("message", "An error occurred while uploading the file");
+        }
+        return "profilePage";
     }
 }
 

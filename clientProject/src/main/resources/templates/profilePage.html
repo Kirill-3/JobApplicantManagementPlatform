@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
     <script src="/javaScript/profilePageJS.js"></script>
     <script th:inline="javascript">
-        const alertMessage = [[${alertMessage}]];
+        const alertMessage = [[$,{alertMessage}]];
         if (alertMessage) {
             alert(alertMessage);
         }
@@ -118,10 +118,14 @@
     </div>
 
     <div class = resume-section>
-        <h2>Applicant Resume</h2>
+        <h2>Applicant CV/Resume</h2>
+        <form th:action="@{/profile/uploadCV/{userID}(userID=${profile.getId()})}" method="post" enctype="multipart/form-data">
+            <label for="cvUpload">Select CV (PDF only):</label>
+            <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf" required>
+            <button type="submit">Upload CV</button>
+        </form>
 
     </div>
-
 
 </div>
 

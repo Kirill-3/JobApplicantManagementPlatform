@@ -117,4 +117,14 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
         return jdbcTemplate.query(sql, ProfileRowMapper);
     }
 
+
+    public void updateCvPath(int userId, byte[] cvPath) {
+        String sql = "UPDATE applicationdetails SET cvPath = ? WHERE id = ?";
+        jdbcTemplate.update(sql, cvPath, userId);
+    }
+
+    public byte[] getCvPath(int userId) {
+        String sql = "SELECT cvPath FROM applicationdetails WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, byte[].class, userId);
+    }
 }
