@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link th:replace="~{fragments/header :: bootstrap-css}"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div>
+    <h1>User Details</h1>
+    <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+    <p><strong>Password:</strong> <span th:text="${user.password}"></span></p>
+    <p><strong>First Name:</strong> <span th:text="${user.firstName}"></span></p>
+    <p><strong>Last Name:</strong> <span th:text="${user.lastName}"></span></p>
+    <p><strong>Role:</strong> <span th:text="${user.role}"></span></p>
+    <p><strong>Last Login:</strong> <span th:text="${user.lastLogin}"></span></p>
+    <p><strong>Created At:</strong> <span th:text="${user.createdAt}"></span></p>
+    <form th:action="@{/admin/user/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <a th:href="@{/admin}" class="btn btn-secondary">Back to List</a>
+</div>
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+</body>
+</html>

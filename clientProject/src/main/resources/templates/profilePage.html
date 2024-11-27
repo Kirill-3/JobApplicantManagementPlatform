@@ -8,11 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
     <script src="/javaScript/profilePageJS.js"></script>
     <script th:inline="javascript">
-        const alertMessage = [[${alertMessage}]];
+        /*<![CDATA[*/
+        const alertMessage = /*[[${alertMessage}]]*/ 'default message';
         if (alertMessage) {
             alert(alertMessage);
         }
-
+        /*]]>*/
     </script>
 
 </head>
@@ -26,14 +27,19 @@
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
-            <th th:data1-href="@{/profile/firstName}" th:data2-href="Ascending">First Name</th>
-            <th th:data1-href="@{/profile/lastName}" th:data2-href="Ascending">Last Name</th>
-            <th th:data-href="@{/profile/locationAscending}">Location</th>
+            <th th:data-type="firstName">First Name</th>
+            <th th:data-type="lastName">Last Name</th>
+            <th>
+                <select id="locationDropdown">
+                    <option value="">All Locations</option>
+                    <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}"></option>
+                </select>
+            </th>
             <th th:data-href="@{/profile/eventAttendedAscending}">Event Attended</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}">
+        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}">
             <td th:text="${profile.getFirstName()}"></td>
             <td th:text="${profile.getLastName()}"></td>
             <td th:text="${profile.getLocation()}"></td>
@@ -118,10 +124,14 @@
     </div>
 
     <div class = resume-section>
-        <h2>Applicant Resume</h2>
+        <h2>Applicant CV/Resume</h2>
+        <form th:action="@{/profile/uploadCV/{userID}(userID=${profile.getId()})}" method="post" enctype="multipart/form-data">
+            <label for="cvUpload">Select CV (PDF only):</label>
+            <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf" required>
+            <button type="submit">Upload CV</button>
+        </form>
 
     </div>
-
 
 </div>
 
