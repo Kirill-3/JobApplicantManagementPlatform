@@ -20,10 +20,10 @@
 <body>
 
     <div th:replace="~{fragments/header :: header}"/>
+
+    <div th:if="${profile == null}">
     <h1> this is the profile page</h1>
-    <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
-        <button type="submit"> Email <span th:text="${userId}"></span></button>
-    </form>
+
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
@@ -50,9 +50,13 @@
         </tbody>
     </table>
 
-
+    </div>
 
     <div th:if="${profile != null}" class="profile-container">
+
+        <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
+            <button type="submit"> Email <span th:text="${userId}"></span></button>
+        </form>
     <div class = "profile-details">
         <h2>Personal Details</h2>
         <table class="tableApplicant">
@@ -130,6 +134,16 @@
             <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf" required>
             <button type="submit">Upload CV</button>
         </form>
+
+        <p th:text="${message}"></p>
+
+        <!-- Check if CV exists and display it -->
+        <div th:if="${cvBase64 != null}">
+            <h3>Uploaded CV</h3>
+            <!-- Embed the uploaded CV PDF using base64 encoding -->
+            <iframe th:src="'data:application/pdf;base64,' + ${cvBase64}" width="100%" height="600px" style="border: none;"></iframe>
+        </div>
+
 
     </div>
 

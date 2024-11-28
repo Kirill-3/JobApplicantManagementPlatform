@@ -1,5 +1,6 @@
 package com.team14.clientProject.profilePage;
 
+import org.springframework.http.*;
 import org.springframework.ui.Model;
 import com.team14.clientProject.profilePage.mail.EmailService;
 import com.team14.clientProject.profilePage.mail.EmailValidation;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -49,6 +51,14 @@ public class ProfilePage {
         } else {
             Profile profile = this.profilePageRepository.getProfileById(userId);
             modelAndView.addObject("profile", profile);
+
+            //Displaying the cv if it exists
+
+            byte[] cvPath = profilePageRepository.getCvPath(userId);
+            if(cvPath != null){
+                String cvBase64 = Base64.getEncoder().encodeToString(cvPath);
+                modelAndView.addObject("cvBase64", cvBase64);
+            }
             return modelAndView;
         }
     }
@@ -139,11 +149,33 @@ public class ProfilePage {
 
             byte[] cvPath = file.getBytes();
             profilePageRepository.updateCvPath(userID, cvPath);
+
+            String cvURL = "/profile/viewCV/" + userID;
+
+            model.addAttribute("cvURL", cvURL);
             model.addAttribute("message", "File uploaded successfully");
         } catch (Exception e){
             model.addAttribute("message", "An error occurred while uploading the file");
         }
         return "profilePage";
+    }
+
+    @GetMapping("/viewCV/{userID}")
+    public ResponseEntity<byte[]> viewCv(@PathVariable int userID) {
+        try{
+            byte[] cvFile = profilePageRepository.getCvPath(userID);
+
+            if (cvFile == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDisposition(ContentDisposition.inline().filename("CV.pdf").build());
+
+            return new ResponseEntity<>(cvFile, headers, HttpStatus.OK);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching the CV", e);
+        }
     }
 }
 
