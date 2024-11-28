@@ -18,16 +18,19 @@
             <caption class="captionFix">Recent Applicants</caption>
             <thead>
             <th>First Name</th>
-            <th>Job Role</th>
+            <th>Last Name</th>
             <th>Location</th>
             <th>Skills</th>
+            <th>Application Time</th>
             </thead>
             <tbody>
             <tr th:each="applicants : ${applicants}">
-                <td th:text="${applicants.name}"></td>
-                <td th:text="${applicants.jobRole}"></td>
+                <td th:text="${applicants.firstName}"></td>
+                <td th:text="${applicants.lastName}"></td>
                 <td th:text="${applicants.location}"></td>
-                <td th:text="${applicants.skills}"></td>
+                <td th:text="${applicants.skill}"></td>
+                <td th:text="${applicants.createdAt}"></td>
+            </tr>
             </tbody>
         </table>
     </div>
