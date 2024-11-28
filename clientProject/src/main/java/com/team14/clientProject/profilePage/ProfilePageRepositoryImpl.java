@@ -116,5 +116,24 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
                 "ORDER BY a.lastName DESC";
         return jdbcTemplate.query(sql, ProfileRowMapper);
     }
+    public List<Profile> getProfilesByUniqueLocation() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "GROUP BY a.location";
+        return jdbcTemplate.query(sql, ProfileRowMapper);
+    }
 
+
+    public void updateCvPath(int userId, byte[] cvPath) {
+        String sql = "UPDATE applicationdetails SET cvPath = ? WHERE id = ?";
+        jdbcTemplate.update(sql, cvPath, userId);
+    }
+
+    public byte[] getCvPath(int userId) {
+        String sql = "SELECT cvPath FROM applicationdetails WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, byte[].class, userId);
+    }
 }

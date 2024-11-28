@@ -4,11 +4,13 @@ public class applicantJobDetails {
     private int applicationID;
     private String currentPosition;
     private String status;
+    private byte[] cvPath;
 
     public applicantJobDetails(int applicationID, String currentPosition, String status) {
         this.applicationID = applicationID;
         this.currentPosition = currentPosition;
         this.status = status;
+
     }
 
     public int getApplicationID() {
@@ -23,6 +25,10 @@ public class applicantJobDetails {
         return status;
     }
 
+    public byte[] getCvPath() {
+        return cvPath;
+    }
+
     public void setApplicationID(int applicationID) {
         this.applicationID = applicationID;
     }
@@ -33,5 +39,9 @@ public class applicantJobDetails {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setCvPath(byte[] cvPath) {
+        this.cvPath = cvPath;
     }
 }

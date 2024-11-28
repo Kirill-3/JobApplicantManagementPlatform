@@ -9,4 +9,5 @@ public interface ProfilePageRepository {
     List<Profile> getProfilesByFirstNameDescending();
     List<Profile> getProfilesByLastNameAscending();
     List<Profile> getProfilesByLastNameDescending();
+    List<Profile> getProfilesByUniqueLocation();
 }
