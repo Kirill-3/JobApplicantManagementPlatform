@@ -144,5 +144,14 @@ public class ProfilePage {
         }
         return "profilePage";
     }
+
+    @GetMapping("/search")
+    public ModelAndView searchProfiles(@RequestParam("query") String query) {
+        List<Profile> searchResults = profilePageRepository.searchProfiles(query);
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        modelAndView.addObject("profileList", searchResults);
+        modelAndView.addObject("uniqueLocations", this.profilePageRepository.getProfilesByUniqueLocation());
+        return modelAndView;
+    }
 }
 
