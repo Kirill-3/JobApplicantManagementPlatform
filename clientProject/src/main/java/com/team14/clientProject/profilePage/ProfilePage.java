@@ -1,8 +1,8 @@
 package com.team14.clientProject.profilePage;
 
 import org.springframework.ui.Model;
-import com.team14.clientProject.profilePage.mail.EmailService;
-import com.team14.clientProject.profilePage.mail.EmailValidation;
+import com.team14.clientProject.emailPage.mail.EmailService;
+import com.team14.clientProject.emailPage.mail.EmailValidation;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
