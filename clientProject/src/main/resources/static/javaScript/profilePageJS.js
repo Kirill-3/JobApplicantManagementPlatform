@@ -6,7 +6,14 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = this.getAttribute("data-href");
         });
     }
-    // name sort
+
+    const checkboxes = document.querySelectorAll(".tableClickable tbody input[type='checkbox']");
+    for (const checkbox of checkboxes) {
+        checkbox.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+    }
+
     const tableHeaders = document.querySelectorAll(".tableClickable thead th");
     var sorted = {firstName: 0, lastName: 0};
     tableHeaders[0].addEventListener("click", function() {
@@ -16,8 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
     tableHeaders[1].addEventListener("click", function() {
         sortTable("data-lastName", "lastName");
     });
-
-
 
     // Location filter
     const locationDropdown = document.getElementById("locationDropdown");
@@ -32,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+
     function sortTable(attribute, key) {
         if (sorted[key] === 0) {
             tableRowArray.sort((a, b) => {
