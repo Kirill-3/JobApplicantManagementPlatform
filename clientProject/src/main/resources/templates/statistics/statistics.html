@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics Page</title>
+    <link th:replace="~{fragments/header :: bootstrap-css}"/>
+    <link rel="stylesheet" href="../../static/css/statistics.css">
+    <script src="../../static/javaScript/statistics.js"></script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main class="statistics-container">
+    <h1>Statistics Page</h1>
+
+    <section>
+        <h2>Event Recruitment Chart</h2>
+        <canvas id="eventRecruitmentChart"></canvas>
+    </section>
+
+    <section>
+        <h2>Time Period Recruitment Chart</h2>
+        <canvas id="timePeriodRecruitmentChart"></canvas>
+    </section>
+
+    <section>
+        <h2>Location Recruitment Chart</h2>
+        <canvas id="locationRecruitmentChart"></canvas>
+    </section>
+</main>
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+</body>
+</html>

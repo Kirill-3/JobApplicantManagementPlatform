@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.statistics-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+select{
+    width: 80%;
+    margin: 20px auto;
+    background: olivedrab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h1, h2{
+    text-align: center;
+    color: black;
+}
+
+canvas{
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 300px;
+}
