@@ -16,6 +16,7 @@ public class HomePageRepositoryImpl implements HomePageRepository {
         setHomePageMapper();
     }
 
+    // Row mapper for the applicant object
     private void setHomePageMapper() {
         ApplicantRowMapper = (rs, rowNum) -> {
             Applicants applicant = new Applicants(
@@ -34,13 +35,24 @@ public class HomePageRepositoryImpl implements HomePageRepository {
         };
     }
 
+    // Method to get the 10 most recent profiles in the database
     @Override
     public List<Applicants> get10MostRecentProfiles() {
-        String sql = "SELECT * " +
+        String sql =
+                "SELECT * " +
                 "FROM applicants " +
                 "ORDER BY createdAt " +
                 "DESC LIMIT 10";
         return jdbc.query(sql, ApplicantRowMapper);
+    }
+
+    @Override
+    public Applicants getApplicantById(int id) {
+        String sql =
+                "SELECT * " +
+                "FROM applicants " +
+                "WHERE id = ?";
+        return jdbc.queryForObject(sql, ApplicantRowMapper, id);
     }
 
 
