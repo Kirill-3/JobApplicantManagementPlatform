@@ -146,11 +146,14 @@ public class ProfilePage {
     }
 
     @GetMapping("/search")
-    public ModelAndView searchProfiles(@RequestParam("query") String query) {
+    public ModelAndView searchProfiles(@RequestParam("query") String query, Model model) {
         List<Profile> searchResults = profilePageRepository.searchProfiles(query);
         ModelAndView modelAndView = new ModelAndView("profilePage");
         modelAndView.addObject("profileList", searchResults);
         modelAndView.addObject("uniqueLocations", this.profilePageRepository.getProfilesByUniqueLocation());
+        if (searchResults.isEmpty()) {
+            modelAndView.addObject("alertMessage", "No results found");
+        }
         return modelAndView;
     }
 }

@@ -8,12 +8,10 @@
     <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
     <script src="/javaScript/profilePageJS.js"></script>
     <script th:inline="javascript">
-        /*<![CDATA[*/
         const alertMessage = /*[[${alertMessage}]]*/ 'default message';
-        if (alertMessage) {
+        if (alertMessage && alertMessage !== 'default message') {
             alert(alertMessage);
         }
-        /*]]>*/
     </script>
 </head>
 <body>
