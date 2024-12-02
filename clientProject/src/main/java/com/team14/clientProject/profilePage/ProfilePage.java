@@ -54,6 +54,7 @@ public class ProfilePage {
             Profile profile = this.profilePageRepository.getProfileById(userId);
             modelAndView.addObject("profile", profile);
 
+
             //Displaying the cv if it exists
 
             byte[] cvPath = profilePageRepository.getCvPath(userId);
