@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tableRows = document.querySelectorAll(".tableClickable tbody tr");
+    var tableRowsDynamic = document.querySelectorAll(".tableClickable tbody tr");
     var tableRowArray = Array.from(tableRows);
+    var eventFilter = "" ;
+    var locationFilter = "" ;
+    var skillFilter = "" ;
     for (const tableRow of tableRows) {
         tableRow.addEventListener("click", function () {
             window.location.href = this.getAttribute("data-href");
@@ -25,17 +29,18 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Location filter
-    const locationDropdown = document.getElementById("locationDropdown");
-    locationDropdown.addEventListener("change", function () {
-        const selectedLocation = this.value;
-        const rows = document.querySelectorAll(".tableClickable tbody tr");
-        rows.forEach(row => {
-            if (selectedLocation === "" || row.getAttribute("data-location") === selectedLocation) {
-                row.style.display = "table-row";
-            } else {
-                row.style.display = "none";
-            }
-        });
+    document.getElementById("locationDropdown").addEventListener("change", function () {
+        filterTable("data-location", this.value);
+    });
+
+    //event filter
+    document.getElementById("eventDropdown").addEventListener("change", function () {
+        filterTable("data-event", this.value);
+    });
+
+    //skill filter
+    document.getElementById("skillDropdown").addEventListener("change", function () {
+        filterTable("data-skill", this.value);
     });
 
     function sortTable(attribute, key) {
@@ -59,4 +64,20 @@ document.addEventListener("DOMContentLoaded", function() {
             tableBody.appendChild(row);
         });
     }
-});
+    function filterTable(attribute, value) {
+        if (attribute === "data-location") {
+            locationFilter = value;
+        } else if (attribute === "data-event") {
+            eventFilter = value;
+        } else if (attribute === "data-skill") {
+            skillFilter = value;
+        }
+        rows = document.querySelectorAll(".tableClickable tbody tr");
+        for (const row of rows) {
+            if (row.getAttribute("data-location").includes(locationFilter) && row.getAttribute("data-event").includes(eventFilter) && row.getAttribute("data-skill").includes(skillFilter)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }});

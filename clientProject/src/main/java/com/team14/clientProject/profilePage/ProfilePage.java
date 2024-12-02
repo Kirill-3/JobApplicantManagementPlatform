@@ -36,6 +36,8 @@ public class ProfilePage {
         ModelAndView modelAndView = new ModelAndView("profilePage");
         modelAndView.addObject("profileList", this.profileList);
         modelAndView.addObject("uniqueLocations", this.profilePageRepository.getProfilesByUniqueLocation());
+        modelAndView.addObject("uniqueEvents", this.profilePageRepository.getProfilesByUniqueEvent());
+        modelAndView.addObject("uniqueSkills", this.profilePageRepository.getUniqueSkills());
         return modelAndView;
     }
 
