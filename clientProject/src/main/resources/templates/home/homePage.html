@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="css/profilePageStyling.css">
 </head>
 <body>
-<script th:src="@{js/homeJs.js}"></script>
 <div th:replace="~{fragments/header :: header}"/>
 
 <div class="homeContainer">
@@ -18,24 +17,28 @@
             <caption class="captionFix">Recent Applicants</caption>
             <thead>
             <th>First Name</th>
-            <th>Job Role</th>
+            <th>Last Name</th>
             <th>Location</th>
             <th>Skills</th>
+            <th>Application Time</th>
             </thead>
             <tbody>
             <tr th:each="applicants : ${applicants}">
-                <td th:text="${applicants.name}"></td>
-                <td th:text="${applicants.jobRole}"></td>
+                <td th:text="${applicants.firstName}"></td>
+                <td th:text="${applicants.lastName}"></td>
                 <td th:text="${applicants.location}"></td>
-                <td th:text="${applicants.skills}"></td>
+                <td th:text="${applicants.skill}"></td>
+                <td th:text="${applicants.createdAt}"></td>
+            </tr>
             </tbody>
         </table>
     </div>
 
     <div class="buttonContainer">
-        <button class="homeButton" onclick="goProfile()">View Applicants</button>
-        <button class="homeButton">Activity Log</button>
-        <button class="homeButton">Statistics</button>
+        <a class="homeButton" th:href="@{/profile}">View Applicants</a>
+        <a class="homeButton">Activity Log</a>
+        <a class="homeButton">Statistics</a>
+        <a class="homeButton">Manually Add Applicant</a>
     </div>
 
 </div>

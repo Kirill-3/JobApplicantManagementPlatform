@@ -8,47 +8,57 @@
     <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
     <script src="/javaScript/profilePageJS.js"></script>
     <script th:inline="javascript">
-        /*<![CDATA[*/
         const alertMessage = /*[[${alertMessage}]]*/ 'default message';
-        if (alertMessage) {
+        if (alertMessage && alertMessage !== 'default message') {
             alert(alertMessage);
         }
-        /*]]>*/
     </script>
-
 </head>
 <body>
 
-    <div th:replace="~{fragments/header :: header}"/>
+<div th:replace="~{fragments/header :: header}"/>
+<form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
+    <button type="submit"> Email <span th:text="${userId}"></span></button>
+</form>
 
-    <div th:if="${profile == null}">
-    <h1> this is the profile page</h1>
-
+<div class = "search-bar-container" th:if = "${profile == null }">
+    <form th:action="@{/profile/search}" method="get">
+        <input type="text" name="query" placeholder="Search profiles...">
+        <button type="submit">Search</button>
+    </form>
+</div>
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
             <th th:data-type="firstName">First Name</th>
             <th th:data-type="lastName">Last Name</th>
-            <th>
-                <select id="locationDropdown">
-                    <option value="">All Locations</option>
-                    <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}"></option>
+            <th th:data-original-text="Location">
+                <select id="locationDropdown" class="thisDropdown">
+                    <option value="" >All Locations</option>
+                    <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}" ></option>
+                </select>
+            </th >
+            <th th:data-original-text="event">
+                <select id="eventDropdown" class="thisDropdown">
+                    <option value="">All events</option>
+                    <option th:each="event : ${uniqueEvents}" th:value="${event.getEventAttended()}" th:text="${event.getEventAttended()}"></option>
                 </select>
             </th>
-            <th th:data-href="@{/profile/eventAttendedAscending}">Event Attended</th>
+            <th>
+                <select id="skillDropdown" class="thisDropdown">
+                    <option value="">All Skills</option>
+                    <option th:each="skill : ${uniqueSkills}" th:value="${skill}" th:text="${skill}"></option>
+                </select>
+            </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}">
+        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}" th:data-event="${profile.getEventAttended()}" th:data-skill="${profile.getSkill()}">
             <td th:text="${profile.getFirstName()}"></td>
             <td th:text="${profile.getLastName()}"></td>
             <td th:text="${profile.getLocation()}"></td>
             <td th:text="${profile.getEventAttended()}"></td>
-
-
-        </tr>
-        </tbody>
-    </table>
+            <td th:text="${profile.getSkill()}"></td>
 
     </div>
 

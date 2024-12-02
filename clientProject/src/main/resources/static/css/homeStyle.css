@@ -21,6 +21,7 @@
 
 .homeTable td, .homeTable tr {
     border-collapse: collapse;
+    padding: 1px;
 }
 
 .homeTable tbody tr:hover {
@@ -37,6 +38,11 @@
     background-color: #2c69c9;
     width: 200px;
     aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
     border: none;
     color: white;
     font-size: 16px;
@@ -77,5 +83,6 @@ body {
 .tableContainer {
     min-width: 400px;
     display: flex;
+    padding-right: 10px;
     /*border: 8px solid lawngreen;*/
 }

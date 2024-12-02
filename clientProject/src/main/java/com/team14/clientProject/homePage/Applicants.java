@@ -10,9 +10,16 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Applicants {
-    private String name;
-    private String jobRole;
+    private int id;
+    private String firstName;
+    private String lastName;
     private String location;
-    private String skills;
+    private String email;
+    private String phoneNumber;
+    private String eventAttended;
+    private String skill;
+    private String createdAt;
+    private String updatedAt;
+
 }
 

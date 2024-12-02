@@ -39,6 +39,8 @@ public class ProfilePage {
         ModelAndView modelAndView = new ModelAndView("profilePage");
         modelAndView.addObject("profileList", this.profileList);
         modelAndView.addObject("uniqueLocations", this.profilePageRepository.getProfilesByUniqueLocation());
+        modelAndView.addObject("uniqueEvents", this.profilePageRepository.getProfilesByUniqueEvent());
+        modelAndView.addObject("uniqueSkills", this.profilePageRepository.getUniqueSkills());
         return modelAndView;
     }
 
@@ -158,6 +160,36 @@ public class ProfilePage {
             model.addAttribute("message", "An error occurred while uploading the file");
         }
         return "profilePage";
+    }
+
+    @GetMapping("/search")
+    public ModelAndView searchProfiles(@RequestParam("query") String query, Model model) {
+        List<Profile> searchResults = profilePageRepository.searchProfiles(query);
+        ModelAndView modelAndView = new ModelAndView("profilePage");
+        modelAndView.addObject("profileList", searchResults);
+        modelAndView.addObject("uniqueLocations", this.profilePageRepository.getProfilesByUniqueLocation());
+        if (searchResults.isEmpty()) {
+            modelAndView.addObject("alertMessage", "No results found");
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("/viewCV/{userID}")
+    public ResponseEntity<byte[]> viewCv(@PathVariable int userID) {
+        try{
+            byte[] cvFile = profilePageRepository.getCvPath(userID);
+
+            if (cvFile == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDisposition(ContentDisposition.inline().filename("CV.pdf").build());
+
+            return new ResponseEntity<>(cvFile, headers, HttpStatus.OK);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching the CV", e);
+        }
     }
 }
 
