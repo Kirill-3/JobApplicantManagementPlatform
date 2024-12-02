@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="css/profilePageStyling.css">
 </head>
 <body>
-<script th:src="@{js/homeJs.js}"></script>
 <div th:replace="~{fragments/header :: header}"/>
 
 <div class="homeContainer">
@@ -36,9 +35,10 @@
     </div>
 
     <div class="buttonContainer">
-        <button class="homeButton" onclick="goProfile()">View Applicants</button>
-        <button class="homeButton">Activity Log</button>
-        <button class="homeButton">Statistics</button>
+        <a class="homeButton" th:href="@{/profile}">View Applicants</a>
+        <a class="homeButton">Activity Log</a>
+        <a class="homeButton">Statistics</a>
+        <a class="homeButton">Manually Add Applicant</a>
     </div>
 
 </div>
