@@ -1,6 +1,6 @@
 function fetchData(route, callback) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", route, true);  // Use "GET" instead of "Get"
+    xhttp.open("GET", route, true);
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             const response = JSON.parse(xhttp.responseText);
@@ -45,7 +45,7 @@ function renderChart(canvasId, data, labelKey, valueKey, chartType) {
                 y: {
                     beginAtZero: true
                 }
-            } : {}  // Only apply y-axis scale for bar charts
+            } : {}
         }
     };
 
@@ -60,7 +60,9 @@ function getBackgroundColor(chartType) {
         case "line":
             return "rgba(153, 102, 255, 0.2)";
         case "pie":
-            return ["#FF5733", "#33FF57", "#3357FF", "#F4FF33"];  // Example for pie chart
+            return ["#FF5733", "#33FF57", "#3357FF", "#F4FF33", "#FF33F4",
+                "#FF8C00", "#800080", "#008080", "#FFD700", "#FF4500",
+                "#4682B4", "#32CD32", "#DC143C", "#6A5ACD", "#20B2AA",];
         default:
             return "rgba(75, 192, 192, 0.2)";
     }
