@@ -103,11 +103,11 @@
 .search-bar-container {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    margin: 2vw 0;
 }
 
 .search-bar-container input[type="text"] {
-    width: 300px;
+    width: 30vw;
     padding: 10px;
     font-size: 16px;
 }
