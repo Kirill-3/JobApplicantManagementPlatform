@@ -125,6 +125,24 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
                 "GROUP BY a.location";
         return jdbcTemplate.query(sql, ProfileRowMapper);
     }
+    public List<Profile> getProfilesByUniqueEvent() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "GROUP BY a.eventAttended";
+        return jdbcTemplate.query(sql, ProfileRowMapper);
+    }
+    public List<String> getUniqueSkills() {
+        String sql = "SELECT DISTINCT TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(a.skill, ',', numbers.n), ',', -1)) AS skill " +
+                "FROM applicants a " +
+                "JOIN (SELECT 1 n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10) numbers " +
+                "ON CHAR_LENGTH(a.skill) - CHAR_LENGTH(REPLACE(a.skill, ',', '')) >= numbers.n - 1 " +
+                "ORDER BY skill";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
 
 
     public void updateCvPath(int userId, byte[] cvPath) {
@@ -135,5 +153,16 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
     public byte[] getCvPath(int userId) {
         String sql = "SELECT cvPath FROM applicationdetails WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, byte[].class, userId);
+    }
+
+    public List<Profile> searchProfiles(String query) {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates, " +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "WHERE a.firstName LIKE ? OR a.lastName LIKE ? OR a.location LIKE ? OR a.skill LIKE ? OR a.eventAttended LIKE ? OR d.currentPosition LIKE ?";
+        String searchQuery = "%" + query + "%";
+        return jdbcTemplate.query(sql, new Object[]{searchQuery, searchQuery, searchQuery, searchQuery, searchQuery, searchQuery}, ProfileRowMapper);
     }
 }
