@@ -8,22 +8,25 @@
     <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
     <script src="/javaScript/profilePageJS.js"></script>
     <script th:inline="javascript">
-        /*<![CDATA[*/
         const alertMessage = /*[[${alertMessage}]]*/ 'default message';
-        if (alertMessage) {
+        if (alertMessage && alertMessage !== 'default message') {
             alert(alertMessage);
         }
-        /*]]>*/
     </script>
-
 </head>
 <body>
 
-    <div th:replace="~{fragments/header :: header}"/>
-    <h1> this is the profile page</h1>
-    <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
-        <button type="submit"> Email <span th:text="${userId}"></span></button>
+<div th:replace="~{fragments/header :: header}"/>
+<form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
+    <button type="submit"> Email <span th:text="${userId}"></span></button>
+</form>
+
+<div class = "search-bar-container" th:if = "${profile == null }">
+    <form th:action="@{/profile/search}" method="get">
+        <input type="text" name="query" placeholder="Search profiles...">
+        <button type="submit">Search</button>
     </form>
+</div>
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
@@ -59,13 +62,13 @@
 
 
 
-        </tr>
-        </tbody>
-    </table>
+    </tr>
+    </tbody>
+</table>
 
 
 
-    <div th:if="${profile != null}" class="profile-container">
+<div th:if="${profile != null}" class="profile-container">
     <div class = "profile-details">
         <h2>Personal Details</h2>
         <table class="tableApplicant">

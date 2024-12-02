@@ -154,4 +154,15 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
         String sql = "SELECT cvPath FROM applicationdetails WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, byte[].class, userId);
     }
+
+    public List<Profile> searchProfiles(String query) {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates, " +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "WHERE a.firstName LIKE ? OR a.lastName LIKE ? OR a.location LIKE ? OR a.skill LIKE ? OR a.eventAttended LIKE ? OR d.currentPosition LIKE ?";
+        String searchQuery = "%" + query + "%";
+        return jdbcTemplate.query(sql, new Object[]{searchQuery, searchQuery, searchQuery, searchQuery, searchQuery, searchQuery}, ProfileRowMapper);
+    }
 }
