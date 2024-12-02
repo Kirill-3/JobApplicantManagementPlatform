@@ -159,23 +159,5 @@ public class ProfilePage {
         }
         return "profilePage";
     }
-
-    @GetMapping("/viewCV/{userID}")
-    public ResponseEntity<byte[]> viewCv(@PathVariable int userID) {
-        try{
-            byte[] cvFile = profilePageRepository.getCvPath(userID);
-
-            if (cvFile == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
-            }
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDisposition(ContentDisposition.inline().filename("CV.pdf").build());
-
-            return new ResponseEntity<>(cvFile, headers, HttpStatus.OK);
-        } catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching the CV", e);
-        }
-    }
 }
 
