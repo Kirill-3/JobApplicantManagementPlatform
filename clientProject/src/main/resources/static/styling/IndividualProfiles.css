@@ -5,12 +5,12 @@
 }
 
 .profile-details {
-    flex: 2;
+    flex: 1.5;
     margin-right: 20px;
 }
 
 .resume-section {
-    flex: 1;
+    flex: 1.25;
     border-left: 1px solid #ccc;
     padding-left: 20px;
 }
