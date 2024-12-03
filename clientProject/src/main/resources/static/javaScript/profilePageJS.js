@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var eventFilter = "" ;
     var locationFilter = "" ;
     var skillFilter = "" ;
+    var statusFilter = "" ;
     for (const tableRow of tableRows) {
         tableRow.addEventListener("click", function () {
             window.location.href = this.getAttribute("data-href");
@@ -42,6 +43,12 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("skillDropdown").addEventListener("change", function () {
         filterTable("data-skill", this.value);
     });
+    //status filter
+    document.getElementById("statusDropdown").addEventListener("change", function () {
+        filterTable("data-status", this.value);
+    });
+
+
 
     function sortTable(attribute, key) {
         if (sorted[key] === 0) {
@@ -71,10 +78,14 @@ document.addEventListener("DOMContentLoaded", function() {
             eventFilter = value;
         } else if (attribute === "data-skill") {
             skillFilter = value;
-        }
+        } else if (attribute === "data-status") {
+            statusFilter = value;
+            }
+
+
         rows = document.querySelectorAll(".tableClickable tbody tr");
         for (const row of rows) {
-            if (row.getAttribute("data-location").includes(locationFilter) && row.getAttribute("data-event").includes(eventFilter) && row.getAttribute("data-skill").includes(skillFilter)) {
+            if (row.getAttribute("data-location").includes(locationFilter) && row.getAttribute("data-event").includes(eventFilter) && row.getAttribute("data-skill").includes(skillFilter) && row.getAttribute("data-status").includes(statusFilter)) {
                 row.style.display = "";
             } else {
                 row.style.display = "none";
