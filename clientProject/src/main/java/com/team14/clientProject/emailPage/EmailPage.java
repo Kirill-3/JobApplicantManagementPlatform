@@ -64,4 +64,40 @@ public class EmailPage {
         modelAndView.addObject("profileList", this.profileList);
         return modelAndView;
     }
+
+
+    @GetMapping("/customEmails")
+    public ModelAndView customComposePage() {
+        ModelAndView modelAndView = new ModelAndView("email/customEmails");
+        modelAndView.addObject("profileList", this.profileList);
+        return modelAndView;
+    }
+
+    // Handle sending the custom email
+    @PostMapping("/sendCustomEmails")
+    public ModelAndView sendCustomEmails(
+            @RequestParam("subject") String subject,
+            @RequestParam("message") String message,
+            @RequestParam(value = "emailIds", required = false) List<String> emailIds) {
+
+        ModelAndView modelAndView = new ModelAndView("email/customEmails");
+        String logoPath = "src/main/resources/static/images/dhcw.png";
+
+        if (emailIds == null || emailIds.isEmpty()) {
+            modelAndView.addObject("alertMessage", "Please select at least one recipient.");
+            modelAndView.addObject("profileList", this.profileList);
+            return modelAndView;
+        }
+
+        try {
+            String resultMessage = emailServiceHandler.sendEmails(emailIds, subject, message, logoPath);
+            modelAndView.addObject("alertMessage", resultMessage);
+        } catch (Exception e) {
+            modelAndView.addObject("alertMessage", "Error sending emails: " + e.getMessage());
+        }
+
+        modelAndView.addObject("profileList", this.profileList);
+        return modelAndView;
+    }
+
 }
