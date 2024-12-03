@@ -1,8 +1,8 @@
 -- Populate the Users table
 insert into users (username, passwordHashed, firstName, lastName, role, lastLogin)
 values
-    ('admin', SHA2('password1', 256), 'Alice', 'Johnson', 'admin', NOW()),
-    ('user1', SHA2('password1', 256), 'Alice', 'Johnson', 'recruiter', NOW()),
+    ('admin', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'admin', NOW()),
+    ('user', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'recruiter', NOW()),
     ('user2', SHA2('password2', 256), 'Bob', 'Smith', 'recruiter', NOW()),
     ('user3', SHA2('password3', 256), 'Carol', 'Williams', 'recruiter', NOW()),
     ('user4', SHA2('password4', 256), 'David', 'Brown', 'recruiter', NOW()),
