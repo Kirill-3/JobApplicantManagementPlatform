@@ -1,6 +1,8 @@
 package com.team14.clientProject.homePage;
 
+import jakarta.persistence.Entity;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -71,4 +73,30 @@ public class HomePageTest {
     }
 
 
+    @Test
+    void testViewApplicantsButtonDirectsToProfilePage() throws Exception {
+        mvc.perform(get("/profile"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("profilePage"));
+    }
+
+    @Test
+    void testTableDisplaysCorrectData() throws Exception {
+        List<Applicants> mockApplicant = List.of(
+                new Applicants(1, "John", "Smith", null, "smith@example.com",
+                        "9876543210", "Conference", null, "2024-11-30", "2024-11-30")
+        );
+        when(homePageRepositoryImpl.get10MostRecentProfiles()).thenReturn(mockApplicant);
+        MvcResult result = mvc.perform(get("/home"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(view().name("home/homePage"))
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("<td>John</td>"));
+        assertTrue(content.contains("<td>Smith</td>"));
+
+    }
 }
