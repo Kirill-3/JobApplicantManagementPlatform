@@ -85,6 +85,18 @@
             <label for="phoneNumber">Phone Number:</label>
             <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required>
             <br>
+            <label for="currentPosition">Current Position:</label>
+            <input type="text" id="currentPosition" name="currentPosition" th:value="${profile.jobDetails?.currentPosition}" required>
+            <br>
+            <label for="status">Status:</label>
+            <input type="text" id="status" name="status" th:value="${profile.jobDetails?.status}" required>
+            <br>
+            <label for="skill">Skills:</label>
+            <input type="text" id="skill" name="skill" th:value="${profile.skill}" required>
+            <br>
+            <label for="eventAttended">Event Attended:</label>
+            <input type="text" id="eventAttended" name="eventAttended" th:value="${profile.eventAttended}" required>
+            <br>
             <button type="submit">Save</button>
         </form>
     </div>
