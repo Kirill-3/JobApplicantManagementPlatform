@@ -173,6 +173,13 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
         String jobDetailsSql = "UPDATE applicationdetails SET currentPosition = ?, status = ? WHERE id = ?";
         jdbcTemplate.update(jobDetailsSql, profile.getJobDetails().getCurrentPosition(), profile.getJobDetails().getStatus(), profile.getId());
+
+        String preferencesSql = "UPDATE applicantPreferences SET SubscribeToNewsLetter = ?, SubscribeToBulletins = ?, SubscribeToJobUpdates = ? WHERE applicationId = ?";
+        jdbcTemplate.update(sql,
+                profile.getPreferences().isSubscribeToNewsletter() ? "Yes" : "No",
+                profile.getPreferences().isSubscribeToBulletins() ? "Yes" : "No",
+                profile.getPreferences().isSubscribeToJobUpdates() ? "Yes" : "No",
+                profile.getId());
     }
 }
 

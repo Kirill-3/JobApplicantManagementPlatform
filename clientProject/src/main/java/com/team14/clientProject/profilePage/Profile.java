@@ -104,5 +104,13 @@ public class Profile {
     public void setCurrentPosition(String currentPosition) {this.jobDetails.setCurrentPosition(currentPosition);}
 
     public void setStatus(String status) { this.jobDetails.setStatus(status);}
+
+    public void setSubscribeToNewsletter(boolean subscribeToNewsletter) {this.preferences.setSubscribeToNewsletter(subscribeToNewsletter);}
+
+    public void setSubscribeToBulletins(boolean subscribeToBulletins) {this.preferences.setSubscribeToBulletins(subscribeToBulletins);}
+
+    public void setSubscribeToJobUpdates(boolean subscribeToJobUpdates) {this.preferences.setSubscribeToJobUpdates(subscribeToJobUpdates);}
+
+
 }
 
