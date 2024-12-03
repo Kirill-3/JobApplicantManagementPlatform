@@ -21,51 +21,75 @@
     <button type="submit"> Email <span th:text="${userId}"></span></button>
 </form>
 
-<div class = "search-bar-container" th:if = "${profile == null }">
+<div class="search-bar-container" th:if="${profile == null}">
     <form th:action="@{/profile/search}" method="get">
         <input type="text" name="query" placeholder="Search profiles...">
         <button type="submit">Search</button>
     </form>
 </div>
-    <table id="table1" class="tableClickable">
-        <thead>
-        <tr>
-            <th th:data-type="firstName">First Name</th>
-            <th th:data-type="lastName">Last Name</th>
-            <th th:data-original-text="Location">
-                <select id="locationDropdown" class="thisDropdown">
-                    <option value="" >All Locations</option>
-                    <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}" ></option>
-                </select>
-            </th >
-            <th th:data-original-text="event">
-                <select id="eventDropdown" class="thisDropdown">
-                    <option value="">All events</option>
-                    <option th:each="event : ${uniqueEvents}" th:value="${event.getEventAttended()}" th:text="${event.getEventAttended()}"></option>
-                </select>
-            </th>
-            <th>
-                <select id="skillDropdown" class="thisDropdown">
-                    <option value="">All Skills</option>
-                    <option th:each="skill : ${uniqueSkills}" th:value="${skill}" th:text="${skill}"></option>
-                </select>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}" th:data-event="${profile.getEventAttended()}" th:data-skill="${profile.getSkill()}">
-            <td th:text="${profile.getFirstName()}"></td>
-            <td th:text="${profile.getLastName()}"></td>
-            <td th:text="${profile.getLocation()}"></td>
-            <td th:text="${profile.getEventAttended()}"></td>
-            <td th:text="${profile.getSkill()}"></td>
-        </tr>
-        </tbody>
-    </table>
 
-    <div th:if="${profile != null}" class="profile-container">
+<table id="table1" class="tableClickable">
+    <thead>
+    <tr>
+        <th th:data-type="firstName">First Name</th>
+        <th th:data-type="lastName">Last Name</th>
+        <th th:data-original-text="Location">
+            <select id="locationDropdown" class="thisDropdown">
+                <option value="">All Locations</option>
+                <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}"></option>
+            </select>
+        </th>
+        <th th:data-original-text="event">
+            <select id="eventDropdown" class="thisDropdown">
+                <option value="">All events</option>
+                <option th:each="event : ${uniqueEvents}" th:value="${event.getEventAttended()}" th:text="${event.getEventAttended()}"></option>
+            </select>
+        </th>
+        <th>
+            <select id="skillDropdown" class="thisDropdown">
+                <option value="">All Skills</option>
+                <option th:each="skill : ${uniqueSkills}" th:value="${skill}" th:text="${skill}"></option>
+            </select>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}" th:data-event="${profile.getEventAttended()}" th:data-skill="${profile.getSkill()}">
+        <td th:text="${profile.getFirstName()}"></td>
+        <td th:text="${profile.getLastName()}"></td>
+        <td th:text="${profile.getLocation()}"></td>
+        <td th:text="${profile.getEventAttended()}"></td>
+        <td th:text="${profile.getSkill()}"></td>
+    </tr>
+    </tbody>
+</table>
 
-    <div class = "profile-details">
+<div th:if="${profile != null}" class="profile-container">
+
+    <button id="editButton" onclick="showEditForm()">Edit</button>
+
+    <div id="editForm" style="display:none;">
+        <form th:action="@{/profile/edit/{userID}(userID=${profile.getId()})}" method="post">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" th:value="${profile.firstName}" required>
+            <br>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" th:value="${profile.lastName}" required>
+            <br>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" th:value="${profile.location}" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" th:value="${profile.email}" required>
+            <br>
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required>
+            <br>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <div class="profile-details">
         <h2>Personal Details</h2>
         <table class="tableApplicant">
             <tr>
@@ -88,7 +112,6 @@
                 <th>Phone Number</th>
                 <td th:text="${profile.phoneNumber != null ? profile.phoneNumber : 'N/A'}"></td>
             </tr>
-
         </table>
         <br>
 
@@ -135,7 +158,7 @@
 
     </div>
 
-    <div class = resume-section>
+    <div class="resume-section">
         <h2>Applicant CV/Resume</h2>
         <form th:action="@{/profile/uploadCV/{userID}(userID=${profile.getId()})}" method="post" enctype="multipart/form-data">
             <label for="cvUpload">Select CV (PDF only):</label>
@@ -151,10 +174,7 @@
             <!-- Embed the uploaded CV PDF using base64 encoding -->
             <iframe th:src="'data:application/pdf;base64,' + ${cvBase64}" width="100%" height="600px" style="border: none;"></iframe>
         </div>
-
-
     </div>
-
 </div>
 
 <!-- Footer -->

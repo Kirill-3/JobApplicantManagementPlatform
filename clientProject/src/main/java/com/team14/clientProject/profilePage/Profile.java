@@ -79,6 +79,8 @@ public class Profile {
         this.firstName = firstName;
     }
 
+    public void setLastName(String lastName) {this.lastName = lastName;}
+
     public void setLocation(String location) {
         this.location = location;
     }

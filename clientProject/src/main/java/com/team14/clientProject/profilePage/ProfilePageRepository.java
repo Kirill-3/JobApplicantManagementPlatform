@@ -12,4 +12,5 @@ public interface ProfilePageRepository {
     List<Profile> getProfilesByUniqueLocation();
     List<Profile> getProfilesByUniqueEvent();
     List<String> getUniqueSkills();
+    void updateProfile(Profile profile);
 }

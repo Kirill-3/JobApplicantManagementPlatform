@@ -192,5 +192,27 @@ public class ProfilePage {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching the CV", e);
         }
     }
+
+    @PostMapping("/edit/{userID}")
+    public String editProfile(@PathVariable int userID,
+                              @RequestParam String firstName,
+                              @RequestParam String lastName,
+                              @RequestParam String location,
+                              @RequestParam String email,
+                              @RequestParam String phoneNumber,
+                              Model model) {
+        Profile profile = profilePageRepository.getProfileById(userID);
+        if (profile == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile not found");
+        }
+        profile.setFirstName(firstName);
+        profile.setLastName(lastName);
+        profile.setLocation(location);
+        profile.setEmail(email);
+        profile.setPhoneNumber(phoneNumber);
+        profilePageRepository.updateProfile(profile);
+        model.addAttribute("profile", profile);
+        return "profilePage";
+    }
 }
 
