@@ -39,7 +39,7 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
         };
     }
 
-    public void addApplicant(AddApplicantForm applicants) {
+    public String addApplicant(AddApplicantForm applicants) {
         // Validating that the email does not already exist in the database
         String emailValidation =
                 "SELECT COUNT(*) " +
@@ -49,7 +49,9 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
         Integer queryResult = jdbcTemplate.queryForObject(emailValidation, Integer.class, applicants.getEmail());
 
         if (queryResult > 0) {
-            throw new IllegalArgumentException("Duplicate email in use.");
+            //throw new IllegalArgumentException("Email already exists");
+            String check= "false";
+            return check;
         }
 
         // Insert query for the form data
@@ -69,7 +71,7 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
                 applicants.getSkill()
         );
 
-
-
+        String check="true";
+        return check;
     }
 }

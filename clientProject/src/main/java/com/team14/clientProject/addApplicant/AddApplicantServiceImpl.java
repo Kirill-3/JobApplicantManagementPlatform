@@ -15,5 +15,5 @@ public class AddApplicantServiceImpl implements AddApplicantService {
     }
 
 
-    public void addApplicant(AddApplicantForm applicants) {addApplicantRepository.addApplicant(applicants);}
+    public String addApplicant(AddApplicantForm applicants) {return addApplicantRepository.addApplicant(applicants);}
 }

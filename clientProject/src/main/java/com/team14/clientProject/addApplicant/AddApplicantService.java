@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AddApplicantService {
-    void addApplicant(AddApplicantForm applicants);
+    String addApplicant(AddApplicantForm applicants);
 }

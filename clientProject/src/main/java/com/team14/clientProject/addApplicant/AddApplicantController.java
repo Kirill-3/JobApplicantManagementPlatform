@@ -27,13 +27,23 @@ public class AddApplicantController {
     @PostMapping("/add-applicant/manual")
     public ModelAndView addApplicant(@ModelAttribute AddApplicantForm applicants) {
         ModelAndView modelAndView = new ModelAndView("addApplicant/addApplicantPage");
-        try {
-            addApplicantService.addApplicant(applicants);
+//        try {
+//            addApplicantService.addApplicant(applicants);
+//            modelAndView.addObject("added", true);
+//            modelAndView.addObject("applicants", applicants);
+//        }
+//        catch (IllegalArgumentException e) {
+//            System.out.println("test");
+//            modelAndView.addObject("errorEmail", true);
+//            modelAndView.addObject("applicants", applicants);
+//        }
+
+        String function = addApplicantService.addApplicant(applicants);
+        if(function.equals("true")) {
             modelAndView.addObject("added", true);
             modelAndView.addObject("applicants", applicants);
         }
-        catch (IllegalArgumentException e) {
-            System.out.println("test");
+        else {
             modelAndView.addObject("errorEmail", true);
             modelAndView.addObject("applicants", applicants);
         }
