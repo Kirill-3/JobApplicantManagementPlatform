@@ -29,11 +29,12 @@ public class EmailPage {
     private List<Profile> profileList;
 
     // Constructor to initialize the EmailPage with JdbcTemplate.
-    public EmailPage(JdbcTemplate jdbcTemplate) {
+    public EmailPage(JdbcTemplate jdbcTemplate, ProfilePageRepositoryImpl profilePageRepository) {
         this.jdbcTemplate = jdbcTemplate;
-        this.profilePageRepository = new ProfilePageRepositoryImpl(jdbcTemplate);
-        this.profileList = profilePageRepository.getProfiles();
+        this.profilePageRepository = profilePageRepository != null ? profilePageRepository : new ProfilePageRepositoryImpl(jdbcTemplate);
+        this.profileList = this.profilePageRepository.getProfiles();
     }
+
 
     // Handles GET requests to the /email endpoint
     @GetMapping
