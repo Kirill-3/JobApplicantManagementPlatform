@@ -4,78 +4,72 @@
   <meta charset="UTF-8">
   <title>Applicant Profile</title>
   <link rel="stylesheet" href="/styling/IndividualProfiles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
   <link th:replace="fragments/header :: bootstrap-css"/>
   <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
   <script src="/javaScript/profilePageJS.js"></script>
   <script th:inline="javascript">
-    const alertMessage = [[${alertMessage}]];
-    if (alertMessage) {
+    const alertMessage = /*[[${alertMessage}]]*/ 'default message';
+    if (alertMessage && alertMessage !== 'default message') {
       alert(alertMessage);
     }
+    </script>
 
-  </script>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"/>
-<h1>Compose Custom Email</h1>
 
+
+<h1>Compose Email</h1>
+
+<br>
+
+<!-- Email Compose Form -->
 <form th:action="@{/email/sendCustomEmails}" method="post">
-  <!-- Email Compose Form -->
-  <div>
-    <label for="subject">Subject:</label>
-    <input type="text" id="subject" name="subject" required>
+
+  <div class="form-group">
+    <div>
+      <label for="subject">Subject:</label>
+      <input type="text" class="form-control" id="subject" name="subject"  placeholder="Email Subject here" required>
+    </div>
+    <div>
+      <label for="message" class="col-sm-2 col-form-label">Message:</label>
+      <textarea id="message" class="form-control" name="message" rows="5" cols="50" placeholder="Your message here" required></textarea>
+    </div>
   </div>
-  <div>
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" rows="5" cols="50" required></textarea>
-  </div>
+  <!-- Email selector -->
 
-  <h2>Select Recipients</h2>
-  <!-- Recipient Selector Table -->
-  <table id="table1" class="tableClickable">
-    <thead>
-    <tr>
-      <th th:data-type="firstName">First Name</th>
-      <th th:data-type="lastName">Last Name</th>
-      <th th:data-original-text="Location">
-        <select id="locationDropdown" class="thisDropdown">
-          <option value="" >All Locations</option>
-          <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}" ></option>
-        </select>
-      </th >
-      <th th:data-original-text="event">
-        <select id="eventDropdown" class="thisDropdown">
-          <option value="">All events</option>
-          <option th:each="event : ${uniqueEvents}" th:value="${event.getEventAttended()}" th:text="${event.getEventAttended()}"></option>
-        </select>
-      </th>
-      <th>
-        <select id="skillDropdown" class="thisDropdown">
-          <option value="">All Skills</option>
-          <option th:each="skill : ${uniqueSkills}" th:value="${skill}" th:text="${skill}"></option>
-        </select>
-      </th>
-      <th>Email?</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}" th:data-event="${profile.getEventAttended()}" th:data-skill="${profile.getSkill()}">
-      <td th:text="${profile.getFirstName()}"></td>
-      <td th:text="${profile.getLastName()}"></td>
-      <td th:text="${profile.getLocation()}"></td>
-      <td th:text="${profile.getEventAttended()}"></td>
-      <td th:text="${profile.getSkill()}"></td>
-
-      <td><input type="checkbox" name="emailIds" th:value="${profile.getId()}"></td>
-    </tr>
-    </tbody>
-  </table>
-
-  <div text-align="Centre">
-    <button type="submit">Send Email</button>
-  </div>
-
-
+  <h3>Select Recipients</h3>
+  <form th:action="@{/email/sendEmails}" method="post">
+    <table id="table1" class="tableClickable">
+      <thead>
+      <tr>
+        <th th:data-type="firstName">First Name</th>
+        <th th:data-type="lastName">Last Name</th>
+        <th>
+          <select id="locationDropdown">
+            <option value="">All Locations</option>
+            <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}"></option>
+          </select>
+        </th>
+        <th th:data-href="@{/profile/eventAttendedAscending}">Event Attended</th>
+        <th>Email?</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}">
+        <td th:text="${profile.getFirstName()}"></td>
+        <td th:text="${profile.getLastName()}"></td>
+        <td th:text="${profile.getLocation()}"></td>
+        <td th:text="${profile.getEventAttended()}"></td>
+        <td><input type="checkbox" name="emailIds" th:value="${profile.getId()}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <button type="submit">Send email to selected users</button>
+  </form>
 </form>
 
 
