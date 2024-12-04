@@ -39,21 +39,17 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
         };
     }
 
-    public String addApplicant(AddApplicantForm applicants) {
-        // Validating that the email does not already exist in the database
+    public Integer emailValidation(AddApplicantForm applicants) {
         String emailValidation =
                 "SELECT COUNT(*) " +
-                        "FROM applicants " +
-                        "WHERE email = ?";
+                "FROM applicants " +
+                "WHERE email = ?";
 
-        Integer queryResult = jdbcTemplate.queryForObject(emailValidation, Integer.class, applicants.getEmail());
+        Integer queryResultEmail = jdbcTemplate.queryForObject(emailValidation, Integer.class, applicants.getEmail());
+        return queryResultEmail;
+    }
 
-        if (queryResult > 0) {
-            //throw new IllegalArgumentException("Email already exists");
-            String check= "false";
-            return check;
-        }
-
+    public void addApplicant(AddApplicantForm applicants) {
         // Insert query for the form data
         String sql =
                 "INSERT INTO applicants" +
@@ -71,7 +67,8 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
                 applicants.getSkill()
         );
 
-        String check="true";
-        return check;
+        // Return a variable used to check if the record was added successfully
+//        String check="true";
+//        return check;
     }
 }

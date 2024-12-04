@@ -4,10 +4,12 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // Creating a form for adding an applicant
 @Data
 @AllArgsConstructor
+//@NoArgsConstructor
 public class AddApplicantForm {
     @NotEmpty(message = "The first name cannot be empty")
     private String firstName;
@@ -24,6 +26,7 @@ public class AddApplicantForm {
     @NotEmpty(message = "The event attended cannot be empty")
     private String eventAttended;
     private String skill;
+
 
     public AddApplicantForm() {
         this("", "", "", "", "", "", "");

@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AddApplicantRepository {
 
-    String addApplicant(AddApplicantForm applicants);
+    Integer emailValidation(AddApplicantForm applicants);
+    void addApplicant(AddApplicantForm applicants);
 }

@@ -16,6 +16,9 @@
     <div th:if="${added}" class="text-success">
         <p>Applicant added successfully</p>
     </div>
+    <div th:if="${bindingError}" class="text-danger">
+        <p>Email or Phone Number is in an invalid format</p>
+    </div>
     <form th:method="post" th:object="${applicants}">
         <label class="form-label" th:for="*{firstName}">First Name: </label>
         <input class="form-control" placeholder="First Name" th:field="*{firstName}" type="text" required>
