@@ -1,5 +1,8 @@
 package com.team14.clientProject.profilePage;
 
+import com.team14.clientProject.loggingSystem.CommunicationLogRepository;
+import com.team14.clientProject.loggingSystem.CommunicationLog;
+import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
 import org.springframework.http.*;
 import org.springframework.ui.Model;
 import com.team14.clientProject.emailPage.mail.EmailService;
@@ -13,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class ProfilePage {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private ProfilePageRepositoryImpl profilePageRepository;
+    private CommunicationLogRepository communicationLogRepository;
+    private List<CommunicationLog> communicationLogList;
     private List<Profile> profileList;
     @Autowired
     private EmailService emailService;
@@ -32,6 +36,7 @@ public class ProfilePage {
         this.jdbcTemplate = jdbcTemplate;
         this.profilePageRepository = new ProfilePageRepositoryImpl(jdbcTemplate);
         this.profileList = profilePageRepository.getProfiles();
+        this.communicationLogRepository = new CommunicationLogRepositoryImpl(jdbcTemplate);
     }
 
     @GetMapping()
@@ -53,6 +58,7 @@ public class ProfilePage {
         } else {
             Profile profile = this.profilePageRepository.getProfileById(userId);
             modelAndView.addObject("profile", profile);
+            modelAndView.addObject("Log", this.communicationLogRepository.getLogsByApplicantId(userId));
 
 
             //Displaying the cv if it exists

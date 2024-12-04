@@ -175,13 +175,7 @@
             </tr>
         </table>
 
-        <br>
-        <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
-            <button type="submit"> Email <span th:text="${profile.firstName}"></span></button>
-        </form>
-        <br>
 
-        <a th:href="@{/profile}">Back to Profiles</a>
 
     </div>
 
@@ -203,7 +197,39 @@
         </div>
     </div>
 </div>
+<div th:if="${profile != null}" class="log" >
+    <table id="table2" class="logTable">
+        <thead>
+        <tr>
+            <th>UserId</th>
+            <th>Communication Method</th>
+            <th>Action Taken</th>
+            <th>Content</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${Log}">
+            <td th:text="${log.getUserId()}"></td>
+            <td th:text="${log.getCommunicationType()}"></td>
+            <td th:text="${log.getActionTaken()}"></td>
+            <td th:text="${log.getNotes()}"></td>
+            <td th:text="${log.getTimestamp()}"></td>
+        </tr>
 
+        </tbody>
+    </table>
+</div>
+<div th:if="${profile != null}">
+    <br>
+    <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
+        <button type="submit"> Email <span th:text="${profile.firstName}"></span></button>
+    </form>
+    <br>
+
+
+    <a th:href="@{/profile}">Back to Profiles</a>
+</div>
 <!-- Footer -->
 <div th:replace="~{fragments/footer :: footer-links}"></div>
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
