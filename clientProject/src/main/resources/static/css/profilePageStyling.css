@@ -1,12 +1,36 @@
 .tableClickable {
     width: 90%;
+    height: 80%;
     margin: 0 auto;
     align-content: center;
-
 }
+.tableContainer{
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
 .tableClickable th, .tableClickable td {
     border: 1px solid black;
     border-collapse: collapse;
+    height: 3vw;
+}
+.tableClickable th {
+    font-size: 2vw;
+    font-weight: normal;
+    position: sticky;
+    background: #2D366C;
+    top: -0.2vh;
+    z-index: auto;
+}
+.tableClickable td {
+    font-size: 1.25vw;
+    text-align: center;
+    padding: 0.5vw;
+    height: 3vw;
 }
 .tableClickable thead {
     background: #2D366C;
@@ -14,13 +38,15 @@
     padding: 200px 0;
     text-align: center;
     text-transform: uppercase;
-    font-size: 1.5em;
+    font-size: 2vw;
     cursor: crosshair;
 }
 
 .tableClickable tbody tr {
     cursor: pointer;
     transition: all 0.25s ease-in-out;
+    height: 3vw;
+    display: table-row;
 }
 
 .tableClickable tbody tr:not(:first-child) {
@@ -30,70 +56,35 @@
 .tableClickable tbody tr:last-child {
     border-bottom: 1px #2D366C;
 }
+
 .tableClickable tbody tr:hover {
     color: white;
     background: #2D366C;
 }
-.thisDropdown {
+
+.thisDropdown, #locationDropdown {
     background-color: #2D366C;
     color: white;
-    font-size: 1.5em;
+    font-size: 2vw;
     text-transform: uppercase;
     cursor: crosshair;
     border: #2D366C;
+    width: 20vw;
 }
-.thisDropdown option {
+.statusDropdown {
     background-color: white;
     color: black;
-    cursor: pointer;
-    font-size: 0.4em;
-}
-
-.tableClickable {
-    width: 90%;
-    margin: 0 auto;
-    align-content: center;
-
-}
-.tableClickable th, .tableClickable td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-.tableClickable thead {
-    background: #2D366C;
-    color: white;
-    padding: 200px 0;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 1.5em;
-    cursor: crosshair;
-}
-
-.tableClickable tbody tr {
-    cursor: pointer;
-    transition: all 0.25s ease-in-out;
-}
-
-.tableClickable tbody tr:not(:first-child) {
-    border-top: 1px #2D366C;
-}
-
-.tableClickable tbody tr:last-child {
-    border-bottom: 1px #2D366C;
-}
-.tableClickable tbody tr:hover {
-    color: white;
-    background: #2D366C;
-}
-#locationDropdown {
-    background-color: #2D366C;
-    color: white;
-    font-size: 1.5em;
+    font-size: 1.5vw;
     text-transform: uppercase;
     cursor: crosshair;
     border: #2D366C;
+    width: 20vw;
+    padding: 0.521vw;
+    justify-content: center;
+    align-items: center;
 }
-#locationDropdown option {
+
+.thisDropdown option, #locationDropdown option {
     background-color: white;
     color: black;
     cursor: pointer;
@@ -108,13 +99,11 @@
 
 .search-bar-container input[type="text"] {
     width: 30vw;
-    padding: 10px;
-    font-size: 16px;
+    padding: 0.521vw;
+    font-size: 0.833vw;
 }
 
 .search-bar-container button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 0.521vw 1.042vw;
+    font-size: 0.833vw;
 }
-
-
