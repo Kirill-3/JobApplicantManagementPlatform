@@ -219,6 +219,9 @@ public class ProfilePage {
         profile.setCurrentPosition(currentPosition);
         profile.setStatus(status);
         profilePageRepository.updateProfile(profile);
+
+        this.profileList = profilePageRepository.getProfiles();
+
         model.addAttribute("profile", profile);
         return "profilePage";
     }
