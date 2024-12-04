@@ -25,8 +25,16 @@
     <form th:action="@{/profile/search}" method="get">
         <input type="text" name="query" placeholder="Search profiles...">
         <button type="submit">Search</button>
+        <select id="statusDropdown" class="statusDropdown">
+            <option value="">All Statuses</option>
+            <option value="Internal">Internal</option>
+            <option value="External">External</option>
+        </select>
+
+
     </form>
 </div>
+<div class="tableContainer">
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
@@ -53,22 +61,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}" th:data-event="${profile.getEventAttended()}" th:data-skill="${profile.getSkill()}">
+        <tr th:each="profile : ${profileList}" th:data-href="@{/profile/{id}(id=${profile.getId()})}" th:data-location="${profile.getLocation()}" th:data-firstName="${profile.getFirstName()}" th:data-lastName="${profile.getLastName()}" th:data-event="${profile.getEventAttended()}" th:data-skill="${profile.getSkill()}" th:data-status="${profile.jobDetails.getStatus()}">
             <td th:text="${profile.getFirstName()}"></td>
             <td th:text="${profile.getLastName()}"></td>
             <td th:text="${profile.getLocation()}"></td>
             <td th:text="${profile.getEventAttended()}"></td>
             <td th:text="${profile.getSkill()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
+    <div th:if="${profile != null}" class="profile-container">
 
-
-    </tr>
-    </tbody>
-</table>
-
-
-
-<div th:if="${profile != null}" class="profile-container">
     <div class = "profile-details">
         <h2>Personal Details</h2>
         <table class="tableApplicant">
@@ -146,6 +151,16 @@
             <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf" required>
             <button type="submit">Upload CV</button>
         </form>
+
+        <p th:text="${message}"></p>
+
+        <!-- Check if CV exists and display it -->
+        <div th:if="${cvBase64 != null}">
+            <h3>Uploaded CV</h3>
+            <!-- Embed the uploaded CV PDF using base64 encoding -->
+            <iframe th:src="'data:application/pdf;base64,' + ${cvBase64}" width="100%" height="600px" style="border: none;"></iframe>
+        </div>
+
 
     </div>
 
