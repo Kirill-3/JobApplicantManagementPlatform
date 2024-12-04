@@ -168,8 +168,11 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
     @Override
     public void updateProfile(Profile profile) {
-        String sql = "UPDATE applicants SET firstName = ?, lastName = ?, location = ?, email = ?, phoneNumber = ? WHERE id = ?";
-        jdbcTemplate.update(sql, profile.getFirstName(), profile.getLastName(), profile.getLocation(), profile.getEmail(), profile.getPhoneNumber(), profile.getId());
+        String sql = "UPDATE applicants SET firstName = ?, lastName = ?, location = ?, email = ?, phoneNumber = ?, eventAttended = ?, skill = ? WHERE id = ?";
+        jdbcTemplate.update(sql, profile.getFirstName(), profile.getLastName(), profile.getLocation(), profile.getEmail(), profile.getPhoneNumber(), profile.getEventAttended(), profile.getSkill(), profile.getId());
+
+        String jobDetailsSql = "UPDATE applicationdetails SET currentPosition = ?, status = ? WHERE id = ?";
+        jdbcTemplate.update(jobDetailsSql, profile.getJobDetails().getCurrentPosition(), profile.getJobDetails().getStatus(), profile.getId());
     }
 }
 

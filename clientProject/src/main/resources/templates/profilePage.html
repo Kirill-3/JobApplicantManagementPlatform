@@ -17,9 +17,6 @@
 <body>
 
 <div th:replace="~{fragments/header :: header}"/>
-<form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
-    <button type="submit"> Email <span th:text="${userId}"></span></button>
-</form>
 
 <div class="search-bar-container" th:if="${profile == null}">
     <form th:action="@{/profile/search}" method="get">
@@ -72,6 +69,7 @@
     </table>
 </div>
 
+<div th:if="${profile == null}" >
 <table id="table1" class="tableClickable">
     <thead>
     <tr>
@@ -107,7 +105,9 @@
     </tr>
     </tbody>
 </table>
+</div>
 
+<br>
 <div th:if="${profile != null}" class="profile-container">
 
     <button id="editButton" onclick="showEditForm()">Edit</button>
@@ -129,9 +129,22 @@
             <label for="phoneNumber">Phone Number:</label>
             <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required>
             <br>
+            <label for="currentPosition">Current Position:</label>
+            <input type="text" id="currentPosition" name="currentPosition" th:value="${profile.jobDetails?.currentPosition}" required>
+            <br>
+            <label for="status">Status:</label>
+            <input type="text" id="status" name="status" th:value="${profile.jobDetails?.status}" required>
+            <br>
+            <label for="skill">Skills:</label>
+            <input type="text" id="skill" name="skill" th:value="${profile.skill}" required>
+            <br>
+            <label for="eventAttended">Event Attended:</label>
+            <input type="text" id="eventAttended" name="eventAttended" th:value="${profile.eventAttended}" required>
+            <br>
             <button type="submit">Save</button>
         </form>
     </div>
+    <br>
 
     <div class="profile-details">
         <h2>Personal Details</h2>
@@ -197,6 +210,12 @@
                 <td th:text="${profile.preferences?.subscribeToJobUpdates} ? 'Yes' : 'No'"></td>
             </tr>
         </table>
+
+        <br>
+        <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
+            <button type="submit"> Email <span th:text="${profile.firstName}"></span></button>
+        </form>
+        <br>
 
         <a th:href="@{/profile}">Back to Profiles</a>
 

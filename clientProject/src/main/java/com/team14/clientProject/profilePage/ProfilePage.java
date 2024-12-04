@@ -200,6 +200,10 @@ public class ProfilePage {
                               @RequestParam String location,
                               @RequestParam String email,
                               @RequestParam String phoneNumber,
+                              @RequestParam String currentPosition,
+                              @RequestParam String status,
+                              @RequestParam String skill,
+                              @RequestParam String eventAttended,
                               Model model) {
         Profile profile = profilePageRepository.getProfileById(userID);
         if (profile == null) {
@@ -210,6 +214,10 @@ public class ProfilePage {
         profile.setLocation(location);
         profile.setEmail(email);
         profile.setPhoneNumber(phoneNumber);
+        profile.setEventAttended(eventAttended);
+        profile.setSkill(skill);
+        profile.setCurrentPosition(currentPosition);
+        profile.setStatus(status);
         profilePageRepository.updateProfile(profile);
         model.addAttribute("profile", profile);
         return "profilePage";

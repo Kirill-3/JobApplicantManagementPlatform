@@ -101,6 +101,8 @@ public class Profile {
         this.skill = skill;
     }
 
+    public void setCurrentPosition(String currentPosition) {this.jobDetails.setCurrentPosition(currentPosition);}
 
+    public void setStatus(String status) { this.jobDetails.setStatus(status);}
 }
 
