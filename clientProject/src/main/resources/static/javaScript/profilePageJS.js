@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
             tableBody.appendChild(row);
         });
     }
+
     function filterTable(attribute, value) {
         if (attribute === "data-location") {
             locationFilter = value;
@@ -91,4 +92,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 row.style.display = "none";
             }
         }
-    }});
+    }
+});
+
+function showEditForm() {
+    document.getElementById('editForm').style.display = 'block';
+}

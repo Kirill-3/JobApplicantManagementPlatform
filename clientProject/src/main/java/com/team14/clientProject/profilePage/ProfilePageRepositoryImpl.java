@@ -165,4 +165,11 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
         String searchQuery = "%" + query + "%";
         return jdbcTemplate.query(sql, new Object[]{searchQuery, searchQuery, searchQuery, searchQuery, searchQuery, searchQuery}, ProfileRowMapper);
     }
+
+    @Override
+    public void updateProfile(Profile profile) {
+        String sql = "UPDATE applicants SET firstName = ?, lastName = ?, location = ?, email = ?, phoneNumber = ? WHERE id = ?";
+        jdbcTemplate.update(sql, profile.getFirstName(), profile.getLastName(), profile.getLocation(), profile.getEmail(), profile.getPhoneNumber(), profile.getId());
+    }
 }
+
