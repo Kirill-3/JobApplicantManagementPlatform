@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 public interface AddApplicantRepository {
 
     Integer emailValidation(AddApplicantForm applicants);
+    Integer phoneNoValidation(AddApplicantForm applicants);
     void addApplicant(AddApplicantForm applicants);
 }

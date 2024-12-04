@@ -13,6 +13,9 @@
     <div th:if="${errorEmail}" class="text-danger">
         <p>Email already in use</p>
     </div>
+    <div th:if="${errorPhone}" class="text-danger">
+        <p>Phone number already in use</p>
+    </div>
     <div th:if="${added}" class="text-success">
         <p>Applicant added successfully</p>
     </div>

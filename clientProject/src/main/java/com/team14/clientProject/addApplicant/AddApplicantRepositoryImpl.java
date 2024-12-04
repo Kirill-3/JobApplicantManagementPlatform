@@ -49,6 +49,15 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
         return queryResultEmail;
     }
 
+    public Integer phoneNoValidation(AddApplicantForm applicants) {
+        String phoneNoValidation =
+                "SELECT COUNT(*) " +
+                "FROM applicants " +
+                "WHERE phoneNumber = ?";
+        Integer queryResultPhone = jdbcTemplate.queryForObject(phoneNoValidation, Integer.class, applicants.getPhoneNumber());
+        return queryResultPhone;
+    }
+
     public void addApplicant(AddApplicantForm applicants) {
         // Insert query for the form data
         String sql =

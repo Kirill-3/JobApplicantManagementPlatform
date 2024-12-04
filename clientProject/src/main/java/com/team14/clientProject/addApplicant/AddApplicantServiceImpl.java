@@ -17,10 +17,15 @@ public class AddApplicantServiceImpl implements AddApplicantService {
 
     public String addApplicant(AddApplicantForm applicants) {
         Integer queryResultEmail = addApplicantRepository.emailValidation(applicants);
-        // If there is a result found from the query, return a variable used for error handling
+        Integer queryResultPhone = addApplicantRepository.phoneNoValidation(applicants);
+        // If there is a result found from the following queries, return a variable used for error handling
         if (queryResultEmail > 0) {
-            //throw new IllegalArgumentException("Email already exists");
-            String check= "false";
+            String check= "emailFalse";
+            return check;
+        }
+
+        if (queryResultPhone > 0) {
+            String check = "phoneFalse";
             return check;
         }
 
@@ -28,7 +33,6 @@ public class AddApplicantServiceImpl implements AddApplicantService {
         addApplicantRepository.addApplicant(applicants);
         return check;
 
-//        return addApplicantRepository.addApplicant(applicants);
 
     }
 }
