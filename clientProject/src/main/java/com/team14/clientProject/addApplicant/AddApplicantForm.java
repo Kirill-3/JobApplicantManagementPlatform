@@ -21,6 +21,7 @@ public class AddApplicantForm {
     // Regex used from EmailServiceHandler class
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&*+/=?`{}~^.-]+@[a-zA-Z0-9.-]+$", message="Email must be in a valid format")
     private String email;
+    // Regex adapted from https://stackoverflow.com/questions/11518035/regular-expression-for-gb-based-and-only-numeric-phone-number
     @Pattern(regexp = "^(07\\d{9}|(\\+44)\\d{10})$", message="Phone number must be a valid UK phone number")
     private String phoneNumber;
     @NotEmpty(message = "The event attended cannot be empty")

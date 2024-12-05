@@ -8,4 +8,6 @@ public interface AddApplicantRepository {
     Integer emailValidation(AddApplicantForm applicants);
     Integer phoneNoValidation(AddApplicantForm applicants);
     void addApplicant(AddApplicantForm applicants);
+
+    Integer getApplicantCount();
 }

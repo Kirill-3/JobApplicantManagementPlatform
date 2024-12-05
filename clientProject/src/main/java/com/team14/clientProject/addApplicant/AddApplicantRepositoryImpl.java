@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Repository
 public class AddApplicantRepositoryImpl implements AddApplicantRepository {
 
@@ -58,6 +60,13 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
         return queryResultPhone;
     }
 
+    public Integer getApplicantCount() {
+        String sql =
+                "SELECT COUNT(*) FROM " +
+                "applicants";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+
     public void addApplicant(AddApplicantForm applicants) {
         // Insert query for the form data
         String sql =
@@ -76,8 +85,5 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
                 applicants.getSkill()
         );
 
-        // Return a variable used to check if the record was added successfully
-//        String check="true";
-//        return check;
     }
 }

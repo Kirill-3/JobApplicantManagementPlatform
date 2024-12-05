@@ -41,7 +41,7 @@ public class AddApplicantController {
                 modelAndView.addObject("added", true);
                 modelAndView.addObject("applicants", applicants);
             }
-            // If an error occurs, display error(s) message
+            // If an error occurs, display error messages for each issue
             else if (function.equals("emailFalse")){
                 modelAndView.addObject("errorEmail", true);
                 modelAndView.addObject("applicants", applicants);

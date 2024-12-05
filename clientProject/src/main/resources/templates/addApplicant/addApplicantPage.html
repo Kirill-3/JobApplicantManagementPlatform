@@ -24,25 +24,25 @@
     </div>
     <form th:method="post" th:object="${applicants}">
         <label class="form-label" th:for="*{firstName}">First Name: </label>
-        <input class="form-control" placeholder="First Name" th:field="*{firstName}" type="text" required>
+        <input name="firstName" class="form-control" placeholder="First Name" th:field="*{firstName}" type="text" required>
 
         <label class="form-label" th:for="*{lastName}">Last Name: </label>
-        <input class="form-control" placeholder="Last Name" th:field="*{lastName}" type="text" required>
+        <input name="lastName" class="form-control" placeholder="Last Name" th:field="*{lastName}" type="text" required>
 
         <label class="form-label" th:for="*{location}">Location: </label>
-        <input class="form-control" placeholder="Location" th:field="*{location}" type="text" required>
+        <input name="location" class="form-control" placeholder="Location" th:field="*{location}" type="text" required>
 
         <label class="form-label" th:for="*{email}">Email: </label>
-        <input class="form-control" placeholder="Email" th:field="*{email}" type="text" required>
+        <input name="email" class="form-control" placeholder="Email" th:field="*{email}" type="text" required>
 
         <label class="form-label" th:for="*{phoneNumber}">Phone Number: </label>
-        <input class="form-control" placeholder="Phone Number" th:field="*{phoneNumber}" type="text">
+        <input name="phoneNumber" class="form-control" placeholder="Phone Number" th:field="*{phoneNumber}" type="text">
 
         <label class="form-label" th:for="*{eventAttended}">Event Attended: </label>
-        <input class="form-control" placeholder="Event Attended" th:field="*{eventAttended}" type="text" required>
+        <input name="eventAttended" class="form-control" placeholder="Event Attended" th:field="*{eventAttended}" type="text" required>
 
         <label class="form-label" th:for="*{skill}">Skill: </label>
-        <input class="form-control" placeholder="Skill" th:field="*{skill}" type="text">
+        <input name = "skill" class="form-control" placeholder="Skill" th:field="*{skill}" type="text">
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
