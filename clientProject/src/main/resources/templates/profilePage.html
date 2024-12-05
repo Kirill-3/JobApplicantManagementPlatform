@@ -78,6 +78,7 @@
 
     <div id="editForm" style="display:none;">
         <form th:action="@{/profile/edit/{userID}(userID=${profile.getId()})}" method="post">
+            <!-- Existing fields -->
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" th:value="${profile.firstName}" required>
             <br>
@@ -105,13 +106,14 @@
             <label for="eventAttended">Event Attended:</label>
             <input type="text" id="eventAttended" name="eventAttended" th:value="${profile.eventAttended}" required>
             <br>
-            <label for="subscribeToNewsletter">Subscribed to Newsletter:</label>
+            <!-- New fields for preferences -->
+            <label for="subscribeToNewsletter">Subscribe to Newsletter:</label>
             <input type="checkbox" id="subscribeToNewsletter" name="subscribeToNewsletter" th:checked="${profile.preferences?.subscribeToNewsletter}">
             <br>
-            <label for="subscribeToBulletins">Subscribed to Bulletins:</label>
+            <label for="subscribeToBulletins">Subscribe to Bulletins:</label>
             <input type="checkbox" id="subscribeToBulletins" name="subscribeToBulletins" th:checked="${profile.preferences?.subscribeToBulletins}">
             <br>
-            <label for="subscribeToJobUpdates">Subscribed to Job Updates:</label>
+            <label for="subscribeToJobUpdates">Subscribe to Job Updates:</label>
             <input type="checkbox" id="subscribeToJobUpdates" name="subscribeToJobUpdates" th:checked="${profile.preferences?.subscribeToJobUpdates}">
             <br>
             <button type="submit">Save</button>

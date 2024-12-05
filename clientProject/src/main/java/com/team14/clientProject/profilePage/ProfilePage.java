@@ -222,13 +222,18 @@ public class ProfilePage {
         profile.setCurrentPosition(currentPosition);
         profile.setStatus(status);
 
+        // Update preferences
         applicantPreferences preferences = profile.getPreferences();
         if (preferences == null) {
-            preferences = new applicantPreferences(0, false, false, false);
+            preferences = new applicantPreferences(userID,
+                    subscribeToNewsletter != null && subscribeToNewsletter,
+                    subscribeToBulletins != null && subscribeToBulletins,
+                    subscribeToJobUpdates != null && subscribeToJobUpdates);
+        } else {
+            preferences.setSubscribeToNewsletter(subscribeToNewsletter != null && subscribeToNewsletter);
+            preferences.setSubscribeToBulletins(subscribeToBulletins != null && subscribeToBulletins);
+            preferences.setSubscribeToJobUpdates(subscribeToJobUpdates != null && subscribeToJobUpdates);
         }
-        preferences.setSubscribeToNewsletter(subscribeToNewsletter != null && subscribeToNewsletter);
-        preferences.setSubscribeToBulletins(subscribeToBulletins != null && subscribeToBulletins);
-        preferences.setSubscribeToJobUpdates(subscribeToJobUpdates != null && subscribeToJobUpdates);
         profile.setPreferences(preferences);
 
         profilePageRepository.updateProfile(profile);

@@ -17,7 +17,6 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
     private void createProfileRowMapper() {
         ProfileRowMapper = (rs, rowNum) -> {
-
             Profile profile = new Profile(
                     rs.getInt("id"),
                     rs.getString("firstName"),
@@ -31,9 +30,9 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
             applicantPreferences preferences = new applicantPreferences(
                     rs.getInt("id"),
-                    rs.getBoolean("SubscribeToNewsLetter"),
-                    rs.getBoolean("SubscribeToBulletins"),
-                    rs.getBoolean("SubscribeToJobUpdates")
+                    "Yes".equals(rs.getString("SubscribeToNewsLetter")),
+                    "Yes".equals(rs.getString("SubscribeToBulletins")),
+                    "Yes".equals(rs.getString("SubscribeToJobUpdates"))
             );
             profile.setPreferences(preferences);
 
@@ -46,7 +45,6 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
             return profile;
         };
-
     }
 
 
@@ -169,13 +167,21 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
     @Override
     public void updateProfile(Profile profile) {
         String sql = "UPDATE applicants SET firstName = ?, lastName = ?, location = ?, email = ?, phoneNumber = ?, eventAttended = ?, skill = ? WHERE id = ?";
-        jdbcTemplate.update(sql, profile.getFirstName(), profile.getLastName(), profile.getLocation(), profile.getEmail(), profile.getPhoneNumber(), profile.getEventAttended(), profile.getSkill(), profile.getId());
+        jdbcTemplate.update(sql,
+                profile.getFirstName(),
+                profile.getLastName(),
+                profile.getLocation(),
+                profile.getEmail(),
+                profile.getPhoneNumber(),
+                profile.getEventAttended(),
+                profile.getSkill(),
+                profile.getId());
 
         String jobDetailsSql = "UPDATE applicationdetails SET currentPosition = ?, status = ? WHERE id = ?";
         jdbcTemplate.update(jobDetailsSql, profile.getJobDetails().getCurrentPosition(), profile.getJobDetails().getStatus(), profile.getId());
 
         String preferencesSql = "UPDATE applicantPreferences SET SubscribeToNewsLetter = ?, SubscribeToBulletins = ?, SubscribeToJobUpdates = ? WHERE applicationId = ?";
-        jdbcTemplate.update(sql,
+        jdbcTemplate.update(preferencesSql,
                 profile.getPreferences().isSubscribeToNewsletter() ? "Yes" : "No",
                 profile.getPreferences().isSubscribeToBulletins() ? "Yes" : "No",
                 profile.getPreferences().isSubscribeToJobUpdates() ? "Yes" : "No",
