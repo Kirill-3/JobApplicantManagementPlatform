@@ -204,6 +204,9 @@ public class ProfilePage {
                               @RequestParam String status,
                               @RequestParam String skill,
                               @RequestParam String eventAttended,
+                              @RequestParam(required = false) Boolean subscribeToNewsletter,
+                              @RequestParam(required = false) Boolean subscribeToBulletins,
+                              @RequestParam(required = false) Boolean subscribeToJobUpdates,
                               Model model) {
         Profile profile = profilePageRepository.getProfileById(userID);
         if (profile == null) {
@@ -218,6 +221,21 @@ public class ProfilePage {
         profile.setSkill(skill);
         profile.setCurrentPosition(currentPosition);
         profile.setStatus(status);
+
+        // Update preferences
+        applicantPreferences preferences = profile.getPreferences();
+        if (preferences == null) {
+            preferences = new applicantPreferences(userID,
+                    subscribeToNewsletter != null && subscribeToNewsletter,
+                    subscribeToBulletins != null && subscribeToBulletins,
+                    subscribeToJobUpdates != null && subscribeToJobUpdates);
+        } else {
+            preferences.setSubscribeToNewsletter(subscribeToNewsletter != null && subscribeToNewsletter);
+            preferences.setSubscribeToBulletins(subscribeToBulletins != null && subscribeToBulletins);
+            preferences.setSubscribeToJobUpdates(subscribeToJobUpdates != null && subscribeToJobUpdates);
+        }
+        profile.setPreferences(preferences);
+
         profilePageRepository.updateProfile(profile);
 
         this.profileList = profilePageRepository.getProfiles();
