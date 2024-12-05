@@ -1,0 +1,142 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    position: relative
+}
+
+header h1 {
+    font-size: 2rem;
+    margin: 0.5rem 0;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+header nav ul li a:hover {
+    background: #475d75;
+}
+
+/* Back to Overview Link */
+header a {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #f4f4f9;
+    text-decoration: none;
+    background: #475d75;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+header a:hover {
+    background: #627a91;
+}
+
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Titles */
+section h2 {
+    text-align: center;
+    color: #2d3e50;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+/* Section */
+section {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #D5D5D5;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+/* Canvas Styling */
+canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 400px;
+    width: 100%;
+    margin: 0 auto;
+    height: 300px;
+}
+
+/* Chart Container for Scrollable Legends */
+.chart-container {
+    position: relative;
+    height: 500px;
+    overflow-y: auto;
+    margin: 1rem auto;
+}
+
+.multiselect {
+    width: 300px; /* Adjust width as needed */
+}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    width: 100%;
+    font-weight: bold;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+    background: #2d3e50;
+    position: absolute;
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#checkboxes label {
+    display: block;
+    padding: 5px;
+}
+
+#checkboxes label:hover {
+    background-color: #1e90ff;
+}

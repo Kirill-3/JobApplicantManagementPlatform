@@ -232,6 +232,9 @@ public class ProfilePage {
         profile.setPreferences(preferences);
 
         profilePageRepository.updateProfile(profile);
+
+        this.profileList = profilePageRepository.getProfiles();
+
         model.addAttribute("profile", profile);
         return "profilePage";
     }
