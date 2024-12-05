@@ -10,24 +10,22 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<main class="statistics-container">
-    <h1>Statistics Page</h1>
-
-    <section>
-        <h2>Event Recruitment Chart</h2>
-        <canvas id="eventRecruitmentChart"></canvas>
-    </section>
-
-    <section>
-        <h2>Time Period Recruitment Chart</h2>
-        <canvas id="timePeriodRecruitmentChart"></canvas>
-    </section>
-
-    <section>
-        <h2>Location Recruitment Chart</h2>
-        <canvas id="locationRecruitmentChart"></canvas>
-    </section>
-</main>
+<header>
+    <h1>Statistics Overview</h1>
+    <nav>
+        <ul>
+            <li><a href="/event-statistics">Event Recruitment</a></li>
+            <li><a href="/time-statistics">Time Period Recruitment</a></li>
+            <li><a href="/location-statistics">Location Recruitment</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h1></h1>
+            <canvas></canvas>
+        </section>
+    </main>
+</header>
 <div th:replace="~{fragments/footer :: footer-links}"></div>
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 </body>
