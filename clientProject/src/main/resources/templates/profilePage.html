@@ -92,7 +92,7 @@
             <input type="email" id="email" name="email" th:value="${profile.email}" required>
             <br>
             <label for="phoneNumber">Phone Number:</label>
-            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required oninput="validateUKPhoneNumber(this)">
             <br>
             <label for="currentPosition">Current Position:</label>
             <input type="text" id="currentPosition" name="currentPosition" th:value="${profile.jobDetails?.currentPosition}" required>
@@ -106,7 +106,6 @@
             <label for="eventAttended">Event Attended:</label>
             <input type="text" id="eventAttended" name="eventAttended" th:value="${profile.eventAttended}" required>
             <br>
-            <!-- New fields for preferences -->
             <label for="subscribeToNewsletter">Subscribe to Newsletter:</label>
             <input type="checkbox" id="subscribeToNewsletter" name="subscribeToNewsletter" th:checked="${profile.preferences?.subscribeToNewsletter}">
             <br>
