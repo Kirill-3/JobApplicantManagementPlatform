@@ -110,12 +110,12 @@ function validateUKPhoneNumber(input) {
     }
 }
 
-function validateStatus() {
-    const statusInput = document.getElementById('status').value;
+function validateStatus(input) {
+    const statusInput = input.value;
     const validStatuses = ['Internal', 'External'];
     if (!validStatuses.includes(statusInput)) {
-        alert("Please enter a valid status: 'Internal' or 'External'.");
-        return false;
+        input.setCustomValidity("Please enter a valid status: 'Internal' or 'External'.");
+    } else {
+        input.setCustomValidity("");
     }
-    return true;
 }

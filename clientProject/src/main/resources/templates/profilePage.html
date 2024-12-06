@@ -98,7 +98,7 @@
             <input type="text" id="currentPosition" name="currentPosition" th:value="${profile.jobDetails?.currentPosition}" required>
             <br>
             <label for="status">Status:</label>
-            <input type="text" id="status" name="status" th:value="${profile.jobDetails?.status}" required>
+            <input type="text" id="status" name="status" th:value="${profile.jobDetails?.status}" required oninput="validateStatus(this)">
             <br>
             <label for="skill">Skills:</label>
             <input type="text" id="skill" name="skill" th:value="${profile.skill}" required>
