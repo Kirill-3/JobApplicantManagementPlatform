@@ -4,6 +4,7 @@ use nhs_recruitment;
 
 SET FOREIGN_KEY_CHECKS = 0;
 drop table if exists communicationLogs;
+drop table if exists communicationslogs;
 drop table if exists systemLogs;
 
 drop table if exists applicantpreferences;

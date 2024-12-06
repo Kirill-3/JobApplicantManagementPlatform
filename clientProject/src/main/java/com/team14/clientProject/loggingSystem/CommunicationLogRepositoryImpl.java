@@ -42,6 +42,11 @@ public class CommunicationLogRepositoryImpl implements CommunicationLogRepositor
             jdbcTemplate.update(sql, applicantIdInt, emailContent);
         }
     }
+    @Override
+    public void addApplicantLog(){
+        String sql = "INSERT INTO communicationLogs (applicantId, actionTaken, notes) VALUES ((SELECT Max(Id) FROM applicants), 'applicantAdded', 'Applicant added to the system')";
+        jdbcTemplate.update(sql);
+    }
 
     @Override
     public List<CommunicationLog> getLogsByApplicantId(int applicantId){

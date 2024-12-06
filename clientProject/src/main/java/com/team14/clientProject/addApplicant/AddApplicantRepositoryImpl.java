@@ -1,12 +1,15 @@
 package com.team14.clientProject.addApplicant;
 
 import com.team14.clientProject.homePage.Applicants;
+import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import com.team14.clientProject.loggingSystem.CommunicationLogRepository;
 
 import java.util.List;
 
@@ -14,8 +17,9 @@ import java.util.List;
 public class AddApplicantRepositoryImpl implements AddApplicantRepository {
 
     private JdbcTemplate jdbcTemplate;
-
     private RowMapper<Applicants> ApplicantRowMapper;
+    @Autowired
+    private CommunicationLogRepositoryImpl communicationLogRepository;
 
     public AddApplicantRepositoryImpl(JdbcTemplate aJdbc) {
         this.jdbcTemplate = aJdbc;
@@ -68,6 +72,7 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
     }
 
     public void addApplicant(AddApplicantForm applicants) {
+
         // Insert query for the form data
         String sql =
                 "INSERT INTO applicants" +
@@ -84,6 +89,7 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
                 applicants.getEventAttended(),
                 applicants.getSkill()
         );
+        this.communicationLogRepository.addApplicantLog();
 
     }
 }

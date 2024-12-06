@@ -27,6 +27,7 @@ public class EmailPage {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private ProfilePageRepositoryImpl profilePageRepository;
+    @Autowired
     private CommunicationLogRepositoryImpl CommunicationLogRepository;
     private List<Profile> profileList;
 
