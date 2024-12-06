@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Applicant</title>
+    <link th:replace="~{fragments/header :: bootstrap-css}"/>
+    <link rel="stylesheet" type="text/css" href="css/homeStyle.css"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"/>
+
+<div class="heading">
+    <h2>Select which way you would like to add an applicant</h2>
+</div>
+<div class="optionDiv">
+    <a class="homeButton" th:href="@{add-applicant/manual}">Manually Add Applicant</a>
+    <a class="homeButton">Import from CSV</a>
+</div>
+<div class="heading">
+    <a class="btn btn-info" th:href="@{/home}">Back</a>
+</div>
+
+
+
+
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+
+</body>
+</html>

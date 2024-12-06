@@ -11,7 +11,7 @@
 <div th:replace="~{fragments/header :: header}"/>
 
 <div class="homeContainer">
-
+<!--Recent applicant table-->
     <div class="tableContainer">
         <table class="homeTable">
             <caption class="captionFix">Recent Applicants</caption>
@@ -23,6 +23,7 @@
             <th>Application Time</th>
             </thead>
             <tbody>
+<!--            Adding applicants-->
             <tr th:each="applicants : ${applicants}">
                 <td th:text="${applicants.firstName}"></td>
                 <td th:text="${applicants.lastName}"></td>
@@ -34,11 +35,12 @@
         </table>
     </div>
 
+<!--    Buttons for navigation-->
     <div class="buttonContainer">
         <a class="homeButton" th:href="@{/profile}">View Applicants</a>
         <a class="homeButton">Activity Log</a>
-        <a class="homeButton">Statistics</a>
-        <a class="homeButton">Manually Add Applicant</a>
+        <a class="homeButton" th:href="@{/statistics}">Statistics</a>
+        <a class="homeButton" th:href="@{add-applicant}">Add Applicant</a>
     </div>
 
 </div>

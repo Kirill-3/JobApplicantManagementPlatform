@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics Page</title>
+    <link th:replace="~{fragments/header :: bootstrap-css}"/>
+    <link rel="stylesheet" href="/css/statistics.css">
+    <script src="/javaScript/statistics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<header>
+    <h1>Statistics Overview</h1>
+    <nav>
+        <ul>
+            <li><a href="/event-statistics">Event Recruitment</a></li>
+            <li><a href="/time-statistics">Time Period Recruitment</a></li>
+            <li><a href="/location-statistics">Location Recruitment</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h1></h1>
+            <canvas></canvas>
+        </section>
+    </main>
+</header>
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+</body>
+</html>
