@@ -77,12 +77,6 @@
     <button id="editButton" onclick="showEditForm()"> Edit <span th:text="${profile.firstName}"></span></button>
     <br>
 
-    <form id="deleteForm" th:action="@{/profile/delete/{userID}(userID=${profile.getId()})}" method="post";>
-        <input type="hidden" id="deleteUserId" name="userID" th:value="${profile.getId()}">
-    </form>
-    <br>
-
-    <button id="deleteButton" onclick="confirmDelete()">Delete <span th:text="${profile.firstName}"></span></button>
     <div id="editForm" style="display:none;">
         <form th:action="@{/profile/edit/{userID}(userID=${profile.getId()})}" method="post">
             <!-- Existing fields -->
@@ -200,6 +194,15 @@
         </form>
         <br>
 
+        <form id="deleteForm" th:action="@{/profile/delete/{userID}(userID=${profile.getId()})}" method="post";>
+            <input type="hidden" id="deleteUserId" name="userID" th:value="${profile.getId()}">
+        </form>
+        <br>
+
+        <button id="deleteButton" onclick="confirmDelete()">Delete <span th:text="${profile.firstName}"></span></button>
+
+        <br>
+        <br>
         <a th:href="@{/profile}">Back to Profiles</a>
 
     </div>
