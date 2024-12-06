@@ -90,7 +90,7 @@ values
 -- Populate the communicationLogs table
 insert into communicationlogs (applicantId, userId, timestamp, userType, logType, communicationType, actionTaken, notes)
 VALUES
-    (1, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR) , 'recruiter', 'communication', 'email', 'emailSent', 'Invitation to interview'),
+    (1, 2, Now(), 'recruiter', 'communication', 'email', 'emailSent', 'Invitation to interview'),
     (1, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'email', 'applicantDetailsChanged', 'changed email address'),
     (1, 3, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'email', 'emailSent', 'Invitation to interview'),
     (1, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'phone', 'emailSent', 'Discussed application details'),
