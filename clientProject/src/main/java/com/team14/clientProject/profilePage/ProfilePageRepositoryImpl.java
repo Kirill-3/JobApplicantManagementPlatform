@@ -187,5 +187,10 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
                 profile.getPreferences().isSubscribeToJobUpdates() ? "Yes" : "No",
                 profile.getId());
     }
+
+    public void deleteProfile(int id) {
+        String sql = "DELETE FROM applicants WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
 

@@ -98,3 +98,9 @@ document.addEventListener("DOMContentLoaded", function() {
 function showEditForm() {
     document.getElementById('editForm').style.display = 'block';
 }
+
+function confirmDelete() {
+    if (confirm('Are you sure you want to delete this profile?')) {
+        document.getElementById('deleteForm').submit();
+    }
+}
