@@ -1,13 +1,19 @@
 package com.team14.clientProject.profilePage;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+
 
 @Repository
 public class ProfilePageRepositoryImpl implements ProfilePageRepository {
     private JdbcTemplate jdbcTemplate;
     private RowMapper<Profile> ProfileRowMapper;
+
+
 
     public ProfilePageRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

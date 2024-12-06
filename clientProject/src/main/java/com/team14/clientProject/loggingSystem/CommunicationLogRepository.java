@@ -6,5 +6,6 @@ public interface CommunicationLogRepository {
     void addEmailLog(List<String> applicantId, String emailContent);
     List<CommunicationLog> getLogsByApplicantId(int applicantId);
     void addApplicantLog();
+    void editApplicantLog(int applicantId);
 }
 

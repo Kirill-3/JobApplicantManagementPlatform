@@ -54,4 +54,10 @@ public class CommunicationLogRepositoryImpl implements CommunicationLogRepositor
         return jdbcTemplate.query(sql, CommunicationLogMapper, applicantId);
     }
 
+    @Override
+    public void editApplicantLog(int applicantId){
+        String sql = "INSERT INTO communicationLogs (applicantId, actionTaken, notes) VALUES (?, 'applicantDetailsChanged', 'Applicant details edited')";
+        jdbcTemplate.update(sql, applicantId);
+    }
+
 }

@@ -97,6 +97,7 @@ public class EmailPage {
         try {
             String resultMessage = emailServiceHandler.sendEmails(emailIds, subject, message, logoPath);
             modelAndView.addObject("alertMessage", resultMessage);
+            this.CommunicationLogRepository.addEmailLog(emailIds, subject);
         } catch (Exception e) {
             modelAndView.addObject("alertMessage", "Error sending emails: " + e.getMessage());
         }

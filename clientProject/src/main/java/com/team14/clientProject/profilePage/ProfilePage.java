@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.Base64;
 import java.util.List;
 
 @Controller
 @RequestMapping("/profile")
 public class ProfilePage {
+
+    @Autowired
+    private CommunicationLogRepositoryImpl CommunicationLogRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -243,6 +245,7 @@ public class ProfilePage {
         profile.setPreferences(preferences);
 
         profilePageRepository.updateProfile(profile);
+        this.communicationLogRepository.editApplicantLog(userID);
 
         this.profileList = profilePageRepository.getProfiles();
 
