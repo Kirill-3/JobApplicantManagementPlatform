@@ -2,14 +2,19 @@ create schema if not exists nhs_recruitment;
 
 use nhs_recruitment;
 
+SET FOREIGN_KEY_CHECKS = 0;
+drop table if exists communicationLogs;
+drop table if exists systemLogs;
+
 drop table if exists applicantpreferences;
 drop table if exists applicationdetails;
-drop table if exists communicationsLogs;
-drop table if exists systemLogs;
-drop table if exists recruitmentLogs;
+
+
 drop table if exists users;
 drop table if exists applicants;
-drop table if exists deletedApplicants;
+SET FOREIGN_KEY_CHECKS = 1;
+
+
 
 -- User Table
 create table if not exists users(
@@ -62,39 +67,32 @@ create table if not exists applicantPreferences
 ) engine = InnoDB;
 
 
+
+-- logging table
+create table if not exists communicationLogs(
+    logId              int auto_increment primary key,
+    applicantId        int null,
+    userId         int not null DEFAULT 1,
+    timestamp       timestamp default current_timestamp,
+    userType        enum('admin', 'recruiter') not null DEFAULT 'recruiter',
+    logType        enum('communication', 'detailchange') not null,
+    communicationType enum('email', 'phone', 'text', 'person') null DEFAULT 'email',
+    actionTaken enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'addedUser', 'note', 'other') not null,
+    notes           varchar(225),
+    foreign key (userId) references users(Id) on delete cascade,
+    foreign key (applicantId) references applicants(Id) on delete cascade
+) engine = InnoDB;
+
 -- System Logs Table
 create table if not exists systemLogs(
-    Id              int auto_increment primary key,
-    userId          int not null,
-    action          varchar(225),
-    timestamp   datetime default current_timestamp,
-    foreign key (userId) references users(ID) on delete cascade
-) engine = InnoDB;
-
-
--- Communication Log Table
-create table if not exists communicationsLogs(
-    Id              int auto_increment primary key,
-    applicationId   int not null,
-    userId          int not null,
-    type            enum('Email', 'SMS'),
-    content         varchar(225),
-    sentAt          datetime default current_timestamp,
-    foreign key (applicationId) references applicants(Id) on delete cascade,
-    foreign key (userId) references users(ID) on delete cascade
-) engine = InnoDB;
-
-
--- Recruitment Logs Table
-create table if not exists recruitmentLogs(
-        Id              int auto_increment primary key,
-        applicationId   int not null,
-        userId          int not null,
-        action          enum('Contacted', 'Interview Scheduled', 'Moved to internal'),
-        notes           varchar(225),
-        createdAt       timestamp default current_timestamp,
-        foreign key (applicationId) references applicants(Id) on delete cascade,
-        foreign key (userId) references users(ID) on delete cascade
+                                         systemLogId              int auto_increment primary key,
+                                         logId              int null,
+                                         userId          int not null,
+                                         action          enum('login', 'logout', 'addedUser', 'RemovedUser', 'changedRole', 'other'),
+                                         actionTaken     enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'addedUser', 'note', 'other') not null,
+                                         timestamp   datetime default current_timestamp,
+                                         foreign key (logId) references communicationLogs(logId) on delete cascade,
+                                         foreign key (userId) references users(ID) on delete cascade
 ) engine = InnoDB;
 
 -- Deleted Applicants Table - Temporary table to store deleted applicants for a period of time
