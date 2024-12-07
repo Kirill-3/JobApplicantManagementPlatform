@@ -12,6 +12,8 @@ drop table if exists applicationdetails;
 
 drop table if exists users;
 drop table if exists applicants;
+
+drop table if exists deletedApplicants;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
@@ -94,6 +96,8 @@ create table if not exists systemLogs(
                                          foreign key (logId) references communicationLogs(logId) on delete cascade,
                                          foreign key (userId) references users(ID) on delete cascade
 ) engine = InnoDB;
+
+DESCRIBE users;
 
 -- Deleted Applicants Table - Temporary table to store deleted applicants for a period of time
 -- Currently set to 30 seconds - easier to demonstrate the functionality to client

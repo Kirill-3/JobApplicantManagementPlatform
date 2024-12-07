@@ -119,3 +119,8 @@ function validateStatus(input) {
         input.setCustomValidity("");
     }
 }
+    function confirmDelete() {
+        if (confirm('Are you sure you want to delete this profile?')) {
+            document.getElementById('deleteForm').submit();
+        }
+}
