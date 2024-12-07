@@ -62,7 +62,8 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
 
     public Integer getApplicantCount() {
         String sql =
-                "SELECT COUNT(*) FROM " +
+                "SELECT COUNT(*) " +
+                "FROM " +
                 "applicants";
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }

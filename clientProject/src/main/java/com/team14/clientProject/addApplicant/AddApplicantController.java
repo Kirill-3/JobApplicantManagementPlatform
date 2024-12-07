@@ -1,6 +1,7 @@
 package com.team14.clientProject.addApplicant;
 
 import jakarta.validation.Valid;
+import org.h2.engine.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -53,6 +54,10 @@ public class AddApplicantController {
         }
 
         return modelAndView;
+
+//        @PostMapping ("/add-applicant/csv")
+//        public ModelAndView addApplicantByCsv;
+
 
 
     }
