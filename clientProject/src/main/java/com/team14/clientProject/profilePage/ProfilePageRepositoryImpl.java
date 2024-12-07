@@ -187,5 +187,20 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
                 profile.getPreferences().isSubscribeToJobUpdates() ? "Yes" : "No",
                 profile.getId());
     }
+
+    public void deleteProfile(int id) {
+        String insertSql = "INSERT INTO deletedApplicants (id, firstName, lastName, location, email, phoneNumber, currentPosition, status, skill, eventAttended, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates) " +
+                "SELECT a.id, a.firstName, a.lastName, a.location, a.email, a.phoneNumber, " +
+                "d.currentPosition, d.status, a.skill, a.eventAttended, " +
+                "p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.applicationId " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.applicationId " +
+                "WHERE a.id = ?";
+        jdbcTemplate.update(insertSql, id);
+
+        String sql = "DELETE FROM applicants WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
 
