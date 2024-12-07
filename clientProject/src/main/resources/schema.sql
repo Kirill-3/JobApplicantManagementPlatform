@@ -13,6 +13,8 @@ drop table if exists applicationdetails;
 
 drop table if exists users;
 drop table if exists applicants;
+
+drop table if exists deletedApplicants;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
@@ -91,4 +93,31 @@ create table if not exists systemLogs(
                                          actionTaken          enum('login', 'logout', 'addedUser', 'removedUser', 'changedRole', 'other'),
                                          timestamp   datetime default current_timestamp
 ) engine = InnoDB;
+
 DESCRIBE users;
+
+-- Deleted Applicants Table - Temporary table to store deleted applicants for a period of time
+-- Currently set to 30 seconds - easier to demonstrate the functionality to client
+CREATE TABLE deletedApplicants (
+                                   Id int auto_increment primary key,
+                                   firstName varchar(128) not null,
+                                   lastName varchar(128) not null,
+                                   location varchar(100) not null,
+                                   email varchar(100) not null unique,
+                                   phoneNumber varchar(15),
+                                   currentPosition varchar(100),
+                                   status enum('External', 'Internal') default 'External',
+                                   skill text,
+                                   eventAttended varchar(100) not null,
+                                   SubscribeToNewsLetter enum('Yes', 'No') default 'No',
+                                   SubscribeToBulletins enum('Yes', 'No') default 'No',
+                                   SubscribeToJobUpdates enum('Yes', 'No') default 'No',
+                                   deletedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SET GLOBAL event_scheduler = ON;
+
+CREATE EVENT IF NOT EXISTS deleteOldRecords
+    ON SCHEDULE EVERY 30 SECOND
+    DO
+    DELETE FROM deletedApplicants WHERE deletedAt < NOW() - INTERVAL 30 SECOND;

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.Base64;
 import java.util.List;
 
@@ -230,18 +232,12 @@ public class ProfilePage {
         profile.setCurrentPosition(currentPosition);
         profile.setStatus(status);
 
-        // Update preferences
         applicantPreferences preferences = profile.getPreferences();
-        if (preferences == null) {
-            preferences = new applicantPreferences(userID,
-                    subscribeToNewsletter != null && subscribeToNewsletter,
-                    subscribeToBulletins != null && subscribeToBulletins,
-                    subscribeToJobUpdates != null && subscribeToJobUpdates);
-        } else {
+
             preferences.setSubscribeToNewsletter(subscribeToNewsletter != null && subscribeToNewsletter);
             preferences.setSubscribeToBulletins(subscribeToBulletins != null && subscribeToBulletins);
             preferences.setSubscribeToJobUpdates(subscribeToJobUpdates != null && subscribeToJobUpdates);
-        }
+
         profile.setPreferences(preferences);
 
         profilePageRepository.updateProfile(profile);
@@ -252,5 +248,15 @@ public class ProfilePage {
         model.addAttribute("profile", profile);
         return "profilePage";
     }
+    @PostMapping("/delete/{userID}")
+    public String deleteProfile(@PathVariable int userID, RedirectAttributes redirectAttributes) {
+        Profile profile = profilePageRepository.getProfileById(userID);
+
+        profilePageRepository.deleteProfile(userID);
+        this.profileList = profilePageRepository.getProfiles();
+        redirectAttributes.addFlashAttribute("alertMessage", "Profile deleted successfully");
+        return "redirect:/profile";
+    }
+
 }
 

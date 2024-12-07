@@ -98,3 +98,29 @@ document.addEventListener("DOMContentLoaded", function() {
 function showEditForm() {
     document.getElementById('editForm').style.display = 'block';
 }
+
+function validateUKPhoneNumber(input) {
+    const phoneNumber = input.value;
+    // https://stackoverflow.com/questions/5286046/javascript-phone-number-validation
+    const isValid = /^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/.test(phoneNumber);
+    if (!isValid) {
+        input.setCustomValidity("Please enter a valid UK phone number.");
+    } else {
+        input.setCustomValidity("");
+    }
+}
+
+function validateStatus(input) {
+    const statusInput = input.value;
+    const validStatuses = ['Internal', 'External'];
+    if (!validStatuses.includes(statusInput)) {
+        input.setCustomValidity("Please enter a valid status: 'Internal' or 'External'.");
+    } else {
+        input.setCustomValidity("");
+    }
+}
+    function confirmDelete() {
+        if (confirm('Are you sure you want to delete this profile?')) {
+            document.getElementById('deleteForm').submit();
+        }
+}
