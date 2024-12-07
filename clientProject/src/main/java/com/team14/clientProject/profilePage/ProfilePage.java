@@ -25,6 +25,9 @@ import java.util.List;
 public class ProfilePage {
 
     @Autowired
+    private CommunicationLogRepositoryImpl CommunicationLogRepository;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     private ProfilePageRepositoryImpl profilePageRepository;
     private CommunicationLogRepository communicationLogRepository;
@@ -238,6 +241,7 @@ public class ProfilePage {
         profile.setPreferences(preferences);
 
         profilePageRepository.updateProfile(profile);
+        this.communicationLogRepository.editApplicantLog(userID);
 
         this.profileList = profilePageRepository.getProfiles();
 

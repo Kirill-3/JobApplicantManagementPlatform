@@ -1,5 +1,6 @@
 package com.team14.clientProject.adminPage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,6 +16,8 @@ public class AdminRepositoryImpl implements AdminRepository {
 
     private JdbcTemplate jdbcTemplate;
     private RowMapper<User> userMapper;
+    @Autowired
+
 
     // Constructor injection of JdbcTemplate
     public AdminRepositoryImpl(JdbcTemplate jdbcTemplate) {

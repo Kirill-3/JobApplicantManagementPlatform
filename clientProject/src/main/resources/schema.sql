@@ -4,6 +4,7 @@ use nhs_recruitment;
 
 SET FOREIGN_KEY_CHECKS = 0;
 drop table if exists communicationLogs;
+drop table if exists communicationslogs;
 drop table if exists systemLogs;
 
 drop table if exists applicantpreferences;
@@ -79,9 +80,9 @@ create table if not exists communicationLogs(
     userId         int not null DEFAULT 1,
     timestamp       timestamp default current_timestamp,
     userType        enum('admin', 'recruiter') not null DEFAULT 'recruiter',
-    logType        enum('communication', 'detailchange') not null,
+    logType        enum('communication', 'detailChange') not null,
     communicationType enum('email', 'phone', 'text', 'person') null DEFAULT 'email',
-    actionTaken enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'addedUser', 'note', 'other') not null,
+    actionTaken enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'note', 'other') not null,
     notes           varchar(225),
     foreign key (userId) references users(Id) on delete cascade,
     foreign key (applicantId) references applicants(Id) on delete cascade
@@ -90,13 +91,9 @@ create table if not exists communicationLogs(
 -- System Logs Table
 create table if not exists systemLogs(
                                          systemLogId              int auto_increment primary key,
-                                         logId              int null,
                                          userId          int not null,
-                                         action          enum('login', 'logout', 'addedUser', 'RemovedUser', 'changedRole', 'other'),
-                                         actionTaken     enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'addedUser', 'note', 'other') not null,
-                                         timestamp   datetime default current_timestamp,
-                                         foreign key (logId) references communicationLogs(logId) on delete cascade,
-                                         foreign key (userId) references users(ID) on delete cascade
+                                         actionTaken          enum('login', 'logout', 'addedUser', 'removedUser', 'changedRole', 'other'),
+                                         timestamp   datetime default current_timestamp
 ) engine = InnoDB;
 
 DESCRIBE users;
