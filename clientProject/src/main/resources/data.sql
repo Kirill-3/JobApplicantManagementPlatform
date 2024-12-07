@@ -1,4 +1,6 @@
 -- Populate the Users table
+use nhs_recruitment;
+
 insert into users (username, passwordHashed, firstName, lastName, role, lastLogin)
 values
     ('admin', SHA2('password1', 256), 'Alice', 'Johnson', 'admin', NOW()),
