@@ -1,6 +1,7 @@
 package com.team14.clientProject.emailPage;
 
 import com.team14.clientProject.emailPage.mail.EmailServiceHandler;
+import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
 import com.team14.clientProject.profilePage.Profile;
 import com.team14.clientProject.profilePage.ProfilePageRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class EmailPage {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private ProfilePageRepositoryImpl profilePageRepository;
+    @Autowired
+    private CommunicationLogRepositoryImpl CommunicationLogRepository;
     private List<Profile> profileList;
 
     // Constructor to initialize the EmailPage with JdbcTemplate.
@@ -63,6 +66,7 @@ public class EmailPage {
         String alertMessage = emailServiceHandler.sendEmails(emailIds, subject, htmlBody, logoPath);
         modelAndView.addObject("alertMessage", alertMessage);
         modelAndView.addObject("profileList", this.profileList);
+        this.CommunicationLogRepository.addEmailLog(emailIds, subject);
         return modelAndView;
     }
 
@@ -93,6 +97,7 @@ public class EmailPage {
         try {
             String resultMessage = emailServiceHandler.sendEmails(emailIds, subject, message, logoPath);
             modelAndView.addObject("alertMessage", resultMessage);
+            this.CommunicationLogRepository.addEmailLog(emailIds, subject);
         } catch (Exception e) {
             modelAndView.addObject("alertMessage", "Error sending emails: " + e.getMessage());
         }

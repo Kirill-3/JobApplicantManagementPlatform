@@ -1,4 +1,6 @@
 -- Populate the Users table
+use nhs_recruitment;
+
 insert into users (username, passwordHashed, firstName, lastName, role, lastLogin)
 values
     ('admin', SHA2('password1', 256), 'Alice', 'Johnson', 'admin', NOW()),
@@ -152,6 +154,56 @@ values
     (18, 'Surgical Assistant', 'External', NULL, NULL),
     (19, 'Healthcare Administrator', 'Internal', NULL, NULL),
     (20, 'Health Coordinator', 'External', NULL, NULL);
+
+
+-- Populate the communicationLogs table
+insert into communicationlogs (applicantId, userId, timestamp, userType, logType, communicationType, actionTaken, notes)
+VALUES
+    (1, 2, Now(), 'recruiter', 'communication', 'email', 'emailSent', 'Invitation to interview'),
+    (1, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'email', 'applicantDetailsChanged', 'changed email address'),
+    (1, 3, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'email', 'emailSent', 'Invitation to interview'),
+    (1, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'phone', 'emailSent', 'Discussed application details'),
+    (1, 3, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'email', 'applicantDetailsChanged', 'Updated phone number'),
+    (1, 4, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'text', 'applicantAdded', 'Sent confirmation of registration'),
+    (1, 5, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'person', 'applicantDetailsChanged', 'Changed event attended information'),
+    (1, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'phone', 'note', 'Provided additional instructions for interview'),
+    (1, 3, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'person', 'applicantRemoved', 'Discussed withdrawal of application'),
+    (2, 4, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'email', 'applicantDetailsChanged', 'New applicant profile created'),
+    (2, 5, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'text', 'emailSent', 'Sent final offer email'),
+    (2, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'person', 'applicantDetailsChanged', 'Updated applicant skills'),
+    (3, 3, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'email', 'note', 'Notified applicant about next steps'),
+    (4, 4, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'phone', 'applicantAdded', 'Applicant confirmed availability for interview'),
+    (5, 5, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'person', 'emailSent', 'Shared job description details'),
+    (6, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'email', 'note', 'Added a note regarding applicant follow-up'),
+    (7, 3, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'phone', 'applicantRemoved', 'Applicant declined job offer'),
+    (8, 4, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'text', 'emailSent', 'Reminder for upcoming assessment center'),
+    (9, 5, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'detailChange', 'person', 'applicantDetailsChanged', 'Corrected spelling in applicant name'),
+    (10, 2, DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR), 'recruiter', 'communication', 'person', 'emailSent', 'In-person interview invitation sent');
+
+
+-- populate the systemLogs table
+INSERT INTO systemLogs (systemLogId, userId, actionTaken)
+VALUES
+    (1,2, 'login'),
+    (2,3, 'login'),
+    (3,4, 'login'),
+    (4,5, 'login'),
+    (5,6, 'login'),
+    (6,7, 'login'),
+    (7,8, 'login'),
+    (8,9, 'login'),
+    (9,10, 'login'),
+    (10,2, 'logout'),
+    (11,3, 'logout'),
+    (12,4, 'logout'),
+    (13,5, 'logout'),
+    (14,6, 'logout'),
+    (15,7, 'logout'),
+    (16,8, 'logout'),
+    (17,9, 'logout'),
+    (18,10, 'logout');
+
+
 
 
 DESCRIBE users;

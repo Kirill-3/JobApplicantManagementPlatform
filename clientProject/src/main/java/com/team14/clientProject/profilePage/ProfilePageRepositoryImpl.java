@@ -1,13 +1,19 @@
 package com.team14.clientProject.profilePage;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+
 
 @Repository
 public class ProfilePageRepositoryImpl implements ProfilePageRepository {
     private JdbcTemplate jdbcTemplate;
     private RowMapper<Profile> ProfileRowMapper;
+
+
 
     public ProfilePageRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -17,7 +23,6 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
     private void createProfileRowMapper() {
         ProfileRowMapper = (rs, rowNum) -> {
-
             Profile profile = new Profile(
                     rs.getInt("id"),
                     rs.getString("firstName"),
@@ -31,9 +36,9 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
             applicantPreferences preferences = new applicantPreferences(
                     rs.getInt("id"),
-                    rs.getBoolean("SubscribeToNewsLetter"),
-                    rs.getBoolean("SubscribeToBulletins"),
-                    rs.getBoolean("SubscribeToJobUpdates")
+                    "Yes".equals(rs.getString("SubscribeToNewsLetter")),
+                    "Yes".equals(rs.getString("SubscribeToBulletins")),
+                    "Yes".equals(rs.getString("SubscribeToJobUpdates"))
             );
             profile.setPreferences(preferences);
 
@@ -46,7 +51,6 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
 
             return profile;
         };
-
     }
 
 
@@ -169,10 +173,40 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
     @Override
     public void updateProfile(Profile profile) {
         String sql = "UPDATE applicants SET firstName = ?, lastName = ?, location = ?, email = ?, phoneNumber = ?, eventAttended = ?, skill = ? WHERE id = ?";
-        jdbcTemplate.update(sql, profile.getFirstName(), profile.getLastName(), profile.getLocation(), profile.getEmail(), profile.getPhoneNumber(), profile.getEventAttended(), profile.getSkill(), profile.getId());
+        jdbcTemplate.update(sql,
+                profile.getFirstName(),
+                profile.getLastName(),
+                profile.getLocation(),
+                profile.getEmail(),
+                profile.getPhoneNumber(),
+                profile.getEventAttended(),
+                profile.getSkill(),
+                profile.getId());
 
         String jobDetailsSql = "UPDATE applicationdetails SET currentPosition = ?, status = ? WHERE id = ?";
         jdbcTemplate.update(jobDetailsSql, profile.getJobDetails().getCurrentPosition(), profile.getJobDetails().getStatus(), profile.getId());
+
+        String preferencesSql = "UPDATE applicantPreferences SET SubscribeToNewsLetter = ?, SubscribeToBulletins = ?, SubscribeToJobUpdates = ? WHERE applicationId = ?";
+        jdbcTemplate.update(preferencesSql,
+                profile.getPreferences().isSubscribeToNewsletter() ? "Yes" : "No",
+                profile.getPreferences().isSubscribeToBulletins() ? "Yes" : "No",
+                profile.getPreferences().isSubscribeToJobUpdates() ? "Yes" : "No",
+                profile.getId());
+    }
+
+    public void deleteProfile(int id) {
+        String insertSql = "INSERT INTO deletedApplicants (id, firstName, lastName, location, email, phoneNumber, currentPosition, status, skill, eventAttended, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates) " +
+                "SELECT a.id, a.firstName, a.lastName, a.location, a.email, a.phoneNumber, " +
+                "d.currentPosition, d.status, a.skill, a.eventAttended, " +
+                "p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.applicationId " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.applicationId " +
+                "WHERE a.id = ?";
+        jdbcTemplate.update(insertSql, id);
+
+        String sql = "DELETE FROM applicants WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }
 

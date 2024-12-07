@@ -46,7 +46,7 @@
             </th >
             <th th:data-original-text="event">
                 <select id="eventDropdown" class="thisDropdown">
-                    <option value="">All events</option>
+                    <option value="">All Sources</option>
                     <option th:each="event : ${uniqueEvents}" th:value="${event.getEventAttended()}" th:text="${event.getEventAttended()}"></option>
                 </select>
             </th>
@@ -74,10 +74,12 @@
 <br>
 <div th:if="${profile != null}" class="profile-container">
 
-    <button id="editButton" onclick="showEditForm()">Edit</button>
+    <button id="editButton" onclick="showEditForm()"> Edit <span th:text="${profile.firstName}"></span></button>
+    <br>
 
     <div id="editForm" style="display:none;">
         <form th:action="@{/profile/edit/{userID}(userID=${profile.getId()})}" method="post">
+            <!-- Existing fields -->
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" th:value="${profile.firstName}" required>
             <br>
@@ -91,13 +93,13 @@
             <input type="email" id="email" name="email" th:value="${profile.email}" required>
             <br>
             <label for="phoneNumber">Phone Number:</label>
-            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required oninput="validateUKPhoneNumber(this)">
             <br>
             <label for="currentPosition">Current Position:</label>
             <input type="text" id="currentPosition" name="currentPosition" th:value="${profile.jobDetails?.currentPosition}" required>
             <br>
             <label for="status">Status:</label>
-            <input type="text" id="status" name="status" th:value="${profile.jobDetails?.status}" required>
+            <input type="text" id="status" name="status" th:value="${profile.jobDetails?.status}" required oninput="validateStatus(this)">
             <br>
             <label for="skill">Skills:</label>
             <input type="text" id="skill" name="skill" th:value="${profile.skill}" required>
@@ -105,10 +107,20 @@
             <label for="eventAttended">Event Attended:</label>
             <input type="text" id="eventAttended" name="eventAttended" th:value="${profile.eventAttended}" required>
             <br>
+            <label for="subscribeToNewsletter">Subscribe to Newsletter:</label>
+            <input type="checkbox" id="subscribeToNewsletter" name="subscribeToNewsletter" th:checked="${profile.preferences?.subscribeToNewsletter}">
+            <br>
+            <label for="subscribeToBulletins">Subscribe to Bulletins:</label>
+            <input type="checkbox" id="subscribeToBulletins" name="subscribeToBulletins" th:checked="${profile.preferences?.subscribeToBulletins}">
+            <br>
+            <label for="subscribeToJobUpdates">Subscribe to Job Updates:</label>
+            <input type="checkbox" id="subscribeToJobUpdates" name="subscribeToJobUpdates" th:checked="${profile.preferences?.subscribeToJobUpdates}">
+            <br>
             <button type="submit">Save</button>
         </form>
     </div>
     <br>
+
 
     <div class="profile-details">
         <h2>Personal Details</h2>
@@ -175,12 +187,16 @@
             </tr>
         </table>
 
-        <br>
-        <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
-            <button type="submit"> Email <span th:text="${profile.firstName}"></span></button>
+
+        <form id="deleteForm" th:action="@{/profile/delete/{userID}(userID=${profile.getId()})}" method="post";>
+            <input type="hidden" id="deleteUserId" name="userID" th:value="${profile.getId()}">
         </form>
         <br>
 
+        <button id="deleteButton" onclick="confirmDelete()">Delete <span th:text="${profile.firstName}"></span></button>
+
+        <br>
+        <br>
         <a th:href="@{/profile}">Back to Profiles</a>
 
     </div>
@@ -203,7 +219,39 @@
         </div>
     </div>
 </div>
+<div th:if="${profile != null}" class="log" >
+    <table id="table2" class="logTable">
+        <thead>
+        <tr>
+            <th>UserId</th>
+            <th>Communication Method</th>
+            <th>Action Taken</th>
+            <th>Content</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${Log}">
+            <td th:text="${log.getUserId()}"></td>
+            <td th:text="${log.getCommunicationType()}"></td>
+            <td th:text="${log.getActionTaken()}"></td>
+            <td th:text="${log.getNotes()}"></td>
+            <td th:text="${log.getTimestamp()}"></td>
+        </tr>
 
+        </tbody>
+    </table>
+</div>
+<div th:if="${profile != null}">
+    <br>
+    <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
+        <button type="submit"> Email <span th:text="${profile.firstName}"></span></button>
+    </form>
+    <br>
+
+
+    <a th:href="@{/profile}">Back to Profiles</a>
+</div>
 <!-- Footer -->
 <div th:replace="~{fragments/footer :: footer-links}"></div>
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
