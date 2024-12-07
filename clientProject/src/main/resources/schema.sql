@@ -81,9 +81,7 @@ create table if not exists communicationLogs(
     logType        enum('communication', 'detailChange') not null,
     communicationType enum('email', 'phone', 'text', 'person') null DEFAULT 'email',
     actionTaken enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'note', 'other') not null,
-    notes           varchar(225),
-    foreign key (userId) references users(Id) on delete cascade,
-    foreign key (applicantId) references applicants(Id) on delete cascade
+    notes           varchar(225)
 ) engine = InnoDB;
 
 -- System Logs Table
