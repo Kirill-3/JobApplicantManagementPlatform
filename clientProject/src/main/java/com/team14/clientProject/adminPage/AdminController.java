@@ -60,7 +60,7 @@ public class AdminController {
     public String deleteUser(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         try {
             adminService.deleteUser(id);
-            redirectAttributes.addFlashAttribute("success", "User deleted successfully!");
+            redirectAttributes.addFlashAttribute("alertMessage", "User deleted successfully");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Failed to delete user: " + e.getMessage());
         }

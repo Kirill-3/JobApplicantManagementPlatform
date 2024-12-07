@@ -14,6 +14,8 @@ drop table if exists users;
 drop table if exists applicants;
 
 drop table if exists deletedApplicants;
+drop table if exists deletedUsers;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 
@@ -116,11 +118,29 @@ CREATE TABLE deletedApplicants (
                                    SubscribeToBulletins enum('Yes', 'No') default 'No',
                                    SubscribeToJobUpdates enum('Yes', 'No') default 'No',
                                    deletedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) engine = InnoDB;
 
 SET GLOBAL event_scheduler = ON;
 
-CREATE EVENT IF NOT EXISTS deleteOldRecords
+CREATE EVENT IF NOT EXISTS deleteApplicants
     ON SCHEDULE EVERY 30 SECOND
     DO
     DELETE FROM deletedApplicants WHERE deletedAt < NOW() - INTERVAL 30 SECOND;
+
+create table if not exists deletedUsers(
+                                    ID          int auto_increment primary key,
+                                    username        varchar(50) not null unique,
+                                    passwordHashed   varchar(128) not null ,
+                                    firstName       varchar(128) not null,
+                                    lastName        varchar(128) not null,
+                                    role            enum('admin', 'recruiter') not null,
+                                    lastLogin       timestamp,
+                                    createdAt        timestamp default current_timestamp,
+                                    deletedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+) engine = InnoDB;
+
+CREATE EVENT IF NOT EXISTS deleteUsers
+    ON SCHEDULE EVERY 30 SECOND
+    DO
+    DELETE FROM deletedUsers WHERE deletedAt < NOW() - INTERVAL 30 SECOND;
