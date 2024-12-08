@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <title>Admin Page</title>
     <link th:replace="~{fragments/header :: bootstrap-css}"/>
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
     <div class="newUser">
         <h1>List of Users.</h1>
         <button>
-                <a th:href="@{/admin/add}">Add New User</a>
+                <a th:href="@{/admin/add}" class="admin-new-user">Add New User</a>
         </button>
-        <table class="table">
+        <table class="table-content">
             <thead>
             <tr>
                 <th>ID</th>
