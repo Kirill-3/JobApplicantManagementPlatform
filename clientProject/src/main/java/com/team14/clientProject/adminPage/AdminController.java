@@ -1,5 +1,7 @@
 package com.team14.clientProject.adminPage;
 
+import com.team14.clientProject.loggingSystem.CommunicationLogRepository;
+import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
 import com.team14.clientProject.loggingSystem.SystemLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ public class AdminController {
 
     @Autowired
     private SystemLogRepositoryImpl systemLogRepository;
+    @Autowired
+    private CommunicationLogRepositoryImpl communicationLogRepository;
 
     private final AdminService adminService;
 
@@ -30,6 +34,8 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("admin/admin");
         List<User> users = adminService.getAllUsers();
         modelAndView.addObject("users", users);
+        modelAndView.addObject("Log", this.communicationLogRepository.getLogs());
+        modelAndView.addObject("systemLog", this.systemLogRepository.getLogs());
         return modelAndView;
     }
 
