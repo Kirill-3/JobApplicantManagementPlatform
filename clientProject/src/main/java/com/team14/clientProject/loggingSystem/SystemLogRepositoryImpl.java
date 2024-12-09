@@ -28,8 +28,8 @@ public class SystemLogRepositoryImpl implements SystemLogRepository {
 
     @Override
     public List<SystemLog> getLogs() {
-        System.out.println("Logs retrieved");
-        return null;
+        String sql = "SELECT * FROM systemLogs ORDER BY timestamp DESC";
+        return jdbcTemplate.query(sql, SystemLogMapper);
     }
 
     @Override
