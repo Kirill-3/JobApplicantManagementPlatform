@@ -316,26 +316,26 @@ VALUES
 
 
 -- populate the systemLogs table
-INSERT INTO systemLogs (systemLogId, userId, actionTaken)
+INSERT INTO systemLogs (systemLogId, userId, actionTaken, timestamp)
 VALUES
-    (1,2, 'login'),
-    (2,3, 'login'),
-    (3,4, 'login'),
-    (4,5, 'login'),
-    (5,6, 'login'),
-    (6,7, 'login'),
-    (7,8, 'login'),
-    (8,9, 'login'),
-    (9,10, 'login'),
-    (10,2, 'logout'),
-    (11,3, 'logout'),
-    (12,4, 'logout'),
-    (13,5, 'logout'),
-    (14,6, 'logout'),
-    (15,7, 'logout'),
-    (16,8, 'logout'),
-    (17,9, 'logout'),
-    (18,10, 'logout');
+    (1,2, 'login',DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (2,3, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (3,4, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (4,5, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (5,6, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (6,7, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (7,8, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (8,9, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (9,10, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (10,2, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (11,3, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (12,4, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (13,5, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (14,6, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (15,7, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (16,8, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (17,9, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (18,10, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR));
 
 
 

@@ -37,24 +37,34 @@
             </tbody>
         </table>
 </div>
-<br>
+<br><br>
 <div class = "log">
     <table id="table2" class="logTable">
         <thead>
         <tr>
-            <th>UserId</th>
-            <th>Communication Method</th>
+            <th>Log type</th>
+            <th>Log Id</th>
+            <th>User Id</th>
+            <th>applicant ID</th>
+            <th>Comm Method</th>
             <th>Action Taken</th>
             <th>Content</th>
             <th>Time</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="log : ${Log}">
+        <tr th:each="log : ${logs}">
+            <td th:if="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="Communication"></td>
+            <td th:unless="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="System"></td>
+            <td th:text="${log.getLogId()}"></td>
             <td th:text="${log.getUserId()}"></td>
-            <td th:text="${log.getCommunicationType()}"></td>
+            <td th:if="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="${log.getApplicantId}"></td>
+            <td th:unless="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}"></td>
+            <td th:if="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="${log.getCommunicationType()}"></td>
+            <td th:unless="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}"></td>
             <td th:text="${log.getActionTaken()}"></td>
-            <td th:text="${log.getNotes()}"></td>
+            <td th:if="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="${log.getNotes()}"></td>
+            <td th:unless="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}"></td>
             <td th:text="${log.getTimestamp()}"></td>
         </tr>
 
@@ -62,27 +72,6 @@
     </table>
 </div>
 <br><br>
-<div class = "log">
-    <table id="table2" class="logTable">
-        <thead>
-        <tr>
-            <th>System Log Id</th>
-            <th>User ID</th>
-            <th>Action Taken</th>
-            <th>Time</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="thisSystemLog : ${systemLog}">
-            <td th:text="${thisSystemLog.getSystemLogId()}"></td>
-            <td th:text="${thisSystemLog.getUserId()}"></td>
-            <td th:text="${thisSystemLog.getActionTaken()}"></td>
-            <td th:text="${thisSystemLog.getTimestamp()}"></td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
 <div th:replace="~{fragments/footer :: footer-links}"></div>
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 </body>
