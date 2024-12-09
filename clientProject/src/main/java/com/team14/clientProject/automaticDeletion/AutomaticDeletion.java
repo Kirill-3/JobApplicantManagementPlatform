@@ -1,14 +1,15 @@
 package com.team14.clientProject.automaticDeletion;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.JdbcTemplate;
+import com.team14.clientProject.emailPage.mail.EmailService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class AutomaticDeletion {
@@ -17,44 +18,44 @@ public class AutomaticDeletion {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService emailService;
 
-    @Scheduled(cron = "* * * * * ?") // Runs every second
-    public void checkApplicants() {
-        LocalDateTime thirtySecondsAgo = LocalDateTime.now().minusSeconds(30);
-        LocalDateTime fifteenSecondsAgo = LocalDateTime.now().minusSeconds(15);
+    private boolean emailSent = false;
 
-        String warnSql = "SELECT email FROM applicants WHERE createdAt BETWEEN ? AND ? LIMIT 1";
-        List<String> emailsToWarn = jdbcTemplate.queryForList(warnSql, String.class, fifteenSecondsAgo.minusSeconds(15), fifteenSecondsAgo);
-        System.out.println("Emails to warn: " + emailsToWarn);
-
-        if (!emailsToWarn.isEmpty()) {
-            sendWarningEmail(emailsToWarn.get(0));
-            System.out.println("Warning email sent to: " + emailsToWarn.get(0));
+    @Scheduled(cron = "*/15 * * * * ?") // every 15 seconds
+    public void checkApplicants() throws MessagingException, InterruptedException {
+        if (emailSent) {
+            return;
         }
 
-        String moveSql = "INSERT INTO deletedApplicants (id, firstName, lastName, location, email, phoneNumber, currentPosition, status, skill, eventAttended, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates) " +
-                "SELECT a.id, a.firstName, a.lastName, a.location, a.email, a.phoneNumber, " +
-                "d.currentPosition, d.status, a.skill, a.eventAttended, " +
-                "p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates " +
-                "FROM applicants a " +
-                "LEFT JOIN applicantpreferences p ON a.Id = p.applicationId " +
-                "LEFT JOIN applicationdetails d ON a.Id = d.applicationId " +
-                "WHERE a.createdAt BETWEEN ? AND ?";
-        int rowsMoved = jdbcTemplate.update(moveSql, fifteenSecondsAgo.minusSeconds(15), fifteenSecondsAgo);
-        System.out.println("Rows moved to deletedApplicants: " + rowsMoved);
+        LocalDateTime thirtySecondsAgo = LocalDateTime.now().minusSeconds(30);
 
-        String deleteSql = "DELETE FROM applicants WHERE createdAt BETWEEN ? AND ?";
-        int rowsDeleted = jdbcTemplate.update(deleteSql, fifteenSecondsAgo.minusSeconds(15), fifteenSecondsAgo);
-        System.out.println("Rows deleted from applicants: " + rowsDeleted);
-    }
+        System.out.println("Checking applicants created before " + thirtySecondsAgo);
 
+        String warnSql = "SELECT email FROM applicants WHERE createdAt < ? LIMIT 1";
+        List<String> emailsToWarn = jdbcTemplate.queryForList(warnSql, String.class, thirtySecondsAgo);
 
-    private void sendWarningEmail(String email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("Warning: Your information will be deleted soon");
-        message.setText("Your information will be deleted in 15 seconds. Please take any necessary actions.");
-        mailSender.send(message);
+        if (!emailsToWarn.isEmpty()) {
+            System.out.println("Sending warning email to: " + emailsToWarn.get(0));
+            String htmlBody = "<p>Your information will be automatically deleted in 1 month in accordance with company policy. Please contact us to retain your information.</p>";
+            emailService.sendWarningEmail(emailsToWarn.get(0), "Warning: Your information will be deleted soon", htmlBody, "src/main/resources/static/images/dhcw.png");
+            emailSent = true;
+            TimeUnit.SECONDS.sleep(15);
+
+            String moveSql = "INSERT INTO deletedApplicants (id, firstName, lastName, location, email, phoneNumber, currentPosition, status, skill, eventAttended, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates) " +
+                    "SELECT a.id, a.firstName, a.lastName, a.location, a.email, a.phoneNumber, " +
+                    "d.currentPosition, d.status, a.skill, a.eventAttended, " +
+                    "p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates " +
+                    "FROM applicants a " +
+                    "LEFT JOIN applicantpreferences p ON a.Id = p.applicationId " +
+                    "LEFT JOIN applicationdetails d ON a.Id = d.applicationId " +
+                    "WHERE a.createdAt < ? LIMIT 1";
+            int rowsMoved = jdbcTemplate.update(moveSql, thirtySecondsAgo);
+            System.out.println("Rows moved to deletedApplicants: " + rowsMoved);
+
+            String deleteSql = "DELETE FROM applicants WHERE createdAt < ? LIMIT 1";
+            int rowsDeleted = jdbcTemplate.update(deleteSql, thirtySecondsAgo);
+            System.out.println("Rows deleted from applicants: " + rowsDeleted);
+        }
     }
 }
