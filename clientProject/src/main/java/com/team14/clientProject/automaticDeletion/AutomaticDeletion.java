@@ -23,21 +23,14 @@ public class AutomaticDeletion {
     public void checkApplicants() {
         LocalDateTime thirtySecondsAgo = LocalDateTime.now().minusSeconds(30);
         LocalDateTime fifteenSecondsAgo = LocalDateTime.now().minusSeconds(15);
-        LocalDateTime rangeStart = fifteenSecondsAgo.minusSeconds(15).minusSeconds(1);
-        LocalDateTime rangeEnd = fifteenSecondsAgo.plusSeconds(1);
 
         String warnSql = "SELECT email FROM applicants WHERE createdAt BETWEEN ? AND ? LIMIT 1";
-        List<String> emailsToWarn = jdbcTemplate.queryForList(warnSql, String.class, rangeStart, rangeEnd);
-
-        System.out.println("Range Start: " + rangeStart);
-        System.out.println("Range End: " + rangeEnd);
+        List<String> emailsToWarn = jdbcTemplate.queryForList(warnSql, String.class, fifteenSecondsAgo.minusSeconds(15), fifteenSecondsAgo);
         System.out.println("Emails to warn: " + emailsToWarn);
 
         if (!emailsToWarn.isEmpty()) {
             sendWarningEmail(emailsToWarn.get(0));
             System.out.println("Warning email sent to: " + emailsToWarn.get(0));
-        } else {
-            System.out.println("No email to warn in the given range.");
         }
 
         String moveSql = "INSERT INTO deletedApplicants (id, firstName, lastName, location, email, phoneNumber, currentPosition, status, skill, eventAttended, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates) " +
@@ -47,14 +40,15 @@ public class AutomaticDeletion {
                 "FROM applicants a " +
                 "LEFT JOIN applicantpreferences p ON a.Id = p.applicationId " +
                 "LEFT JOIN applicationdetails d ON a.Id = d.applicationId " +
-                "WHERE a.createdAt = ?";
-        int rowsMoved = jdbcTemplate.update(moveSql, thirtySecondsAgo);
+                "WHERE a.createdAt BETWEEN ? AND ?";
+        int rowsMoved = jdbcTemplate.update(moveSql, fifteenSecondsAgo.minusSeconds(15), fifteenSecondsAgo);
         System.out.println("Rows moved to deletedApplicants: " + rowsMoved);
 
-        String deleteSql = "DELETE FROM applicants WHERE createdAt = ?";
-        int rowsDeleted = jdbcTemplate.update(deleteSql, thirtySecondsAgo);
+        String deleteSql = "DELETE FROM applicants WHERE createdAt BETWEEN ? AND ?";
+        int rowsDeleted = jdbcTemplate.update(deleteSql, fifteenSecondsAgo.minusSeconds(15), fifteenSecondsAgo);
         System.out.println("Rows deleted from applicants: " + rowsDeleted);
     }
+
 
     private void sendWarningEmail(String email) {
         SimpleMailMessage message = new SimpleMailMessage();
