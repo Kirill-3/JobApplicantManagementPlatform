@@ -4,13 +4,20 @@ import com.team14.clientProject.emailPage.EmailPage;
 import com.team14.clientProject.emailPage.mail.EmailServiceHandler;
 import com.team14.clientProject.profilePage.Profile;
 import com.team14.clientProject.profilePage.ProfilePageRepositoryImpl;
+import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -18,7 +25,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+@SpringBootTest
+@AutoConfigureMockMvc
 public class customEmailTests {
 
     @Mock
@@ -26,6 +34,9 @@ public class customEmailTests {
 
     @Mock
     private ProfilePageRepositoryImpl profilePageRepository;
+
+    @Mock
+    private CommunicationLogRepositoryImpl communicationLogRepository;
 
     @InjectMocks
     private EmailPage emailPage;
@@ -39,6 +50,7 @@ public class customEmailTests {
         // Mock dependencies
         JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
         profilePageRepository = mock(ProfilePageRepositoryImpl.class);
+        CommunicationLogRepositoryImpl communicationLogRepository = mock(CommunicationLogRepositoryImpl.class);
 
         // Mock profiles
         mockProfiles = Arrays.asList(
@@ -50,7 +62,8 @@ public class customEmailTests {
         when(profilePageRepository.getProfiles()).thenReturn(mockProfiles);
 
         // Initialize EmailPage with mocked dependencies
-        emailPage = new EmailPage(jdbcTemplate, profilePageRepository);
+        emailPage = new EmailPage(jdbcTemplate, profilePageRepository, communicationLogRepository);
+
 
         // Inject  emailServiceHandler and profileList
         try {
@@ -61,6 +74,11 @@ public class customEmailTests {
             Field profileListField = EmailPage.class.getDeclaredField("profileList");
             profileListField.setAccessible(true);
             profileListField.set(emailPage, mockProfiles);
+            Field communicationLogRepositoryField = EmailPage.class.getDeclaredField("CommunicationLogRepository");
+            communicationLogRepositoryField.setAccessible(true);
+            communicationLogRepositoryField.set(emailPage, communicationLogRepository);
+
+
         } catch (Exception e) {
             fail("Failed to inject dependencies: " + e.getMessage());
         }
@@ -68,6 +86,7 @@ public class customEmailTests {
 
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testSendCustomEmails_WithRecipients_Success() {
         // Arrange
         List<String> emailIds = Arrays.asList("john.doe@example.com", "jane.smith@example.com");

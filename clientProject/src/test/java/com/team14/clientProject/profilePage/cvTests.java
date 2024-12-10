@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -14,13 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-
 public class cvTests {
 
     @Autowired
     private MockMvc mvc;
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testUploadValidPdfCv() throws Exception {
         // Create a valid PDF file for upload
         MockMultipartFile validPdfFile = new MockMultipartFile(
@@ -39,6 +40,7 @@ public class cvTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testUploadInvalidFileType() throws Exception {
         // Createing an invalid file type in this case a text file
         MockMultipartFile invalidFile = new MockMultipartFile(
@@ -57,6 +59,7 @@ public class cvTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testUploadNoFileSelected() throws Exception {
         // Perform the upload request with no file
         MvcResult result = mvc.perform(MockMvcRequestBuilders.multipart("/profile/uploadCV/{userID}", 1)
@@ -68,6 +71,7 @@ public class cvTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testDatabaseUpdateOnCvUpload() throws Exception {
         // Creating a valid PDF file for upload
         MockMultipartFile validPdfFile = new MockMultipartFile(

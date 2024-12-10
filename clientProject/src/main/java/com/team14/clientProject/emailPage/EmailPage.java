@@ -4,6 +4,7 @@ import com.team14.clientProject.emailPage.mail.EmailServiceHandler;
 import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
 import com.team14.clientProject.profilePage.Profile;
 import com.team14.clientProject.profilePage.ProfilePageRepositoryImpl;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -32,9 +33,10 @@ public class EmailPage {
     private List<Profile> profileList;
 
     // Constructor to initialize the EmailPage with JdbcTemplate.
-    public EmailPage(JdbcTemplate jdbcTemplate, ProfilePageRepositoryImpl profilePageRepository) {
+    public EmailPage(JdbcTemplate jdbcTemplate, ProfilePageRepositoryImpl profilePageRepository, CommunicationLogRepositoryImpl communicationLogRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.profilePageRepository = profilePageRepository != null ? profilePageRepository : new ProfilePageRepositoryImpl(jdbcTemplate);
+        this.CommunicationLogRepository = communicationLogRepository;
         this.profileList = this.profilePageRepository.getProfiles();
     }
 
