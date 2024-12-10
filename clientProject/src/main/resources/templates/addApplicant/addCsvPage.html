@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Upload</title>
+    <link th:replace="~{fragments/header :: bootstrap-css}"/>
+    <link rel="stylesheet" type="text/css" href="css/homeStyle.css"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"/>
+<div class="container">
+    <h2>Upload CSV File</h2>
+    <div th:if="${ioException}" class="text-danger">
+        <p>Sorry something has gone wrong! Please try again.</p>
+    </div>
+    <div th:if="${csvSuccess}" class="text-success">
+        <p>CSV file successfully inserted</p>
+    </div>
+    <div th:if="${duplicateKeyException}" class="text-danger">
+        <p>Duplicate entry found in CSV file. Please fix and retry.</p>
+    </div>
+    <form th:method="post" enctype="multipart/form-data">
+        <label for="csv"></label>
+        <input name="csv" id="csv" type="file" accept=".csv" required>
+
+        <button type="submit" class="btn btn-primary">Upload CSV</button>
+
+    </form>
+</div>
+
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+
+</body>
+</html>

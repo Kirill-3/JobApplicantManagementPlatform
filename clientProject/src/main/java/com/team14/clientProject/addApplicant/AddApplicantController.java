@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -55,10 +57,40 @@ public class AddApplicantController {
 
         return modelAndView;
 
-//        @PostMapping ("/add-applicant/csv")
-//        public ModelAndView addApplicantByCsv;
 
 
+
+    }
+
+    @GetMapping("/add-applicant/csv")
+    public ModelAndView displayCsvPage() {
+        ModelAndView modelAndView = new ModelAndView("addApplicant/addCsvPage");
+        return modelAndView;
+    }
+
+
+
+
+
+
+    @PostMapping ("/add-applicant/csv")
+    public ModelAndView addApplicantByCsv(@RequestParam("csv") MultipartFile csv) {
+        ModelAndView modelAndView = new ModelAndView("addApplicant/addCsvPage");
+        String function = addApplicantService.csvFunction(csv);
+
+        if (function.equals("true")) {
+            modelAndView.addObject("csvSuccess", true);
+        }
+
+        else if(function.equals("ioException")) {
+            modelAndView.addObject("ioException", true);
+        }
+
+        else if(function.equals("duplicateKeyException")) {
+            modelAndView.addObject("duplicateKeyException", true);
+        }
+
+        return modelAndView;
 
     }
 }

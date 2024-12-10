@@ -93,4 +93,62 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
         this.communicationLogRepository.addApplicantLog();
 
     }
+
+    public Integer getRecentId() {
+        String fetchId = "SELECT LAST_INSERT_ID()";
+        Integer id = jdbcTemplate.queryForObject(fetchId, Integer.class);
+        return id;
+    }
+
+    public void addApplicantFromCsv(Applicant applicant) {
+        String sql =
+                "INSERT INTO applicants" +
+                "(firstName, lastName, location, email, phoneNumber, eventAttended, skill) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+//        String fetchId = "SELECT id FROM applicants WHERE email = ?";
+
+        // Fetch the id of the applicant that was just inserted
+//        String fetchId = "SELECT LAST_INSERT_ID()";
+        jdbcTemplate.update(sql,
+                applicant.getFirstName(),
+                applicant.getLastName(),
+                applicant.getLocation(),
+                applicant.getEmail(),
+                applicant.getPhoneNumber(),
+                applicant.getEventAttended(),
+                applicant.getSkill()
+        );
+//        int id = jdbcTemplate.queryForObject(fetchId, Integer.class);
+//        return id;
+    }
+
+    public void addApplicantPreferencesFromCsv(ApplicantPreferences applicantPreferences, Integer id) {
+        String sql =
+                "INSERT INTO applicantpreferences" +
+                "(applicationId, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates) " +
+                "VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
+                id,
+                applicantPreferences.getSubscribeToNewsletter(),
+                applicantPreferences.getSubscribeToBulletins(),
+                applicantPreferences.getSubscribeToJobUpdates()
+        );
+    }
+
+    public void addApplicantDetailsFromCsv(ApplicantDetails applicantDetails, Integer id) {
+        String sql =
+                "INSERT INTO applicationdetails" +
+                "(applicationId, currentPosition, status, CvPath, CoverLetterPath) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
+                id,
+                applicantDetails.getCurrentPosition(),
+                applicantDetails.getStatus(),
+                applicantDetails.getCvPath(),
+                applicantDetails.getCoverLetterPath()
+        );
+    }
+
+
 }

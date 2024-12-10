@@ -1,32 +1,48 @@
 package com.team14.clientProject.addApplicant;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import com.opencsv.bean.CsvBindByName;
+import lombok.NoArgsConstructor;
+
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ApplicantCSVForm {
-    @NotEmpty(message = "The first name cannot be empty")
+    // CsvBindByName annotation used to map the field in the CSV file to the field in the form class
+    @CsvBindByName (column = "firstName")
     private String firstName;
-    @NotEmpty(message = "The last name cannot be empty")
+    @CsvBindByName (column = "lastName")
     private String lastName;
-    @NotEmpty(message = "The location cannot be empty")
+    @CsvBindByName (column = "location")
     private String location;
-    @NotEmpty(message = "The email cannot be empty")
-    // Regex used from EmailServiceHandler class
-    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&*+/=?`{}~^.-]+@[a-zA-Z0-9.-]+$", message="Email must be in a valid format")
+    @CsvBindByName (column = "email")
     private String email;
-    // Regex adapted from https://stackoverflow.com/questions/11518035/regular-expression-for-gb-based-and-only-numeric-phone-number
-    @Pattern(regexp = "^(07\\d{9}|(\\+44)\\d{10})$", message="Phone number must be a valid UK phone number")
+    @CsvBindByName (column = "phoneNumber")
     private String phoneNumber;
-    @NotEmpty(message = "The event attended cannot be empty")
+    @CsvBindByName (column = "eventAttended")
     private String eventAttended;
+    @CsvBindByName (column = "skill")
     private String skill;
-    private String createdAt;
-    private String updatedAt;
+    @CsvBindByName (column = "SubscribeToNewsletter")
     private String subscribeToNewsletter;
+    @CsvBindByName (column = "SubscribeToBulletins")
     private String subscribeToBulletins;
+    @CsvBindByName (column = "SubscribeToJobUpdates")
     private String subscribeToJobUpdates;
+    @CsvBindByName (column = "currentPosition")
+    private String currentPosition;
+    @CsvBindByName (column = "status")
+    private String status;
+    @Null
+    @CsvBindByName (column = "CvPath")
+    private String cvPath;
+    @Null
+    @CsvBindByName (column = "CoverLetterPath")
+    private String coverLetterPath;
+
 }
