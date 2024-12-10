@@ -14,4 +14,14 @@ public interface EmailService {
                                        String htmlBody,
                                        byte[] pdfAttachment)
             throws MessagingException;
+
+    void sendWarningEmail(String to,
+                          String subject,
+                          String htmlBody,
+                          String logoPath)
+            throws MessagingException;
+
 }
+
+
+

@@ -41,8 +41,6 @@ public class EmailServiceImpl implements EmailService {
         emailSender.send(message);
     }
 
-}
-
 
     @Override
     public void sendWarningEmail(String to, String subject, String htmlBody, String logoPath) throws MessagingException {
@@ -51,3 +49,4 @@ public class EmailServiceImpl implements EmailService {
         System.out.println("Warning email sent to: " + to);
     }
 }
+
