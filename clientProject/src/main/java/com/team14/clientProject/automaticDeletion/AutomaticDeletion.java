@@ -2,6 +2,7 @@ package com.team14.clientProject.automaticDeletion;
 
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,6 +20,9 @@ public class AutomaticDeletion {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     private boolean emailSent = false;
 
@@ -56,6 +60,9 @@ public class AutomaticDeletion {
             String deleteSql = "DELETE FROM applicants WHERE createdAt < ? LIMIT 1";
             int rowsDeleted = jdbcTemplate.update(deleteSql, thirtySecondsAgo);
             System.out.println("Rows deleted from applicants: " + rowsDeleted);
+
+            // Publish an event after deletion
+            eventPublisher.publishEvent(new ProfileListUpdatedEvent(this));
         }
     }
 }
