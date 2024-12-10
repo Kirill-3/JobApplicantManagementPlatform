@@ -30,7 +30,7 @@ public class AdminRepositoryImpl implements AdminRepository {
                 rs.getString("passwordHashed"),
                 rs.getString("firstname"),
                 rs.getString("lastname"),
-                User.Role.valueOf(rs.getString("role")),
+                rs.getString("role"),
                 rs.getTimestamp("lastLogin") != null ? rs.getTimestamp("lastLogin").toLocalDateTime() : null,
                 rs.getTimestamp("createdAt") != null ? rs.getTimestamp("createdAt").toLocalDateTime() : null
         );

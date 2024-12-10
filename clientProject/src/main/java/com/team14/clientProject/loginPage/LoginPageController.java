@@ -24,13 +24,7 @@ public class LoginPageController {
     public String loginPage() {
         return "hello";
     }
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username, passwordHashed as password, 'true' as enabled from users where username=?")
-                .authoritiesByUsernameQuery("select username, role from users where username=?")
-                .passwordEncoder(new BCryptPasswordEncoder());
-    }
+
 
     @Bean
     public PasswordEncoder passwordEncrypter() {

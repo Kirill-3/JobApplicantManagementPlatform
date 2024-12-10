@@ -30,7 +30,7 @@ public class AddUserTest {
         newUser.setPassword("password123");
         newUser.setFirstName("Test");
         newUser.setLastName("User");
-        newUser.setRole(User.Role.recruiter);
+        newUser.setRole("ROLE_USER");
         newUser.setLastLogin(LocalDateTime.now());
         newUser.setCreatedAt(LocalDateTime.now());
 
@@ -51,7 +51,7 @@ public class AddUserTest {
         newUser.setPassword("password123");
         newUser.setFirstName("Test");
         newUser.setLastName("User");
-        newUser.setRole(User.Role.recruiter);
+        newUser.setRole("ROLE_USER");
         newUser.setLastLogin(LocalDateTime.now());
         newUser.setCreatedAt(LocalDateTime.now());
 

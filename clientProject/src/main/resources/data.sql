@@ -1,17 +1,17 @@
 -- Populate the Users table
 insert into users (username, passwordHashed, firstName, lastName, role, lastLogin)
 values
-    ('admin', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'admin', NOW()),
-    ('user', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'recruiter', NOW()),
-    ('user2', SHA2('password2', 256), 'Bob', 'Smith', 'recruiter', NOW()),
-    ('user3', SHA2('password3', 256), 'Carol', 'Williams', 'recruiter', NOW()),
-    ('user4', SHA2('password4', 256), 'David', 'Brown', 'recruiter', NOW()),
-    ('user5', SHA2('password5', 256), 'Eve', 'Davis', 'recruiter', NOW()),
-    ('user6', SHA2('password6', 256), 'Frank', 'Miller', 'recruiter', NOW()),
-    ('user7', SHA2('password7', 256), 'Grace', 'Wilson', 'recruiter', NOW()),
-    ('user8', SHA2('password8', 256), 'Henry', 'Moore', 'recruiter', NOW()),
-    ('user9', SHA2('password9', 256), 'Ivy', 'Taylor', 'recruiter', NOW()),
-    ('user10', SHA2('password10', 256), 'Jack', 'Anderson', 'recruiter', NOW());
+    ('admin', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'ROLE_ADMIN', NOW()),
+    ('user', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'ROLE_USER', NOW()),
+    ('user2', SHA2('password2', 256), 'Bob', 'Smith', 'ROLE_USER', NOW()),
+    ('user3', SHA2('password3', 256), 'Carol', 'Williams', 'ROLE_USER', NOW()),
+    ('user4', SHA2('password4', 256), 'David', 'Brown', 'ROLE_USER', NOW()),
+    ('user5', SHA2('password5', 256), 'Eve', 'Davis', 'ROLE_USER', NOW()),
+    ('user6', SHA2('password6', 256), 'Frank', 'Miller', 'ROLE_USER', NOW()),
+    ('user7', SHA2('password7', 256), 'Grace', 'Wilson', 'ROLE_USER', NOW()),
+    ('user8', SHA2('password8', 256), 'Henry', 'Moore', 'ROLE_USER', NOW()),
+    ('user9', SHA2('password9', 256), 'Ivy', 'Taylor', 'ROLE_USER', NOW()),
+    ('user10', SHA2('password10', 256), 'Jack', 'Anderson', 'ROLE_USER', NOW());
 
 
 -- Populate the Applicants table with NHS-related data

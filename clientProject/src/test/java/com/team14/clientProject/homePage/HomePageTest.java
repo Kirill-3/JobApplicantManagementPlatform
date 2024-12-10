@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.*;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,8 +32,9 @@ public class HomePageTest {
     private HomePageRepositoryImpl homePageRepositoryImpl;
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void homePageDisplays() throws Exception {
-        MvcResult result = mvc
+        mvc
                 .perform(get("/home"))
                 .andDo(print())
                 .andExpect(status().isOk())

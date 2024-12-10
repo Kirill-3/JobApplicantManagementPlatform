@@ -17,7 +17,7 @@ create table if not exists users(
     passwordHashed   CHAR(128) not null ,
     firstName       varchar(128) not null,
     lastName        varchar(128) not null,
-    role            enum('admin', 'recruiter') not null,
+    role            varchar(50) not null,
     lastLogin       timestamp,
     createdAt        timestamp default current_timestamp
     ) engine = InnoDB;

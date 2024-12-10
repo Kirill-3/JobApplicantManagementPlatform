@@ -18,31 +18,38 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    public static final String[] ENDPOINTS_WHITELIST = {
+            "/",
+            "/403",
+            "/login"
+    };
+
     @Autowired
     private DataSource dataSource;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("admin")
-                        .anyRequest().hasAnyAuthority("admin", "recruiter"))
+                        .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().hasAnyRole("USER", "ADMIN"))
 
                 .formLogin(form -> form
                         .defaultSuccessUrl("/home", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .permitAll());
+                        .permitAll())
+                .exceptionHandling(e -> e
+                        .accessDeniedPage("/403"));
         return http.build();
     }
+
     @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder authBuilder) throws Exception {
-        authBuilder.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery("select username, passwordHashed, enabled from users where username=?")
-                .authoritiesByUsernameQuery("select username, authority from user_authorities where username=?")
-        ;
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select username, passwordHashed as password, 'true' as enabled from users where username=?")
+                .authoritiesByUsernameQuery("select username, role from users where username=?")
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 }
