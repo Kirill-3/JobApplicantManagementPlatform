@@ -49,10 +49,9 @@ public class customEmailTests {
         // Mocking the repositories behavior
         when(profilePageRepository.getProfiles()).thenReturn(mockProfiles);
 
-        // Initialize EmailPage with mocked dependencies
+        //  EmailPage with mocked dependencies
         emailPage = new EmailPage(jdbcTemplate, profilePageRepository);
 
-        // Inject  emailServiceHandler and profileList
         try {
             Field emailServiceHandlerField = EmailPage.class.getDeclaredField("emailServiceHandler");
             emailServiceHandlerField.setAccessible(true);
@@ -69,16 +68,14 @@ public class customEmailTests {
 
     @Test
     public void testSendCustomEmails_WithRecipients_Success() {
-        // Arrange
+
         List<String> emailIds = Arrays.asList("john.doe@example.com", "jane.smith@example.com");
         String successMessage = "Emails sent successfully.";
         when(emailServiceHandler.sendEmails(emailIds, "Test Subject", "Test Message", "src/main/resources/static/images/dhcw.png"))
                 .thenReturn(successMessage);
 
-        // Act
         ModelAndView result = emailPage.sendCustomEmails("Test Subject", "Test Message", emailIds);
 
-        // Assert
         assertEquals("email/customEmails", result.getViewName());
         assertTrue(result.getModel().containsKey("alertMessage"));
         assertEquals(successMessage, result.getModel().get("alertMessage"));
@@ -88,15 +85,15 @@ public class customEmailTests {
 
     @Test
     public void testSendCustomEmails_WithRecipients_Failure() {
-        // Arrange
+
         List<String> emailIds = Arrays.asList("john.doe@example.com", "jane.smith@example.com");
         when(emailServiceHandler.sendEmails(emailIds, "Test Subject", "Test Message", "src/main/resources/static/images/dhcw.png"))
                 .thenThrow(new RuntimeException("SMTP server not reachable."));
 
-        // Act
+
         ModelAndView result = emailPage.sendCustomEmails("Test Subject", "Test Message", emailIds);
 
-        // Assert
+
         assertEquals("email/customEmails", result.getViewName());
         assertTrue(result.getModel().containsKey("alertMessage"));
         assertEquals("Error sending emails: SMTP server not reachable.", result.getModel().get("alertMessage"));
@@ -106,10 +103,10 @@ public class customEmailTests {
 
     @Test
     public void testCustomComposePage() {
-        // Act
+
         ModelAndView result = emailPage.customComposePage();
 
-        // Assert
+
         assertEquals("email/customEmails", result.getViewName());
         assertTrue(result.getModel().containsKey("profileList"));
         assertEquals(mockProfiles, result.getModel().get("profileList"));
@@ -117,10 +114,9 @@ public class customEmailTests {
 
     @Test
     public void testSendCustomEmails_NoRecipients() {
-        // Act
+
         ModelAndView result = emailPage.sendCustomEmails("Test Subject", "Test Message", null);
 
-        // Assert
         assertEquals("email/customEmails", result.getViewName());
         assertTrue(result.getModel().containsKey("alertMessage"));
         assertEquals("Please select at least one recipient.", result.getModel().get("alertMessage"));

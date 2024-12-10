@@ -110,24 +110,24 @@ insert into applicantPreferences (applicationId, SubscribeToNewsLetter, Subscrib
 values
     (1, 'yes', 'no', 'yes'),
     (2, 'yes', 'yes', 'no'),
-    (3, 'no', 'yes', 'yes'),
-    (4, 'yes', 'yes', 'yes'),
+    (3, 'yes', 'yes', 'yes'),
+    (4, 'no', 'yes', 'yes'),
     (5, 'no', 'yes', 'no'),
-    (6, 'yes', 'no', 'no'),
+    (6, 'no', 'no', 'no'),
     (7, 'no', 'no', 'no'),
-    (8, 'yes', 'no', 'yes'),
-    (9, 'yes', 'yes', 'yes'),
-    (10, 'yes', 'no', 'no'),
-    (11, 'yes', 'yes', 'yes'),
+    (8, 'no', 'no', 'yes'),
+    (9, 'no', 'yes', 'yes'),
+    (10, 'no', 'no', 'no'),
+    (11, 'no', 'yes', 'yes'),
     (12, 'no', 'yes', 'no'),
-    (13, 'yes', 'no', 'yes'),
-    (14, 'yes', 'yes', 'yes'),
+    (13, 'no', 'no', 'yes'),
+    (14, 'no', 'yes', 'yes'),
     (15, 'no', 'yes', 'no'),
-    (16, 'yes', 'yes', 'yes'),
+    (16, 'no', 'yes', 'yes'),
     (17, 'no', 'no', 'yes'),
-    (18, 'yes', 'no', 'yes'),
+    (18, 'no', 'no', 'yes'),
     (19, 'no', 'yes', 'yes'),
-    (20, 'yes', 'yes', 'no');
+    (20, 'no', 'yes', 'no');
 
 -- Populate the Application Details table
 insert into applicationdetails(applicationId, currentPosition, status, CvPath, CoverLetterPath)

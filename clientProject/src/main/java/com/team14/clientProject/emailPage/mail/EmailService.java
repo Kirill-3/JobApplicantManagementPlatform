@@ -10,4 +10,10 @@ public interface EmailService {
                                  String htmlBody,
                                  String logoPath)
             throws MessagingException;
+
+    void sendHtmlMessageWithAttachment(String to,
+                                       String subject,
+                                       String htmlBody,
+                                       byte[] pdfAttachment)
+            throws MessagingException;
 }

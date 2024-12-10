@@ -187,5 +187,14 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
                 profile.getPreferences().isSubscribeToJobUpdates() ? "Yes" : "No",
                 profile.getId());
     }
+
+    public List<String> getSubscribedEmails(){
+        String sql = "SELECT a.email " +
+                "FROM applicants a " +
+                "JOIN applicantpreferences p ON a.Id = p.Id " +
+                "WHERE p.SubscribeToNewsLetter = 'yes'";
+
+        return jdbcTemplate.query(sql,(rs, rowNum) -> rs.getString("email"));
+    }
 }
 
