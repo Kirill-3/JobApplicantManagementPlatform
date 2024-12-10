@@ -76,6 +76,7 @@ public class HomePageTest {
 
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testViewApplicantsButtonDirectsToProfilePage() throws Exception {
         mvc.perform(get("/profile"))
                 .andExpect(status().isOk())
@@ -83,6 +84,7 @@ public class HomePageTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testTableDisplaysCorrectData() throws Exception {
         List<Applicants> mockApplicant = List.of(
                 new Applicants(1, "John", "Smith", null, "smith@example.com",

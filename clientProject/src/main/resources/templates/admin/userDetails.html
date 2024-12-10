@@ -5,6 +5,14 @@
     <title>User Details</title>
     <link th:replace="~{fragments/header :: bootstrap-css}"/>
     <link rel="stylesheet" href="/css/admin.css">
+    <script>
+        function confirmDelete() {
+            if (confirm('Are you sure you want to delete this user?')) {
+                document.getElementById('deleteForm').submit();
+            }
+        }
+    </script>
+
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
@@ -23,7 +31,7 @@
         </div>
         <div class="userDetails-actions">
             <form th:action="@{/admin/user/delete/{id}(id=${user.id})}" method="post" class="userDetails-delete-form">
-                <button type="submit" class="userDetails-button-delete">Delete</button>
+                <button type="submit" class="userDetails-button-delete" onclick="confirmDelete()">Delete</button>
             </form>
             <a th:href="@{/admin}" class="userDetails-button-back">Back to List</a>
         </div>

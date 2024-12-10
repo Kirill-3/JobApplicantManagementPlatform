@@ -15,6 +15,8 @@ drop table if exists users;
 drop table if exists applicants;
 
 drop table if exists deletedApplicants;
+drop table if exists deletedUsers;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 
@@ -81,9 +83,7 @@ create table if not exists communicationLogs(
     logType        enum('communication', 'detailChange') not null,
     communicationType enum('email', 'phone', 'text', 'person') null DEFAULT 'email',
     actionTaken enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'note', 'other') not null,
-    notes           varchar(225),
-    foreign key (userId) references users(Id) on delete cascade,
-    foreign key (applicantId) references applicants(Id) on delete cascade
+    notes           varchar(225)
 ) engine = InnoDB;
 
 -- System Logs Table
@@ -113,11 +113,29 @@ CREATE TABLE deletedApplicants (
                                    SubscribeToBulletins enum('Yes', 'No') default 'No',
                                    SubscribeToJobUpdates enum('Yes', 'No') default 'No',
                                    deletedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) engine = InnoDB;
 
 SET GLOBAL event_scheduler = ON;
 
-CREATE EVENT IF NOT EXISTS deleteOldRecords
+CREATE EVENT IF NOT EXISTS deleteApplicants
     ON SCHEDULE EVERY 30 SECOND
     DO
     DELETE FROM deletedApplicants WHERE deletedAt < NOW() - INTERVAL 30 SECOND;
+
+create table if not exists deletedUsers(
+                                    ID          int auto_increment primary key,
+                                    username        varchar(50) not null unique,
+                                    passwordHashed   varchar(128) not null ,
+                                    firstName       varchar(128) not null,
+                                    lastName        varchar(128) not null,
+                                    role            varchar(50) NOT NULL DEFAULT 'ROLE_USER',
+                                    lastLogin       timestamp,
+                                    createdAt        timestamp default current_timestamp,
+                                    deletedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+) engine = InnoDB;
+
+CREATE EVENT IF NOT EXISTS deleteUsers
+    ON SCHEDULE EVERY 30 SECOND
+    DO
+    DELETE FROM deletedUsers WHERE deletedAt < NOW() - INTERVAL 30 SECOND;

@@ -32,8 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().hasAnyRole("USER", "ADMIN"))
-
+                        .requestMatchers("/profile/uploadCV/**").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated())
                 .formLogin(form -> form
                         .defaultSuccessUrl("/home", true)
                         .permitAll())

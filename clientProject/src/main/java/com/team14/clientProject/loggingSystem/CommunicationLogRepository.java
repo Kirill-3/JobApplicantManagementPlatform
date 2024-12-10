@@ -7,5 +7,6 @@ public interface CommunicationLogRepository {
     List<CommunicationLog> getLogsByApplicantId(int applicantId);
     void addApplicantLog();
     void editApplicantLog(int applicantId);
+    void deleteApplicantLog(int applicantId);
 }
 
