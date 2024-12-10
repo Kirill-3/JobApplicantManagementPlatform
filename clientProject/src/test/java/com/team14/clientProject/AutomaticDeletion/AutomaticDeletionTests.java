@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.test.context.support.WithMockUser;
-
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -25,6 +25,9 @@ public class AutomaticDeletionTests {
 
     @Mock
     private EmailService emailService;
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private AutomaticDeletion automaticDeletion;
@@ -48,7 +51,7 @@ public class AutomaticDeletionTests {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void CheckApplicantsToWorn() throws MessagingException, InterruptedException {
+    public void CheckApplicantsToWarn() throws MessagingException, InterruptedException {
         when(jdbcTemplate.queryForList(anyString(), eq(String.class), any(LocalDateTime.class)))
                 .thenReturn(Collections.singletonList("test@example.com"));
 
@@ -57,5 +60,6 @@ public class AutomaticDeletionTests {
         verify(emailService, times(1)).sendWarningEmail(eq("test@example.com"), anyString(), anyString(), anyString());
         verify(jdbcTemplate, times(1)).update(contains("INSERT INTO deletedApplicants"), any(LocalDateTime.class));
         verify(jdbcTemplate, times(1)).update(contains("DELETE FROM applicants"), any(LocalDateTime.class));
+        verify(eventPublisher, times(1)).publishEvent(any());
     }
 }
