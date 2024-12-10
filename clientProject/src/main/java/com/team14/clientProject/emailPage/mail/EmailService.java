@@ -9,6 +9,12 @@ public interface EmailService {
                                  String logoPath)
             throws MessagingException;
 
+    void sendHtmlMessageWithAttachment(String to,
+                                       String subject,
+                                       String htmlBody,
+                                       byte[] pdfAttachment)
+            throws MessagingException;
+
     void sendWarningEmail(String to,
                           String subject,
                           String htmlBody,
@@ -16,3 +22,6 @@ public interface EmailService {
             throws MessagingException;
 
 }
+
+
+
