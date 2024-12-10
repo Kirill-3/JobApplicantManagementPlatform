@@ -83,9 +83,7 @@ create table if not exists communicationLogs(
     logType        enum('communication', 'detailChange') not null,
     communicationType enum('email', 'phone', 'text', 'person') null DEFAULT 'email',
     actionTaken enum('emailSent', 'applicantAdded', 'applicantRemoved', 'applicantDetailsChanged', 'note', 'other') not null,
-    notes           varchar(225),
-    foreign key (userId) references users(Id) on delete cascade,
-    foreign key (applicantId) references applicants(Id) on delete cascade
+    notes           varchar(225)
 ) engine = InnoDB;
 
 -- System Logs Table
@@ -130,7 +128,7 @@ create table if not exists deletedUsers(
                                     passwordHashed   varchar(128) not null ,
                                     firstName       varchar(128) not null,
                                     lastName        varchar(128) not null,
-                                    role            enum('admin', 'recruiter') not null,
+                                    role            varchar(50) NOT NULL DEFAULT 'ROLE_USER',
                                     lastLogin       timestamp,
                                     createdAt        timestamp default current_timestamp,
                                     deletedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
