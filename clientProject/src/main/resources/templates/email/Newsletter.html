@@ -23,7 +23,7 @@
 
 <h1>Sending a Newsletter</h1>
 <br>
-<form action="/email/sendNewsletter" method="post" enctype="multipart/form-data" class="form-group">
+<form th:action="@{/email/sendNewsletter}" method="post" enctype="multipart/form-data" class="form-group">>
     <div>
         <label for="subject">Subject:</label>
         <input type="text" class="form-control" id="subject" name="subject"  placeholder="Email Subject here" required>
