@@ -30,14 +30,14 @@ public class AddUserTest {
         newUser.setPassword("password123");
         newUser.setFirstName("Test");
         newUser.setLastName("User");
-        newUser.setRole(User.Role.recruiter);
+        newUser.setRole("ROLE_USER");
         newUser.setLastLogin(LocalDateTime.now());
         newUser.setCreatedAt(LocalDateTime.now());
 
         // Call the service to add a new user
         User savedUser = adminService.addUser(newUser);
 
-        // Validate the user was added
+        // Validate the user was added  
         Assert.notNull(savedUser, "Saved user should not be null");
         Assert.isTrue(savedUser.getId() > 0, "Saved user ID should be greater than 0");
         Assert.isTrue("testUser".equals(savedUser.getUsername()), "Usernames should match");
@@ -51,7 +51,7 @@ public class AddUserTest {
         newUser.setPassword("password123");
         newUser.setFirstName("Test");
         newUser.setLastName("User");
-        newUser.setRole(User.Role.recruiter);
+        newUser.setRole("ROLE_USER");
         newUser.setLastLogin(LocalDateTime.now());
         newUser.setCreatedAt(LocalDateTime.now());
 

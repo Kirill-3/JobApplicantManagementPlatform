@@ -107,3 +107,31 @@
     padding: 0.521vw 1.042vw;
     font-size: 0.833vw;
 }
+.log{
+    width: 90%;
+    height: 40vh;
+    margin: 0 auto;
+    align-content: center;
+    overflow-y: auto;
+}
+.logTable {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    align-content: center;
+    overflow-x: auto;
+}
+.logTable th, .logTable td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    height: auto;
+}
+.logTable th {
+    font-size: 1.5vw;
+    font-weight: normal;
+    color: white;
+    position: sticky;
+    background: #2D366C;
+    top: -0.2vh;
+    z-index: auto;
+}

@@ -1,13 +1,19 @@
 package com.team14.clientProject.profilePage;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+
 
 @Repository
 public class ProfilePageRepositoryImpl implements ProfilePageRepository {
     private JdbcTemplate jdbcTemplate;
     private RowMapper<Profile> ProfileRowMapper;
+
+
 
     public ProfilePageRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -188,13 +194,19 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
                 profile.getId());
     }
 
-    public List<String> getSubscribedEmails(){
-        String sql = "SELECT a.email " +
+    public void deleteProfile(int id) {
+        String insertSql = "INSERT INTO deletedApplicants (id, firstName, lastName, location, email, phoneNumber, currentPosition, status, skill, eventAttended, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates) " +
+                "SELECT a.id, a.firstName, a.lastName, a.location, a.email, a.phoneNumber, " +
+                "d.currentPosition, d.status, a.skill, a.eventAttended, " +
+                "p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates " +
                 "FROM applicants a " +
-                "JOIN applicantpreferences p ON a.Id = p.Id " +
-                "WHERE p.SubscribeToNewsLetter = 'yes'";
+                "LEFT JOIN applicantpreferences p ON a.Id = p.applicationId " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.applicationId " +
+                "WHERE a.id = ?";
+        jdbcTemplate.update(insertSql, id);
 
-        return jdbcTemplate.query(sql,(rs, rowNum) -> rs.getString("email"));
+        String sql = "DELETE FROM applicants WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }
 
