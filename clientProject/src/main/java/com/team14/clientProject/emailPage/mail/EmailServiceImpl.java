@@ -15,8 +15,6 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    // Send an email with a logo
-    // Define where the email is sent from
     @Override
     public void sendHtmlMessageWithLogo(String to, String subject, String htmlBody, String logoPath) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
@@ -29,6 +27,11 @@ public class EmailServiceImpl implements EmailService {
         helper.addInline("logo", logo);
         emailSender.send(message);
     }
+
+    @Override
+    public void sendWarningEmail(String to, String subject, String htmlBody, String logoPath) throws MessagingException {
+        String htmlContent = htmlBody + "<br><img src='cid:logo'>";
+        sendHtmlMessageWithLogo(to, subject, htmlContent, logoPath);
+        System.out.println("Warning email sent to: " + to);
+    }
 }
-
-
