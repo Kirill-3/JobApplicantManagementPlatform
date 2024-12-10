@@ -25,10 +25,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 create table if not exists users(
     ID          int auto_increment primary key,
     username        varchar(50) not null unique,
-    passwordHashed   varchar(128) not null ,
+    passwordHashed   CHAR(128) not null ,
     firstName       varchar(128) not null,
     lastName        varchar(128) not null,
-    role            enum('admin', 'recruiter') not null,
+    role            varchar(50) not null,
     lastLogin       timestamp,
     createdAt        timestamp default current_timestamp
     ) engine = InnoDB;

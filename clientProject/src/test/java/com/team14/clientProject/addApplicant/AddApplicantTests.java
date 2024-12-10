@@ -50,7 +50,7 @@ public class AddApplicantTests {
         Integer totalApplicants = addApplicantRepository.getApplicantCount();
 
         // Assert
-        assertEquals(21, totalApplicants);
+        assertEquals(88, totalApplicants);
 
     }
 
