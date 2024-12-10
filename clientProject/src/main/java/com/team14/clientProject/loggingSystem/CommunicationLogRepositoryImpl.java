@@ -59,5 +59,10 @@ public class CommunicationLogRepositoryImpl implements CommunicationLogRepositor
         String sql = "INSERT INTO communicationLogs (applicantId, actionTaken, notes) VALUES (?, 'applicantDetailsChanged', 'Applicant details edited')";
         jdbcTemplate.update(sql, applicantId);
     }
+    @Override
+    public void deleteApplicantLog(int applicantId){
+        String sql = "INSERT INTO communicationLogs (applicantId, actionTaken, notes) VALUES (?, 'applicantRemoved', 'Applicant deleted from the system')";
+        jdbcTemplate.update(sql, applicantId);
+    }
 
 }

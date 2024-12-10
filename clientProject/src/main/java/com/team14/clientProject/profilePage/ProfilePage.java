@@ -259,6 +259,7 @@ public class ProfilePage {
     }
     @PostMapping("/delete/{userID}")
     public String deleteProfile(@PathVariable int userID, RedirectAttributes redirectAttributes) {
+        this.communicationLogRepository.deleteApplicantLog(userID);
         Profile profile = profilePageRepository.getProfileById(userID);
 
         profilePageRepository.deleteProfile(userID);
