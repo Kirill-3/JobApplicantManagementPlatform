@@ -1,6 +1,6 @@
 package com.team14.clientProject.adminPage;
 
-import com.team14.clientProject.loggingSystem.SystemLogRepository;
+import com.team14.clientProject.loggingSystem.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.team14.clientProject.loggingSystem.SystemLogRepositoryImpl;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -17,8 +19,13 @@ public class AdminController {
 
     @Autowired
     private SystemLogRepositoryImpl systemLogRepository;
+    @Autowired
+    private CommunicationLogRepositoryImpl communicationLogRepository;
 
     private final AdminService adminService;
+    private List<CommunicationLog> communicationLogs;
+    private List<SystemLog> systemLogs;
+    private List<Object> combinedLogs;
 
     @Autowired
     public AdminController(AdminService adminService) {
@@ -30,6 +37,19 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("admin/admin");
         List<User> users = adminService.getAllUsers();
         modelAndView.addObject("users", users);
+        communicationLogs = communicationLogRepository.getLogs();
+        systemLogs = systemLogRepository.getLogs();
+        combinedLogs = new ArrayList<>();
+        combinedLogs.addAll(communicationLogs);
+        combinedLogs.addAll(systemLogs);
+        combinedLogs.sort((o1, o2) -> {
+            Timestamp t1 = o1 instanceof CommunicationLog ? Timestamp.valueOf(((CommunicationLog) o1).getTimestamp()) : Timestamp.valueOf(((SystemLog) o1).getTimestamp());
+            Timestamp t2 = o2 instanceof CommunicationLog ? Timestamp.valueOf(((CommunicationLog) o2).getTimestamp()) : Timestamp.valueOf(((SystemLog) o2).getTimestamp());
+            return t2.compareTo(t1);
+        });
+        modelAndView.addObject("logs", combinedLogs);
+
+
         return modelAndView;
     }
 

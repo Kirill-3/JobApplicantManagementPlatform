@@ -3,17 +3,17 @@ use nhs_recruitment;
 
 insert into users (username, passwordHashed, firstName, lastName, role, lastLogin)
 values
-    ('admin', SHA2('password1', 256), 'Alice', 'Johnson', 'admin', NOW()),
-    ('user1', SHA2('password1', 256), 'Alice', 'Johnson', 'recruiter', NOW()),
-    ('user2', SHA2('password2', 256), 'Bob', 'Smith', 'recruiter', NOW()),
-    ('user3', SHA2('password3', 256), 'Carol', 'Williams', 'recruiter', NOW()),
-    ('user4', SHA2('password4', 256), 'David', 'Brown', 'recruiter', NOW()),
-    ('user5', SHA2('password5', 256), 'Eve', 'Davis', 'recruiter', NOW()),
-    ('user6', SHA2('password6', 256), 'Frank', 'Miller', 'recruiter', NOW()),
-    ('user7', SHA2('password7', 256), 'Grace', 'Wilson', 'recruiter', NOW()),
-    ('user8', SHA2('password8', 256), 'Henry', 'Moore', 'recruiter', NOW()),
-    ('user9', SHA2('password9', 256), 'Ivy', 'Taylor', 'recruiter', NOW()),
-    ('user10', SHA2('password10', 256), 'Jack', 'Anderson', 'recruiter', NOW());
+    ('admin', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'ROLE_ADMIN', NOW()),
+    ('user', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'ROLE_USER', NOW()),
+    ('user2', SHA2('password2', 256), 'Bob', 'Smith', 'ROLE_USER', NOW()),
+    ('user3', SHA2('password3', 256), 'Carol', 'Williams', 'ROLE_USER', NOW()),
+    ('user4', SHA2('password4', 256), 'David', 'Brown', 'ROLE_USER', NOW()),
+    ('user5', SHA2('password5', 256), 'Eve', 'Davis', 'ROLE_USER', NOW()),
+    ('user6', SHA2('password6', 256), 'Frank', 'Miller', 'ROLE_USER', NOW()),
+    ('user7', SHA2('password7', 256), 'Grace', 'Wilson', 'ROLE_USER', NOW()),
+    ('user8', SHA2('password8', 256), 'Henry', 'Moore', 'ROLE_USER', NOW()),
+    ('user9', SHA2('password9', 256), 'Ivy', 'Taylor', 'ROLE_USER', NOW()),
+    ('user10', SHA2('password10', 256), 'Jack', 'Anderson', 'ROLE_USER', NOW());
 
 
 -- Populate the Applicants table with NHS-related data
@@ -316,26 +316,26 @@ VALUES
 
 
 -- populate the systemLogs table
-INSERT INTO systemLogs (systemLogId, userId, actionTaken)
+INSERT INTO systemLogs (systemLogId, userId, actionTaken, timestamp)
 VALUES
-    (1,2, 'login'),
-    (2,3, 'login'),
-    (3,4, 'login'),
-    (4,5, 'login'),
-    (5,6, 'login'),
-    (6,7, 'login'),
-    (7,8, 'login'),
-    (8,9, 'login'),
-    (9,10, 'login'),
-    (10,2, 'logout'),
-    (11,3, 'logout'),
-    (12,4, 'logout'),
-    (13,5, 'logout'),
-    (14,6, 'logout'),
-    (15,7, 'logout'),
-    (16,8, 'logout'),
-    (17,9, 'logout'),
-    (18,10, 'logout');
+    (1,2, 'login',DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (2,3, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (3,4, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (4,5, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (5,6, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (6,7, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (7,8, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (8,9, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (9,10, 'login', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (10,2, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (11,3, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (12,4, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (13,5, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (14,6, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (15,7, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (16,8, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (17,9, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR)),
+    (18,10, 'logout', DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 48) HOUR));
 
 
 
