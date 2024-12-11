@@ -3,8 +3,12 @@
 .homeTable{
     display: table;
     /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
+    padding-top: 200px;
+    height: 15vh;
     width: 100%;
     border: 2px solid black;
+    overflow-y: auto;
+
 }
 
 .homeTable thead {
@@ -13,6 +17,10 @@
     text-align: left;
     padding: 6px 8px;
     text-transform: uppercase;
+
+}
+.homeTable th {
+    position: sticky;
 }
 
 .homeTable tbody tr:nth-of-type(even) {
@@ -62,21 +70,7 @@
     cursor: default;
 }
 
-.homeButton {
-    background-color: #2D366C;
-    width: 200px;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
-}
+
 
 
 
@@ -95,24 +89,48 @@ body {
 .homeContainer {
     padding-top: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-content: center;
+
     /*border: 8px solid lawngreen;*/
 }
 
 .buttonContainer {
+    padding-top: 5px;
+    align-content: center;
+    width: 90%;
+    height: 40%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 35px;
-    justify-content: space-between;
-    /*border: 8px solid lawngreen;*/
-    width: 500px;
+    overflow-x: auto;
+    overflow-y: auto;
+    justify-content: space-evenly;
+
 }
 
-.tableContainer {
+.homeButton {
+    background-color: #2D366C;
+    height: 10vw;
+    width: 20vw;
+    text-align: center;
+    text-decoration: #2D366C;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
+}
+
+.tableContainerHome {
     min-width: 400px;
+
     display: flex;
     padding-right: 10px;
+    width: 90%;
+    overflow-y: auto;
+
     /*border: 8px solid lawngreen;*/
 }
