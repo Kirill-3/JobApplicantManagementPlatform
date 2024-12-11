@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
     <script src="/javaScript/profilePageJS.js"></script>
     <script th:inline="javascript">
-        const alertMessage = [[${alertMessage}]];
+        const alertMessage = [[$,{alertMessage}]];
         if (alertMessage) {
             alert(alertMessage);
         }
@@ -19,20 +19,20 @@
 <body>
 
 <div th:replace="~{fragments/header :: header}"/>
-<h1> Select Applicant(s) to Email</h1>
+<h1 th:text="#{custom.email.selectApplicants}"></h1>
 <form th:action="@{/email/sendEmails}" method="post">
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
-            <th th:data-type="firstName">First Name</th>
-            <th th:data-type="lastName">Last Name</th>
+            <th th:data-type="firstName" th:text="#{profile.page.firstName}"></th>
+            <th th:data-type="lastName" th:text="#{profile.page.lastName}"></th>
             <th>
                 <select id="locationDropdown">
-                    <option value="">All Locations</option>
+                    <option value="" th:text="#{profile.page.allLocation}"></option>
                     <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}"></option>
                 </select>
             </th>
-            <th th:data-href="@{/profile/eventAttendedAscending}">Event Attended</th>
+            <th th:data-href="@{/profile/eventAttendedAscending}" th:text="#{profile.page.applicant.experience.eventAttended}"></th>
             <th>Email?</th>
         </tr>
         </thead>
@@ -46,7 +46,7 @@
         </tr>
         </tbody>
     </table>
-    <button type="submit">Send email to selected users</button>
+    <button type="submit" th:text="#{custom.email.message.email.send}"></button>
 </form>
 <!-- Footer -->
 <div th:replace="~{fragments/footer :: footer-links}"></div>

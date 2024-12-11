@@ -11,12 +11,12 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <header>
-    <h1>Statistics Overview</h1>
+    <h1 th:text="#{statistics.overview.tittle}"></h1>
     <nav>
         <ul>
-            <li><a href="/event-statistics">Event Recruitment</a></li>
-            <li><a href="/time-statistics">Time Period Recruitment</a></li>
-            <li><a href="/location-statistics">Location Recruitment</a></li>
+            <li><a href="/event-statistics" th:text="#{statistics.page.eventRecruitment}"></a></li>
+            <li><a href="/time-statistics" th:text="#{statistics.page.timePeriodRecruitment}"></a></li>
+            <li><a href="/location-statistics" th:text="#{statistics.page.locationRecruitment}"></a></li>
         </ul>
     </nav>
     <main>

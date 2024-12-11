@@ -5,13 +5,14 @@
     <title>Email Dashboard</title>
 </head>
 <body>
-<h1>Email Dashboard</h1>
+<h1 th:text="#{email.page.tittle}"></h1>
 <form th:action="@{/email/selector}" method="get">
-    <button type="submit">Send email to multiple users</button>
+    <button type="submit" th:text="#{email.page.sendEmailToMultipleUsers}"></button>
 </form>
 
 <form th:action="@{/email/customEmails}" method="get">
-    <button type="submit">Compose and send custom email</button>
+    <button type="submit" th:text="#{email.page.composeAndSendCustomEmail}"></button>
+</form>
 </body>
 </html>
 

@@ -10,22 +10,22 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <div class="userDetails-container">
     <main class="userDetails-wrapper">
-        <h1 class="userDetails-header">User Details</h1>
         <div class="userDetails-content">
-            <p><strong>ID:</strong> <span th:text="${user.id}" class="userDetails-info"></span></p>
-            <p><strong>Username:</strong> <span th:text="${user.username}" class="userDetails-info"></span></p>
-            <p><strong>Password:</strong> <span th:text="${user.password}" class="userDetails-info"></span></p>
-            <p><strong>First Name:</strong> <span th:text="${user.firstName}" class="userDetails-info"></span></p>
-            <p><strong>Last Name:</strong> <span th:text="${user.lastName}" class="userDetails-info"></span></p>
-            <p><strong>Role:</strong> <span th:text="${user.role}" class="userDetails-info"></span></p>
-            <p><strong>Last Login:</strong> <span th:text="${user.lastLogin}" class="userDetails-info"></span></p>
-            <p><strong>Created At:</strong> <span th:text="${user.createdAt}" class="userDetails-info"></span></p>
+            <h1 th:text="#{user.details.title}"></h1>
+            <p><strong th:text="#{user.details.id}"></strong> <span th:text="${user.id}" class="userDetails-info"></span></p>
+            <p><strong th:text="#{user.details.username}"></strong> <span th:text="${user.username}" class="userDetails-info"></span></p>
+            <p><strong th:text="#{user.details.password}"></strong> <span th:text="${user.password}" class="userDetails-info"></span></p>
+            <p><strong th:text="#{user.details.firstName}"></strong> <span th:text="${user.firstName}" class="userDetails-info"></span></p>
+            <p><strong th:text="#{user.details.lastName}"></strong> <span th:text="${user.lastName}" class="userDetails-info"></span></p>
+            <p><strong th:text="#{user.details.role}"></strong> <span th:text="${user.role}" class="userDetails-info"></span></p>
+            <p><strong th:text="#{user.details.lastLogin}"></strong> <span th:text="${user.lastLogin}" class="userDetails-info"></span></p>
+            <p><strong th:text="#{user.details.createdAt}"></strong> <span th:text="${user.createdAt}" class="userDetails-info"></span></p>
         </div>
         <div class="userDetails-actions">
             <form th:action="@{/admin/user/delete/{id}(id=${user.id})}" method="post" class="userDetails-delete-form">
-                <button type="submit" class="userDetails-button-delete">Delete</button>
+                <button type="submit" class="userDetails-button-delete" th:text="#{user.details.delete}"></button>
             </form>
-            <a th:href="@{/admin}" class="userDetails-button-back">Back to List</a>
+            <a th:href="@{/admin}" class="userDetails-button-back" th:text="#{user.details.back}"></a>
         </div>
     </main>
 </div>

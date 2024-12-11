@@ -9,42 +9,42 @@
 <body>
 <div th:replace="~{fragments/header :: header}"/>
 <div class="container">
-    <h2>Add New Applicant</h2>
+    <h2 th:text="#{add.applicants.page.name}"></h2>
     <div th:if="${errorEmail}" class="text-danger">
-        <p>Email already in use</p>
+        <p th:text="#{add.applicants.duplicateEmail}"></p>
     </div>
     <div th:if="${errorPhone}" class="text-danger">
-        <p>Phone number already in use</p>
+        <p th:text="#{add.applicants.errorMessage2}"></p>
     </div>
     <div th:if="${added}" class="text-success">
-        <p>Applicant added successfully</p>
+        <p th:text="#{add.applicants.added.successfully}"></p>
     </div>
     <div th:if="${bindingError}" class="text-danger">
-        <p>Email or Phone Number is in an invalid format</p>
+        <p th:text="#{add.applicants.errorMessage1}"></p>
     </div>
     <form th:method="post" th:object="${applicants}">
-        <label class="form-label" th:for="*{firstName}">First Name: </label>
-        <input name="firstName" class="form-control" placeholder="First Name" th:field="*{firstName}" type="text" required>
+        <label class="form-label" th:for="*{firstName}" th:text="#{add.applicants.firstName}">: </label>
+        <input name="firstName" class="form-control" th:placeholder="#{add.applicants.firstName}" th:field="*{firstName}" type="text" required>
 
-        <label class="form-label" th:for="*{lastName}">Last Name: </label>
-        <input name="lastName" class="form-control" placeholder="Last Name" th:field="*{lastName}" type="text" required>
+        <label class="form-label" th:for="*{lastName}" th:text="#{add.applicants.lastName}">: </label>
+        <input name="lastName" class="form-control" th:placeholder="#{add.applicants.lastName}" th:field="*{lastName}" type="text" required>
 
-        <label class="form-label" th:for="*{location}">Location: </label>
-        <input name="location" class="form-control" placeholder="Location" th:field="*{location}" type="text" required>
+        <label class="form-label" th:for="*{location}" th:text="#{add.applicants.location}">: </label>
+        <input name="location" class="form-control" th:placeholder="#{add.applicants.location}" th:field="*{location}" type="text" required>
 
-        <label class="form-label" th:for="*{email}">Email: </label>
-        <input name="email" class="form-control" placeholder="Email" th:field="*{email}" type="text" required>
+        <label class="form-label" th:for="*{email}" th:text="#{add.applicants.email}">: </label>
+        <input name="email" class="form-control" placeholder="Email" th:placeholder="#{add.applicants.email}"type="text" required>
 
-        <label class="form-label" th:for="*{phoneNumber}">Phone Number: </label>
-        <input name="phoneNumber" class="form-control" placeholder="Phone Number" th:field="*{phoneNumber}" type="text">
+        <label class="form-label" th:for="*{phoneNumber}" th:text="#{add.applicants.phoneNumber}">: </label>
+        <input name="phoneNumber" class="form-control" th:placeholder="#{add.applicants.phoneNumber}" th:field="*{phoneNumber}" type="text">
 
-        <label class="form-label" th:for="*{eventAttended}">Event Attended: </label>
-        <input name="eventAttended" class="form-control" placeholder="Event Attended" th:field="*{eventAttended}" type="text" required>
+        <label class="form-label" th:for="*{eventAttended}" th:text="#{add.applicants.eventAttended}">: </label>
+        <input name="eventAttended" class="form-control" th:placeholder="#{add.applicants.eventAttended}" th:field="*{eventAttended}" type="text" required>
 
-        <label class="form-label" th:for="*{skill}">Skill: </label>
-        <input name = "skill" class="form-control" placeholder="Skill" th:field="*{skill}" type="text">
+        <label class="form-label" th:for="*{skill}" th:text="#{add.applicants.skill}">: </label>
+        <input name = "skill" class="form-control" th:placeholder="#{add.applicants.skill}" th:field="*{skill}" type="text">
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" th:text="#{add.applicants.submit}"></button>
     </form>
 </div>
 

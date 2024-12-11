@@ -11,13 +11,13 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <header>
-    <a href="/statistics">Back to Overview</a>
-    <h1>Event Recruitment Statistics</h1>
+    <a href="/statistics" th:text="#{statistics.overview.backToOverview}"></a>
+    <h1 th:text="#{statistics.page.eventRecruitment}"></h1>
     <nav>
         <ul>
-            <li><a href="/event-statistics">Event Recruitment</a></li>
-            <li><a href="/time-statistics">Time Period Recruitment</a></li>
-            <li><a href="/location-statistics">Location Recruitment</a></li>
+            <li><a href="/event-statistics" th:text="#{statistics.page.eventRecruitment}"></a></li>
+            <li><a href="/time-statistics" th:text="#{statistics.page.timePeriodRecruitment}"></a></li>
+            <li><a href="/location-statistics" th:text="#{statistics.page.locationRecruitment}"></a></li>
         </ul>
     </nav>
 </header>
@@ -27,7 +27,7 @@
             <div class="selectBox" onclick="showCheckboxes()">
                 <label>
                     <select>
-                        <option>Select Events</option>
+                        <option th:text="#{statistics.overview.selectEvent}"></option>
                     </select>
                 </label>
                 <div class="overSelect"></div>
