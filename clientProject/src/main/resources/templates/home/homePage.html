@@ -11,7 +11,7 @@
 <div th:replace="~{fragments/header :: header}"/>
 <div class="homeContainer">
 <!--Recent applicant table-->
-    <div class="tableContainer">
+    <div class="tableContainerHome">
         <table class="homeTable">
             <caption class="captionFix" th:text="#{home.page.caption}"></caption>
             <thead>
@@ -33,16 +33,16 @@
             </tbody>
         </table>
     </div>
-
-<!--    Buttons for navigation-->
     <div class="buttonContainer">
         <a class="homeButton" th:href="@{/profile}" th:text="#{home.page.viewApplication}"></a>
-        <a class="homeButton" th:text="#{home.page.ActivityLog}"></a>
+        <a class="homeButton" th:href="@{/email}" th:text="#{header.email}"></a>
         <a class="homeButton" th:href="@{/statistics}" th:text="#{home.page.statistics}"></a>
         <a class="homeButton" th:href="@{add-applicant}" th:text="#{home.page.addApplicant}"></a>
     </div>
-
 </div>
+
+<!--    Buttons for navigation-->
+
 
 <div th:replace="~{fragments/footer :: footer-links}"></div>
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
