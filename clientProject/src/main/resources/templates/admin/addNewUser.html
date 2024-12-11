@@ -10,37 +10,37 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <div class="addNewUsers-Container">
     <main class="addNewUsers-wrapper">
-        <h1 class="addNewUsers-header-1">Add New User</h1>
+        <h1 class="addNewUsers-header-1" th:text="#{add.user.title}"></h1>
         <form th:action="@{/admin/add}" th:object="${user}" th:method="post" class="addNewUsers-form-group">
             <div class="addNewUsers-form-group">
-                <label for="firstName" class="addNewUsers-label">First Name: </label>
+                <label for="firstName" class="addNewUsers-label" th:text="#{add.user.firstName}"> </label>
                 <input type="text" id="firstName" th:field="*{firstName}" class="addNewUsers-input" required>
             </div>
 
             <div class="addNewUsers-form-group">
-                <label for="lastName" class="addNewUsers-label">Last Name: </label>
+                <label for="lastName" class="addNewUsers-label" th:text="#{add.user.lastName}"></label>
                 <input type="text" id="lastName" th:field="*{lastName}" class="addNewUsers-input" required>
             </div>
 
             <div class="addNewUsers-form-group">
-                <label for="username" class="addNewUsers-label">Username: </label>
+                <label for="username" class="addNewUsers-label" th:text="#{add.user.username}"></label>
                 <input type="text" id="username" th:field="*{username}" class="addNewUsers-input" required>
             </div>
 
             <div class="addNewUsers-form-group">
-                <label for="passwordHashed" class="addNewUsers-label">Password: </label>
+                <label for="passwordHashed" class="addNewUsers-label" th:text="#{add.user.password}"></label>
                 <input type="password" id="passwordHashed" th:field="*{password}" class="addNewUsers-input" required>
             </div>
 
             <div class="addNewUsers-form-group">
-                <label for="role" class="addNewUsers-label">Role: </label>
+                <label for="role" class="addNewUsers-label" th:text="#{add.user.role}"></label>
                 <select id="role" th:field="*{role}" class="addNewUsers-select" required>
                     <option value="ROLE_USER">Recruiter</option>
                     <option value="ROLL_ADMIN">Admin</option>
                 </select>
             </div>
 
-            <button type="submit" class="addNewUsers-button">Add User</button>
+            <button type="submit" class="addNewUsers-button" th:text="#{add.user.button}"></button>
         </form>
     </main>
 </div>

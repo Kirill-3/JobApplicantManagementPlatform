@@ -20,12 +20,12 @@
 
 <div class="search-bar-container" th:if="${profile == null}">
     <form th:action="@{/profile/search}" method="get">
-        <input type="text" name="query" placeholder="Search profiles...">
-        <button type="submit">Search</button>
-        <select id="statusDropdown" class="statusDropdown">
-            <option value="">All Statuses</option>
-            <option value="Internal">Internal</option>
-            <option value="External">External</option>
+        <input type="text" name="query" th:placeholder="#{profile.page.search.placeholder}">
+        <button type="submit" th:text="#{profile.page.search.button}"></button>
+        <select id="statusDropdown" class="statusDropdown" >
+            <option value="" th:text="#{profile.page.allStatuses}"></option>
+            <option value="Internal" th:text="#{profile.page.internal}"></option>
+            <option value="External" th:text="#{profile.page.external}"></option>
         </select>
 
 
@@ -36,23 +36,23 @@
     <table id="table1" class="tableClickable">
         <thead>
         <tr>
-            <th th:data-type="firstName">First Name</th>
-            <th th:data-type="lastName">Last Name</th>
+            <th th:data-type="firstName" th:text="#{profile.page.firstName}">First Name</th>
+            <th th:data-type="lastName" th:text="#{profile.page.lastName}">Last Name</th>
             <th th:data-original-text="Location">
                 <select id="locationDropdown" class="thisDropdown">
-                    <option value="" >All Locations</option>
-                    <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}" ></option>
+                    <option  th:text="#{profile.page.allLocation}"></option>
+                    <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}"></option>
                 </select>
             </th >
             <th th:data-original-text="event">
-                <select id="eventDropdown" class="thisDropdown">
-                    <option value="">All Sources</option>
+                <select id="eventDropdown" class="thisDropdown" th:title="#{profile.page.allSources}">
+                    <option th:text="#{profile.page.allSources}"></option>
                     <option th:each="event : ${uniqueEvents}" th:value="${event.getEventAttended()}" th:text="${event.getEventAttended()}"></option>
                 </select>
             </th>
             <th>
-                <select id="skillDropdown" class="thisDropdown">
-                    <option value="">All Skills</option>
+                <select id="skillDropdown" th:title="#{profile.page.allSkills}" class="thisDropdown">
+                    <option th:text="#{profile.page.allSkills}"></option>
                     <option th:each="skill : ${uniqueSkills}" th:value="${skill}" th:text="${skill}"></option>
                 </select>
             </th>
@@ -74,115 +74,115 @@
 <br>
 <div th:if="${profile != null}" class="profile-container">
 
-    <button id="editButton" onclick="showEditForm()"> Edit <span th:text="${profile.firstName}"></span></button>
+    <button id="editButton" onclick="showEditForm()" th:text="#{profile.page.edit}"> <span th:text="${profile.firstName}"></span></button>
     <br>
 
     <div id="editForm" style="display:none;">
         <form th:action="@{/profile/edit/{userID}(userID=${profile.getId()})}" method="post">
             <!-- Existing fields -->
-            <label for="firstName">First Name:</label>
+            <label for="firstName" th:text="#{profile.page.edit.firstName}"></label>
             <input type="text" id="firstName" name="firstName" th:value="${profile.firstName}" required>
             <br>
-            <label for="lastName">Last Name:</label>
+            <label for="lastName" th:text="#{profile.page.edit.lastName}"></label>
             <input type="text" id="lastName" name="lastName" th:value="${profile.lastName}" required>
             <br>
-            <label for="location">Location:</label>
+            <label for="location" th:text="#{profile.page.edit.location}"></label>
             <input type="text" id="location" name="location" th:value="${profile.location}" required>
             <br>
-            <label for="email">Email:</label>
+            <label for="email" th:text="#{profile.page.edit.email}"></label>
             <input type="email" id="email" name="email" th:value="${profile.email}" required>
             <br>
-            <label for="phoneNumber">Phone Number:</label>
+            <label for="phoneNumber" th:text="#{profile.page.edit.phoneNumber}"></label>
             <input type="text" id="phoneNumber" name="phoneNumber" th:value="${profile.phoneNumber}" required oninput="validateUKPhoneNumber(this)">
             <br>
-            <label for="currentPosition">Current Position:</label>
+            <label for="currentPosition" th:text="#{profile.page.edit.currentPosition}"></label>
             <input type="text" id="currentPosition" name="currentPosition" th:value="${profile.jobDetails?.currentPosition}" required>
             <br>
-            <label for="status">Status:</label>
+            <label for="status" th:text="#{profile.page.edit.status}"></label>
             <input type="text" id="status" name="status" th:value="${profile.jobDetails?.status}" required oninput="validateStatus(this)">
             <br>
-            <label for="skill">Skills:</label>
+            <label for="skill" th:text="#{profile.page.edit.skills}"></label>
             <input type="text" id="skill" name="skill" th:value="${profile.skill}" required>
             <br>
-            <label for="eventAttended">Event Attended:</label>
+            <label for="eventAttended" th:text="#{profile.page.edit.eventAttended}"></label>
             <input type="text" id="eventAttended" name="eventAttended" th:value="${profile.eventAttended}" required>
             <br>
-            <label for="subscribeToNewsletter">Subscribe to Newsletter:</label>
+            <label for="subscribeToNewsletter" th:text="#{profile.page.edit.subscribeToNewsletter}"></label>
             <input type="checkbox" id="subscribeToNewsletter" name="subscribeToNewsletter" th:checked="${profile.preferences?.subscribeToNewsletter}">
             <br>
-            <label for="subscribeToBulletins">Subscribe to Bulletins:</label>
+            <label for="subscribeToBulletins" th:text="#{profile.page.edit.subscribeToBulletins}"></label>
             <input type="checkbox" id="subscribeToBulletins" name="subscribeToBulletins" th:checked="${profile.preferences?.subscribeToBulletins}">
             <br>
-            <label for="subscribeToJobUpdates">Subscribe to Job Updates:</label>
+            <label for="subscribeToJobUpdates" th:text="#{profile.page.edit.subscribeToJobUpdates}"></label>
             <input type="checkbox" id="subscribeToJobUpdates" name="subscribeToJobUpdates" th:checked="${profile.preferences?.subscribeToJobUpdates}">
             <br>
-            <button type="submit">Save</button>
+            <button type="submit" th:text="#{profile.page.edit.save}"></button>
         </form>
     </div>
     <br>
 
 
     <div class="profile-details">
-        <h2>Personal Details</h2>
+        <h2 th:text="#{profile.page.personal.details}"></h2>
         <table class="tableApplicant">
             <tr>
-                <th>First Name</th>
+                <th th:text="#{profile.page.personal.details.firstName}"></th>
                 <td th:text="${profile.firstName}"></td>
             </tr>
             <tr>
-                <th>Last Name</th>
+                <th th:text="#{profile.page.personal.details.lastName}"></th>
                 <td th:text="${profile.lastName}"></td>
             </tr>
             <tr>
-                <th>Location</th>
+                <th th:text="#{profile.page.personal.details.location}"></th>
                 <td th:text="${profile.location}"></td>
             </tr>
             <tr>
-                <th>Email</th>
+                <th th:text="#{profile.page.personal.details.email}"></th>
                 <td th:text="${profile.email}"></td>
             </tr>
             <tr>
-                <th>Phone Number</th>
+                <th th:text="#{profile.page.personal.details.phoneNumber}"></th>
                 <td th:text="${profile.phoneNumber != null ? profile.phoneNumber : 'N/A'}"></td>
             </tr>
         </table>
         <br>
 
-        <h2>Applicant Experience</h2>
+        <h2 th:text="#{profile.page.applicant.experience}"></h2>
         <table class="tableApplicant">
             <tr>
-                <th>Current Position</th>
+                <th th:text="#{profile.page.applicant.experience.current.position}"></th>
                 <td th:text="${profile.jobDetails?.currentPosition != null ? profile.jobDetails.currentPosition : 'N/A'}"></td>
             </tr>
             <tr>
-                <th>Status</th>
+                <th th:text="#{profile.page.applicant.experience.status}"></th>
                 <td th:text="${profile.jobDetails?.status != null ? profile.jobDetails.status : 'N/A'}"></td>
             </tr>
             <tr>
-                <th>Skills</th>
+                <th th:text="#{profile.page.applicant.experience.skills}"></th>
                 <td th:text="${profile.skill != null ? profile.skill : 'N/A'}"></td>
             </tr>
             <tr>
-                <th>Event Attended</th>
+                <th th:text="#{profile.page.applicant.experience.eventAttended}"></th>
                 <td th:text="${profile.eventAttended}"></td>
             </tr>
         </table>
 
         <br>
 
-        <h2>Applicant Preferences</h2>
+        <h2 th:text="#{profile.page.applicant.preferences}"></h2>
 
         <table class="tableApplicant">
             <tr>
-                <th>Subscribed to newsletter?</th>
+                <th th:text="#{profile.page.applicant.preferences.subscribedToNewsletter}"></th>
                 <td th:text="${profile.preferences?.subscribeToNewsletter} ? 'Yes' : 'No'"></td>
             </tr>
             <tr>
-                <th>Subscribed to bulletins?</th>
+                <th th:text="#{profile.page.applicant.preferences.subscribedToBulletins}"></th>
                 <td th:text="${profile.preferences?.subscribeToBulletins} ? 'Yes' : 'No'"></td>
             </tr>
             <tr>
-                <th>Subscribed to job updates?</th>
+                <th th:text="#{profile.page.applicant.preferences.subscribedToJobUpdates}"></th>
                 <td th:text="${profile.preferences?.subscribeToJobUpdates} ? 'Yes' : 'No'"></td>
             </tr>
         </table>
@@ -193,27 +193,27 @@
         </form>
         <br>
 
-        <button id="deleteButton" onclick="confirmDelete()">Delete <span th:text="${profile.firstName}"></span></button>
+        <button id="deleteButton" onclick="confirmDelete()" th:text="#{profile.page.button.delete}"> <span th:text="${profile.firstName}"></span></button>
 
         <br>
         <br>
-        <a th:href="@{/profile}">Back to Profiles</a>
+        <a th:href="@{/profile}" th:text="#{profile.page.button.backToProfiles}"></a>
 
     </div>
 
     <div class="resume-section">
-        <h2>Applicant CV/Resume</h2>
+        <h2 th:text="#{profile.page.applicant.resume}"></h2>
         <form th:action="@{/profile/uploadCV/{userID}(userID=${profile.getId()})}" method="post" enctype="multipart/form-data">
-            <label for="cvUpload">Select CV (PDF only):</label>
+            <label for="cvUpload" th:text="#{profile.page.applicant.resume.select.cv}"></label>
             <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf" required>
-            <button type="submit">Upload CV</button>
+            <button type="submit" th:text="#{profile.page.applicant.resume.button.upload.cv}"></button>
         </form>
 
         <p th:text="${message}"></p>
 
         <!-- Check if CV exists and display it -->
         <div th:if="${cvBase64 != null}">
-            <h3>Uploaded CV</h3>
+            <h3 th:text="#{profile.page.uploadedCV}"></h3>
             <!-- Embed the uploaded CV PDF using base64 encoding -->
             <iframe th:src="'data:application/pdf;base64,' + ${cvBase64}" width="100%" height="600px" style="border: none;"></iframe>
         </div>
@@ -223,11 +223,11 @@
     <table id="table2" class="logTable">
         <thead>
         <tr>
-            <th>UserId</th>
-            <th>Communication Method</th>
-            <th>Action Taken</th>
-            <th>Content</th>
-            <th>Time</th>
+            <th th:text="#{profile.page.log.userID}"></th>
+            <th th:text="#{profile.page.log.communicationMethod}"></th>
+            <th th:text="#{profile.page.log.actionTaken}"></th>
+            <th th:text="#{profile.page.log.content}"></th>
+            <th th:text="#{profile.page.log.time}"></th>
         </tr>
         </thead>
         <tbody>
@@ -245,12 +245,12 @@
 <div th:if="${profile != null}">
     <br>
     <form th:if="${profile != null}" th:action="@{/profile/sendEmail/{userID}(userID=${profile.getId()})}" method="post" onsubmit="showAlert()">
-        <button type="submit"> Email <span th:text="${profile.firstName}"></span></button>
+        <button type="submit" th:text="#{profile.page.button.email}"> <span th:text="${profile.firstName}"></span></button>
     </form>
     <br>
 
 
-    <a th:href="@{/profile}">Back to Profiles</a>
+    <a th:href="@{/profile}" th:text="#{profile.page.button}"></a>
 </div>
 <!-- Footer -->
 <div th:replace="~{fragments/footer :: footer-links}"></div>

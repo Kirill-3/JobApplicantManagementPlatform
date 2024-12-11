@@ -10,14 +10,14 @@
 <div th:replace="~{fragments/header :: header}"/>
 
 <div class="heading">
-    <h2>Select which way you would like to add an applicant</h2>
+    <h2 th:text="#{option.page.header}"></h2>
 </div>
 <div class="optionDiv">
-    <a class="homeButton" th:href="@{add-applicant/manual}">Manually Add Applicant</a>
-    <a class="homeButton" th:href="@{add-applicant/csv}">Import from CSV</a>
+    <a class="homeButton" th:href="@{add-applicant/manual}" th:text="#{option.page.button.manuallyAdd}"></a>
+    <a class="homeButton" th:text="#{option.page.button.cvs}"></a>
 </div>
 <div class="heading">
-    <a class="btn btn-info" th:href="@{/home}">Back</a>
+    <a class="btn btn-info" th:href="@{/home}" th:text="#{option.page.button.home}"></a>
 </div>
 
 

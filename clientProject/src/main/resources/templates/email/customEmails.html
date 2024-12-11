@@ -22,7 +22,7 @@
 <div th:replace="~{fragments/header :: header}"/>
 
 
-<h1>Compose Email</h1>
+<h1 th:text="#{custom.email.tittle}"></h1>
 
 <br>
 
@@ -31,31 +31,31 @@
 
   <div class="form-group">
     <div>
-      <label for="subject">Subject:</label>
-      <input type="text" class="form-control" id="subject" name="subject"  placeholder="Email Subject here" required>
+      <label for="subject" th:text="#{custom.email.subject}"></label>
+      <input type="text" class="form-control" id="subject" name="subject"  th:placeholder="#{custom.email.subject.placeholder}" required>
     </div>
     <div>
-      <label for="message" class="col-sm-2 col-form-label">Message:</label>
-      <textarea id="message" class="form-control" name="message" rows="5" cols="50" placeholder="Your message here" required></textarea>
+      <label for="message" class="col-sm-2 col-form-label" th:text="#{custom.email.message}"></label>
+      <textarea id="message" class="form-control" name="message" rows="5" cols="50" th:placeholder="#{custom.email.message.placeholder}" required></textarea>
     </div>
   </div>
   <!-- Email selector -->
 
-  <h3>Select Recipients</h3>
+  <h3 th:text="#{custom.email.selectRecipients}"></h3>
   <form th:action="@{/email/sendEmails}" method="post">
     <table id="table1" class="tableClickable">
       <thead>
       <tr>
-        <th th:data-type="firstName">First Name</th>
-        <th th:data-type="lastName">Last Name</th>
+        <th th:data-type="firstName" th:text="#{profile.page.firstName}"></th>
+        <th th:data-type="lastName" th:text="#{profile.page.lastName}"></th>
         <th>
           <select id="locationDropdown">
-            <option value="">All Locations</option>
+            <option value="" th:text="#{profile.page.allLocation}"></option>
             <option th:each="location : ${uniqueLocations}" th:value="${location.getLocation()}" th:text="${location.getLocation()}"></option>
           </select>
         </th>
-        <th th:data-href="@{/profile/eventAttendedAscending}">Event Attended</th>
-        <th>Email?</th>
+        <th th:data-href="@{/profile/eventAttendedAscending}" th:text="#{profile.page.applicant.experience.eventAttended}"></th>
+        <th th:text="#{custom.email.message.email}"></th>
       </tr>
       </thead>
       <tbody>
@@ -68,7 +68,7 @@
       </tr>
       </tbody>
     </table>
-    <button type="submit">Send email to selected users</button>
+    <button type="submit" th:text="#{custom.email.message.email.send}"></button>
   </form>
 </form>
 

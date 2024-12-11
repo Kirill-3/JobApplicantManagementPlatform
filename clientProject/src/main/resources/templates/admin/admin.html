@@ -10,17 +10,17 @@
 <div th:replace="~{fragments/header :: header}"></div>
     <div class="newUser">
         <button>
-                <a th:href="@{/admin/add}" class="admin-new-user">Add New User</a>
+                <a th:href="@{/admin/add}" class="admin-new-user" th:text="#{admin.page.addUser}"></a>
         </button>
         <table class="table-content">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Role</th>
-                <th>Action</th>
+                <th th:text="#{admin.page.id}"></th>
+                <th th:text="#{admin.page.username}"></th>
+                <th th:text="#{admin.page.firstName}"></th>
+                <th th:text="#{admin.page.lastName}"></th>
+                <th th:text="#{admin.page.role}"></th>
+                <th th:text="#{admin.page.action}">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -31,7 +31,7 @@
                 <td th:text="${user.lastName}"></td>
                 <td th:text="${user.role}"></td>
                 <td>
-                    <a th:href="@{/admin/user/{id}(id=${user.id})}" class="btn btn-primary">View Details</a>
+                    <a th:href="@{/admin/user/{id}(id=${user.id})}" class="btn btn-primary" th:text="#{admin.page.viewDetails}"></a>
                 </td>
             </tr>
             </tbody>
@@ -42,14 +42,14 @@
     <table id="table2" class="logTable">
         <thead>
         <tr>
-            <th>Log type</th>
-            <th>Log Id</th>
-            <th>User Id</th>
-            <th>applicant ID</th>
-            <th>Comm Method</th>
-            <th>Action Taken</th>
-            <th>Content</th>
-            <th>Time</th>
+            <th th:text="#{admin.page.logType}">Log type</th>
+            <th th:text="#{admin.page.logId}">Log Id</th>
+            <th th:text="#{admin.page.UserId}">User Id</th>
+            <th th:text="#{admin.page.applicantId}">applicant ID</th>
+            <th th:text="#{admin.page.commMethod}">Comm Method</th>
+            <th th:text="#{admin.page.actionTaken}">Action Taken</th>
+            <th th:text="#{admin.page.content}">Content</th>
+            <th th:text="#{admin.page.Time}">Time</th>
         </tr>
         </thead>
         <tbody>

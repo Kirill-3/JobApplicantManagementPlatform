@@ -11,19 +11,19 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <header>
-    <a href="/statistics">Back to Overview</a>
-    <h1>Location Recruitment Statistics</h1>
+    <a href="/statistics" th:text="#{statistics.overview.backToOverview}"></a>
+    <h1 th:text="#{statistics.page.locationRecruitment}"></h1>
     <nav>
         <ul>
-            <li><a href="/event-statistics">Event Recruitment</a></li>
-            <li><a href="/time-statistics">Time Period Recruitment</a></li>
-            <li><a href="/location-statistics">Location Recruitment</a></li>
+            <li><a href="/event-statistics" th:text="#{statistics.page.eventRecruitment}"></a></li>
+            <li><a href="/time-statistics" th:text="#{statistics.page.timePeriodRecruitment}"></a></li>
+            <li><a href="/location-statistics" th:text="#{statistics.page.locationRecruitment}"></a></li>
         </ul>
     </nav>
 </header>
 <main>
     <section>
-        <h2>Location Recruitment Chart</h2>
+        <h2 th:text="#{statistics.page.locationRecruitment}"></h2>
         <canvas id="locationRecruitmentChart"></canvas>
     </section>
 </main>

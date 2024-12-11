@@ -7,13 +7,12 @@
 <body>
 <div class="container">
     <footer class="text-center" th:fragment="footer-links">
-        <img src="/images/dhcw.png" alt="NHS Wales Logo" style="width:200px; height:100px;">
-        <a>Last updated: November 2024  </a>
-        <a href="https://www.nhs.wales/">NHS Wales</a>
-        <a href="https://www.england.nhs.uk/">NHS England</a>
-        <a href="https://www.nhsinform.scot/">NHS Scotland</a>
-        <a href="https://www.hscni.net/">HSC Northern Ireland</a>
-
+        <a th:text="#{footer.lastUpdated}"></a>
+        <a href="https://www.nhs.wales/" th:text="#{footer.NhsWelsh}"></a>
+        <a href="https://www.england.nhs.uk/" th:text="#{footer.NhsEngland}"></a>
+        <a href="https://www.nhsinform.scot/" th:text="#{footer.NhsScotland}"></a>
+        <a href="https://www.hscni.net/" th:text="#{footer.hscNorthernIreland}"></a>
+        <img src="/images/NhsWales.JPEG" alt="NHS Wales Logo" style="width:100px; height:auto;">
 
     </footer>
     <script th:fragment="bootstrap-js"
