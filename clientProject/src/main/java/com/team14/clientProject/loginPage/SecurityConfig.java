@@ -22,6 +22,7 @@ public class SecurityConfig {
             "/",
             "/403",
             "/login"
+
     };
 
     @Autowired
@@ -32,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/add-applicant/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/profile/uploadCV/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form

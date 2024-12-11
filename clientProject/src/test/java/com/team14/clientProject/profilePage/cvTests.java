@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -64,6 +65,7 @@ public class cvTests {
         // Perform the upload request with no file
         MvcResult result = mvc.perform(MockMvcRequestBuilders.multipart("/profile/uploadCV/{userID}", 1)
                         .file(new MockMultipartFile("cvUpload", "", "application/pdf", new byte[0])))
+
                 .andExpect(status().isOk())
                 .andExpect(view().name("profilePage"))
                 .andExpect(model().attribute("message", "Please select a file to upload"))
