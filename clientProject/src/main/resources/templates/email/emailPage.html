@@ -3,20 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Email Dashboard</title>
+    <link th:replace="fragments/header :: bootstrap-css"/>
+    <link rel="stylesheet" href="/css/emailpage.css">
 </head>
 <body>
-<h1>Email Dashboard</h1>
-<form th:action="@{/email/selector}" method="get">
-    <button type="submit">Send email to multiple users</button>
-</form>
+<div th:replace="~{fragments/header :: header}"/>
 
-<form th:action="@{/email/customEmails}" method="get">
-    <button type="submit">Compose and send custom email</button>
-</form>
 
-<form th:action="@{/email/newsletter}" method="get">
-    <button type="submit">Send Newsletter</button>
-</form>
+
+<h1 class="email-dashboard-title">Email Dashboard</h1>
+<br>
+<div class="email-dashboard-body">
+    <form th:action="@{/email/selector}" method="get">
+        <button class="email-dashboard-button" type="submit">Send email to multiple users</button>
+    </form>
+    <br>
+    <form th:action="@{/email/customEmails}" method="get">
+        <button class="email-dashboard-button" type="submit">Compose and send custom email</button>
+    </form>
+    <br>
+    <form th:action="@{/email/newsletter}" method="get">
+        <button  class="email-dashboard-button" type="submit">Send Newsletter</button>
+    </form>
+</div>
+
+
+<br>
+
+
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 
 </body>
 

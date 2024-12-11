@@ -23,7 +23,7 @@ values
     ('John', 'Doe', 'Swansea', 'kirill.spam1@gmail.com', '2345678901', 'NHS Recruitment Day', 'Healthcare, Public Health'),
     ('Jane', 'Smith', 'Newport', 'ayushyj04@gmail.com', '3456789012', 'Health Conference', 'Nursing, Midwifery'),
     ('Mike', 'Ross', 'Wrexham', 'mross|@example.com', '4567890123', 'NHS Recruitment', 'Clinical Research, Pharmacy'),
-    ('Emily', 'Blunt', 'Bangor', 'eblunt@example.com', '5678901234', 'Health Conference', 'Physiotherapy, Occupational Therapy'),
+    ('Emily', 'Blunt', 'Bangor', '', '5678901234', 'Health Conference', 'Physiotherapy, Occupational Therapy'),
     ('Chris', 'Evans', 'Llandudno', 'cevans@example.com', '6789012345', 'NHS Careers Fair', 'Healthcare, Radiology'),
     ('Anna', 'Taylor', 'Aberystwyth', 'ataylor@example.com', '7890123456', 'Medical Career Day', 'Healthcare, Emergency Medicine'),
     ('Tom', 'Hanks', 'Carmarthen', 'thanks@example.com', '8901234567', 'NHS Recruitment', 'Healthcare, General Practice'),
@@ -110,7 +110,7 @@ values
 -- Populate the Applicant Preferences table with sample data
 insert into applicantPreferences (applicationId, SubscribeToNewsLetter, SubscribeToBulletins, SubscribeToJobUpdates)
 values
-    (1, 'yes', 'no', 'yes'),
+    (1, 'no', 'no', 'yes'),
     (2, 'yes', 'yes', 'no'),
     (3, 'yes', 'yes', 'yes'),
     (4, 'no', 'yes', 'yes'),
