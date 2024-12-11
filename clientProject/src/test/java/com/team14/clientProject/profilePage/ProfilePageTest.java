@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.FlashAttributeResultMatchers;
@@ -27,6 +28,7 @@ class ProfilePageTest {
 
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void profilePageDisplays() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile"))
@@ -35,6 +37,7 @@ class ProfilePageTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testProfilePageDisplaysValidUserProfile() throws Exception {
         List<Profile> profileList = profilePageRepositoryImpl.getProfiles();
         for (Profile profile : profileList) {
@@ -46,6 +49,7 @@ class ProfilePageTest {
         }
     }
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testProfilePageDisplaysInvalidUserProfileTooHighUserId() throws Exception {
         List<Profile> profileList = profilePageRepositoryImpl.getProfiles();
         int count = 0;
@@ -57,43 +61,57 @@ class ProfilePageTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test void testProfilePageDisplaysInvalidUserProfileNegativeUserId() throws Exception {
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testProfilePageDisplaysInvalidUserProfileNegativeUserId() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile").param("userId", "-1"))
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test void testProfilePageDisplaysInvalidUserProfileStringUserId() throws Exception {
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testProfilePageDisplaysInvalidUserProfileStringUserId() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile").param("userId", "string"))
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test void testProfilePageDisplaysInvalidUserProfileEmptyUserId() throws Exception {
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testProfilePageDisplaysInvalidUserProfileEmptyUserId() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile").param("userId", ""))
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test void testProfilePageDisplaysProfilesAscending() throws Exception {
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testProfilePageDisplaysProfilesAscending() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile/firstNameAscending"))
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test void testProfilePageDisplaysProfilesDescending() throws Exception {
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testProfilePageDisplaysProfilesDescending() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile/firstNameDescending"))
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test void testProfilePageDisplaysProfilesByLastNameAscending() throws Exception {
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testProfilePageDisplaysProfilesByLastNameAscending() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile/lastNameAscending"))
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test void testProfilePageDisplaysProfilesByLastNameDescending() throws Exception {
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testProfilePageDisplaysProfilesByLastNameDescending() throws Exception {
         MvcResult result = mvc
                 .perform(get("/profile/lastNameDescending"))
                 .andExpect(status().isOk())

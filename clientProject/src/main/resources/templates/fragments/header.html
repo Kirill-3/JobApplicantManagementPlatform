@@ -33,6 +33,9 @@
 <!--                        Will be later updated to actually show details of the current user
                             Need to wait for login functionality first ... Currently using default template-->
                     </li>
+                    <li class="nav-item">
+                        <a class = "nav-link" th:href="@{/logout}">logout</a>
+                    </li>
                 </ul>
                 <!-- Language selector -->
                 <form method="get" th:action="@{#}" class="d-flex">

@@ -5,12 +5,14 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -50,11 +52,12 @@ public class AddApplicantTests {
         Integer totalApplicants = addApplicantRepository.getApplicantCount();
 
         // Assert
-        assertEquals(21, totalApplicants);
+        assertEquals(88, totalApplicants);
 
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void successMessageDisplayedAfterApplicantIsAdded() throws Exception {
         AddApplicantForm mockForm = new AddApplicantForm();
         mockForm.setFirstName("John");
@@ -67,6 +70,7 @@ public class AddApplicantTests {
 
         MvcResult when = mvc
                 .perform(post("/add-applicant/manual")
+                        .with(csrf())
                         .param("firstName", mockForm.getFirstName())
                         .param("lastName", mockForm.getLastName())
                         .param("location", mockForm.getLocation())

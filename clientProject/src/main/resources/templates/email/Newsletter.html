@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sending Newsletter</title>
+    <link th:replace="fragments/header :: bootstrap-css"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+
+    <script th:inline="javascript">
+        const alertMessage = /*[[${alertMessage}]]*/ 'default message';
+        if (alertMessage && alertMessage !== 'default message') {
+            alert(alertMessage);
+        }
+    </script>
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"/>
+
+<h1>Sending a Newsletter</h1>
+<br>
+<form th:action="@{/email/sendNewsletter}" method="post" enctype="multipart/form-data" class="form-group">
+    <div>
+        <label for="subject">Subject:</label>
+        <input type="text" class="form-control" id="subject" name="subject"  placeholder="Email Subject here" required>
+    </div>
+
+    <div>
+        <label for="newsletterFile">Upload Newsletter (PDF):</label>
+        <input type="file" id="newsletterFile" name="newsletterFile" accept="application/pdf" required>
+    </div>
+
+    <br>
+
+    <button type="submit">Send Newsletter</button>
+</form>
+
+<br>
+
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+
+
+
+</body>
+</html>

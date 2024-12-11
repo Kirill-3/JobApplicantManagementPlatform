@@ -33,7 +33,7 @@ public class AdminRepositoryImpl implements AdminRepository {
                 rs.getString("passwordHashed"),
                 rs.getString("firstname"),
                 rs.getString("lastname"),
-                User.Role.valueOf(rs.getString("role")),
+                rs.getString("role"),
                 rs.getTimestamp("lastLogin") != null ? rs.getTimestamp("lastLogin").toLocalDateTime() : null,
                 rs.getTimestamp("createdAt") != null ? rs.getTimestamp("createdAt").toLocalDateTime() : null
         );
@@ -93,6 +93,11 @@ public class AdminRepositoryImpl implements AdminRepository {
     // Method to delete a user by ID
     @Override
     public void deleteUserById(int ID) {
+        String insertSql = "INSERT INTO deletedUsers (ID, username, passwordHashed, firstName, lastName, role, lastLogin, createdAt) " +
+                "SELECT ID, username, passwordHashed, firstName, lastName, role, lastLogin, createdAt " +
+                "FROM users WHERE ID = ?";
+        jdbcTemplate.update(insertSql, ID);
+
         String sql = "DELETE FROM users WHERE ID = ?";
         jdbcTemplate.update(sql, ID);
     }
