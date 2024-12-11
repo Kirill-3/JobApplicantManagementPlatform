@@ -43,6 +43,7 @@ public class customEmailTests {
 
     private List<Profile> mockProfiles;
 
+    // Setting up the test environment
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -52,7 +53,7 @@ public class customEmailTests {
         profilePageRepository = mock(ProfilePageRepositoryImpl.class);
         CommunicationLogRepositoryImpl communicationLogRepository = mock(CommunicationLogRepositoryImpl.class);
 
-        // Mock profiles
+        // Mocking profiles
         mockProfiles = Arrays.asList(
                 new Profile(1, "John", "Doe", "New York", "john.doe@example.com", "1234567890", "Event1", "Skill1"),
                 new Profile(2, "Jane", "Smith", "Los Angeles", "jane.smith@example.com", "0987654321", "Event2", "Skill2")
@@ -84,6 +85,8 @@ public class customEmailTests {
     }
 
 
+
+    // Test for sending emails to recipients
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void testSendCustomEmails_WithRecipients_Success() {
@@ -102,6 +105,8 @@ public class customEmailTests {
         assertEquals(mockProfiles, result.getModel().get("profileList"));
     }
 
+
+    // Test for when the SMTP server is not reachable
     @Test
     public void testSendCustomEmails_WithRecipients_Failure() {
 
@@ -120,6 +125,8 @@ public class customEmailTests {
         assertEquals(mockProfiles, result.getModel().get("profileList"));
     }
 
+
+    // Test for when the subject is empty
     @Test
     public void testCustomComposePage() {
 
@@ -131,6 +138,8 @@ public class customEmailTests {
         assertEquals(mockProfiles, result.getModel().get("profileList"));
     }
 
+
+    // Test for when no recipients are selected
     @Test
     public void testSendCustomEmails_NoRecipients() {
 
@@ -139,6 +148,36 @@ public class customEmailTests {
         assertEquals("email/customEmails", result.getViewName());
         assertTrue(result.getModel().containsKey("alertMessage"));
         assertEquals("Please select at least one recipient.", result.getModel().get("alertMessage"));
+        assertTrue(result.getModel().containsKey("profileList"));
+        assertEquals(mockProfiles, result.getModel().get("profileList"));
+    }
+
+
+    // Test for when the subject is empty
+    @Test
+    public void testSendCustomEmails_EmptySubject() {
+        List<String> emailIds = Arrays.asList("john.doe@example.com", "jane.smith@example.com");
+
+        ModelAndView result = emailPage.sendCustomEmails("", "Test Message", emailIds);
+
+        assertEquals("email/customEmails", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Subject cannot be empty.", result.getModel().get("alertMessage"));
+        assertTrue(result.getModel().containsKey("profileList"));
+        assertEquals(mockProfiles, result.getModel().get("profileList"));
+    }
+
+
+    // Test for empty message
+    @Test
+    public void testSendCustomEmails_EmptyMessage() {
+        List<String> emailIds = Arrays.asList("john.doe@example.com", "jane.smith@example.com");
+
+        ModelAndView result = emailPage.sendCustomEmails("Test Subject", "", emailIds);
+
+        assertEquals("email/customEmails", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Message cannot be empty.", result.getModel().get("alertMessage"));
         assertTrue(result.getModel().containsKey("profileList"));
         assertEquals(mockProfiles, result.getModel().get("profileList"));
     }

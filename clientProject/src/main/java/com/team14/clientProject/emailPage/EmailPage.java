@@ -3,6 +3,7 @@ package com.team14.clientProject.emailPage;
 import com.team14.clientProject.emailPage.mail.EmailServiceHandler;
 import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
 import com.team14.clientProject.profilePage.Profile;
+import com.team14.clientProject.profilePage.ProfilePageRepository;
 import com.team14.clientProject.profilePage.ProfilePageRepositoryImpl;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,20 @@ public class EmailPage {
             @RequestParam(value = "emailIds", required = false) List<String> emailIds) {
 
         ModelAndView modelAndView = new ModelAndView("email/customEmails");
+
+        if (subject == null || subject.trim().isEmpty()) {
+            modelAndView.addObject("alertMessage", "Subject cannot be empty.");
+
+            modelAndView.addObject("profileList", this.profileList);
+            return modelAndView;
+        }
+
+        if (message == null || message.trim().isEmpty()) {
+            modelAndView.addObject("alertMessage", "Message cannot be empty.");
+            modelAndView.addObject("profileList", this.profileList);
+            return modelAndView;
+        }
+
         String logoPath = "src/main/resources/static/images/dhcw.png";
 
         if (emailIds == null || emailIds.isEmpty()) {
@@ -115,6 +130,18 @@ public class EmailPage {
             @RequestParam("newsletterFile") MultipartFile newsletterFile) {
 
         ModelAndView modelAndView = new ModelAndView("email/Newsletter");
+
+        if (subject == null || subject.trim().isEmpty()) {
+            modelAndView.addObject("alertMessage", "Subject cannot be empty.");
+
+            modelAndView.addObject("profileList", this.profileList);
+            return modelAndView;
+        }
+
+        if (newsletterFile == null || newsletterFile.isEmpty()) {
+            modelAndView.addObject("alertMessage", "Please upload a valid PDF file.");
+            return modelAndView;
+        }
 
         try {
             // checking if he PDF is valid

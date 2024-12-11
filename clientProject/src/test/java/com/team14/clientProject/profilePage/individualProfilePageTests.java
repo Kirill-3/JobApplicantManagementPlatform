@@ -25,9 +25,10 @@ class ProfilePageRepositoryImplTest {
         profilePageRepository = new ProfilePageRepositoryImpl(jdbcTemplate);
     }
 
+    // Test for getting profiles from the database
     @Test
     void testGetProfiles() {
-        // Arrange
+
         String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
                 "d.currentPosition, d.status " +
                 "FROM applicants a " +
@@ -37,18 +38,18 @@ class ProfilePageRepositoryImplTest {
                 "1234567890", "Tech Conference", "Java Developer"));
         when(jdbcTemplate.query(eq(sql), any(RowMapper.class))).thenReturn(mockProfiles);
 
-        // Act
         List<Profile> profiles = profilePageRepository.getProfiles();
 
-        // Assert
         assertEquals(1, profiles.size());
         assertEquals("John", profiles.get(0).getFirstName());
         verify(jdbcTemplate, times(1)).query(eq(sql), any(RowMapper.class));
     }
 
+
+    // Test for getting a profile by ID from the database
     @Test
     void testGetProfileById() {
-        // Arrange
+
         int testId = 1;
         String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
                 "d.currentPosition, d.status " +
@@ -60,18 +61,18 @@ class ProfilePageRepositoryImplTest {
                 "1234567890", "Tech Conference", "Java Developer");
         when(jdbcTemplate.queryForObject(eq(sql), any(RowMapper.class), eq(testId))).thenReturn(mockProfile);
 
-        // Act
         Profile profile = profilePageRepository.getProfileById(testId);
 
-        // Assert
         assertNotNull(profile);
         assertEquals("John", profile.getFirstName());
         verify(jdbcTemplate, times(1)).queryForObject(eq(sql), any(RowMapper.class), eq(testId));
     }
 
+
+    // Test for getting profiles from the database when the database returns null fields
     @Test
     void testGetProfiles_NullFields() {
-        // Arrange
+
         String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
                 "d.currentPosition, d.status " +
                 "FROM applicants a " +
@@ -81,10 +82,8 @@ class ProfilePageRepositoryImplTest {
                 "9876543210", "Conference", null);
         when(jdbcTemplate.query(eq(sql), any(RowMapper.class))).thenReturn(List.of(mockProfile));
 
-        // Act
         List<Profile> profiles = profilePageRepository.getProfiles();
 
-        // Assert
         assertEquals(1, profiles.size());
         assertNull(profiles.get(0).getFirstName());
         assertEquals("Smith", profiles.get(0).getLastName());
@@ -93,9 +92,11 @@ class ProfilePageRepositoryImplTest {
     }
 
 
+
+    // Test for getting profiles from the database when the database returns an empty result
     @Test
     void testGetProfiles_EmptyResult() {
-        // Arrange
+
         String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
                 "d.currentPosition, d.status " +
                 "FROM applicants a " +
@@ -103,12 +104,115 @@ class ProfilePageRepositoryImplTest {
                 "LEFT JOIN applicationdetails d ON a.Id = d.Id";
         when(jdbcTemplate.query(eq(sql), any(RowMapper.class))).thenReturn(List.of());
 
-        // Act
         List<Profile> profiles = profilePageRepository.getProfiles();
 
-        // Assert
         assertTrue(profiles.isEmpty()); // Ensure the returned list is empty
         verify(jdbcTemplate, times(1)).query(eq(sql), any(RowMapper.class));
     }
+
+
+    // Test for getting a profile by ID from the database when the database returns null fields
+    @Test
+    void testGetProfiles_NullPreferencesAndJobDetails() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id";
+
+        // Profile with null preferences and job details
+        Profile mockProfile = new Profile(1, "Jane", "Doe", "London", "jane.doe@example.com",
+                "123456789", "Tech Conference", "Java Developer");
+        when(jdbcTemplate.query(eq(sql), any(RowMapper.class))).thenReturn(List.of(mockProfile));
+
+        List<Profile> profiles = profilePageRepository.getProfiles();
+
+        assertEquals(1, profiles.size());
+        assertNull(profiles.get(0).getPreferences());
+        assertNull(profiles.get(0).getJobDetails());
+        verify(jdbcTemplate, times(1)).query(eq(sql), any(RowMapper.class));
+    }
+
+
+    // Test for getting a profile by ID from the database there is an error in the database
+    @Test
+    void testGetProfiles_DatabaseError() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id";
+
+        when(jdbcTemplate.query(eq(sql), any(RowMapper.class))).thenThrow(new RuntimeException("Database error"));
+
+        Exception exception = assertThrows(RuntimeException.class, () -> profilePageRepository.getProfiles());
+
+        assertEquals("Database error", exception.getMessage());
+        verify(jdbcTemplate, times(1)).query(eq(sql), any(RowMapper.class));
+    }
+
+
+
+
+    @Test
+    void testGetProfileById_ProfileNotFound() {
+        int testId = 999; // Assume this ID doesn't exist in the database
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "WHERE a.id = ?";
+
+        when(jdbcTemplate.queryForObject(eq(sql), any(RowMapper.class), eq(testId))).thenReturn(null);
+
+        Profile profile = profilePageRepository.getProfileById(testId);
+
+        assertNull(profile); // Ensure no profile is returned
+        verify(jdbcTemplate, times(1)).queryForObject(eq(sql), any(RowMapper.class), eq(testId));
+    }
+
+    @Test
+    void testGetProfiles_MultipleProfiles() {
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id";
+
+        Profile mockProfile1 = new Profile(1, "John", "Doe", "New York", "john.doe@example.com", "1234567890", "Tech Conference", "Java Developer");
+        Profile mockProfile2 = new Profile(2, "Jane", "Smith", "San Francisco", "jane.smith@example.com", "9876543210", "Web Development", "Python Developer");
+        when(jdbcTemplate.query(eq(sql), any(RowMapper.class))).thenReturn(List.of(mockProfile1, mockProfile2));
+
+        List<Profile> profiles = profilePageRepository.getProfiles();
+
+        assertEquals(2, profiles.size()); // Ensure two profiles are returned
+        assertEquals("John", profiles.get(0).getFirstName());
+        assertEquals("Jane", profiles.get(1).getFirstName());
+        verify(jdbcTemplate, times(1)).query(eq(sql), any(RowMapper.class));
+    }
+
+
+    @Test
+    void testGetProfileById_MultipleProfilesWithSameId() {
+        int testId = 1;
+        String sql = "SELECT a.*, p.SubscribeToNewsLetter, p.SubscribeToBulletins, p.SubscribeToJobUpdates," +
+                "d.currentPosition, d.status " +
+                "FROM applicants a " +
+                "LEFT JOIN applicantpreferences p ON a.Id = p.Id " +
+                "LEFT JOIN applicationdetails d ON a.Id = d.Id " +
+                "WHERE a.id = ?";
+
+        Profile mockProfile1 = new Profile(1, "John", "Doe", "New York", "john.doe@example.com", "1234567890", "Tech Conference", "Java Developer");
+        Profile mockProfile2 = new Profile(1, "John", "Doe", "San Francisco", "john.doe2@example.com", "9876543210", "Web Conference", "JavaScript Developer");
+        when(jdbcTemplate.queryForObject(eq(sql), any(RowMapper.class), eq(testId))).thenReturn(mockProfile1); // Mocking for one result
+
+        Profile profile = profilePageRepository.getProfileById(testId);
+
+        assertNotNull(profile);
+        assertEquals("John", profile.getFirstName()); // Ensure the correct profile is returned
+        verify(jdbcTemplate, times(1)).queryForObject(eq(sql), any(RowMapper.class), eq(testId));
+    }
+
 
 }
