@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -69,6 +70,7 @@ public class AddApplicantTests {
 
         MvcResult when = mvc
                 .perform(post("/add-applicant/manual")
+                        .with(csrf())
                         .param("firstName", mockForm.getFirstName())
                         .param("lastName", mockForm.getLastName())
                         .param("location", mockForm.getLocation())

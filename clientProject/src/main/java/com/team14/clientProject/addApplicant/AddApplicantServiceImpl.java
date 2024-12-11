@@ -49,51 +49,57 @@ public class AddApplicantServiceImpl implements AddApplicantService {
     // OpenCSV learning from: https://opencsv.sourceforge.net/#reading & https://www.baeldung.com/opencsv
     @Transactional
     public String csvFunction(MultipartFile file) {
+        if(file.getOriginalFilename().endsWith(".csv")) {
 
-        try {
-            InputStreamReader fileReader = new InputStreamReader(file.getInputStream());
-            List<ApplicantCSVForm> beans = new CsvToBeanBuilder<ApplicantCSVForm>(fileReader)
-                    .withType(ApplicantCSVForm.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withIgnoreEmptyLine(true)
-                    .build()
-                    .parse();
 
-            for (ApplicantCSVForm bean : beans) {
-                Applicant applicant = new Applicant(
-                        bean.getFirstName(),
-                        bean.getLastName(),
-                        bean.getLocation(),
-                        bean.getEmail(),
-                        bean.getPhoneNumber(),
-                        bean.getEventAttended(),
-                        bean.getSkill()
-                );
-                ApplicantDetails applicantDetails = new ApplicantDetails(
-                        bean.getCurrentPosition(),
-                        bean.getStatus(),
-                        bean.getCvPath(),
-                        bean.getCoverLetterPath()
-                );
-                ApplicantPreferences applicantPreferences = new ApplicantPreferences(
-                        bean.getSubscribeToNewsletter(),
-                        bean.getSubscribeToBulletins(),
-                        bean.getSubscribeToJobUpdates()
-                );
             try {
-                    addApplicantRepository.addApplicantFromCsv(applicant);
-                    Integer id = addApplicantRepository.getRecentId();
-                    addApplicantRepository.addApplicantPreferencesFromCsv(applicantPreferences, id);
-                    addApplicantRepository.addApplicantDetailsFromCsv(applicantDetails, id);
-            }
-            catch (DuplicateKeyException d) {
-                    String csvCheck = "duplicateKeyException";
-                    return csvCheck;
-                }
-            }
+                InputStreamReader fileReader = new InputStreamReader(file.getInputStream());
+                List<ApplicantCSVForm> beans = new CsvToBeanBuilder<ApplicantCSVForm>(fileReader)
+                        .withType(ApplicantCSVForm.class)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .withIgnoreEmptyLine(true)
+                        .build()
+                        .parse();
 
-        } catch (IOException e) {
-            String csvCheck = "ioException";
+                for (ApplicantCSVForm bean : beans) {
+                    Applicant applicant = new Applicant(
+                            bean.getFirstName(),
+                            bean.getLastName(),
+                            bean.getLocation(),
+                            bean.getEmail(),
+                            bean.getPhoneNumber(),
+                            bean.getEventAttended(),
+                            bean.getSkill()
+                    );
+                    ApplicantDetails applicantDetails = new ApplicantDetails(
+                            bean.getCurrentPosition(),
+                            bean.getStatus(),
+                            bean.getCvPath(),
+                            bean.getCoverLetterPath()
+                    );
+                    ApplicantPreferences applicantPreferences = new ApplicantPreferences(
+                            bean.getSubscribeToNewsletter(),
+                            bean.getSubscribeToBulletins(),
+                            bean.getSubscribeToJobUpdates()
+                    );
+                    try {
+                        addApplicantRepository.addApplicantFromCsv(applicant);
+                        Integer id = addApplicantRepository.getRecentId();
+                        addApplicantRepository.addApplicantPreferencesFromCsv(applicantPreferences, id);
+                        addApplicantRepository.addApplicantDetailsFromCsv(applicantDetails, id);
+                    } catch (DuplicateKeyException d) {
+                        String csvCheck = "duplicateKeyException";
+                        return csvCheck;
+                    }
+                }
+
+            } catch (IOException e) {
+                String csvCheck = "ioException";
+                return csvCheck;
+            }
+        }
+        else {
+            String csvCheck = "invalidFile";
             return csvCheck;
         }
         String csvCheck = "true";

@@ -19,7 +19,10 @@
     <div th:if="${duplicateKeyException}" class="text-danger">
         <p>Duplicate entry found in CSV file. Please fix and retry.</p>
     </div>
-    <form th:method="post" enctype="multipart/form-data">
+    <div th:if="${invalidFile}" class="text-danger">
+        <p>Invalid file type</p>
+    </div>
+    <form th:action="@{/add-applicant/csv}" th:method="post" enctype="multipart/form-data">
         <label for="csv"></label>
         <input name="csv" id="csv" type="file" accept=".csv" required>
 

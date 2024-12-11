@@ -53,6 +53,10 @@ public class AddApplicantController {
                 modelAndView.addObject("errorPhone", true);
                 modelAndView.addObject("applicants", applicants);
             }
+            else if (function.equals("phoneFalse")){
+                modelAndView.addObject("errorPhone", true);
+                modelAndView.addObject("applicants", applicants);
+            }
         }
 
         return modelAndView;
@@ -88,6 +92,9 @@ public class AddApplicantController {
 
         else if(function.equals("duplicateKeyException")) {
             modelAndView.addObject("duplicateKeyException", true);
+        }
+        else if(function.equals("invalidFile")) {
+            modelAndView.addObject("invalidFile", true);
         }
 
         return modelAndView;
