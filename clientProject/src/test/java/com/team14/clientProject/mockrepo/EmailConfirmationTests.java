@@ -71,7 +71,7 @@ public class EmailConfirmationTests {
     @Test
     public void testSendEmailInvalidRFC5322Format() throws MessagingException {
         String userID = "1";
-        String invalidEmail = "username'@domain.com"; // Invalid RFC5322 format
+        String invalidEmail = "username'@domain.com";
         when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(String.class))).thenReturn(invalidEmail);
 
         ModelAndView result = profilePage.sendEmail(userID);
@@ -93,5 +93,19 @@ public class EmailConfirmationTests {
         assertEquals("profilePage", result.getViewName());
         assertTrue(result.getModel().containsKey("alertMessage"));
         assertEquals("Invalid email format for user ID " + userID, result.getModel().get("alertMessage"));
+    }
+
+    @Test
+    public void testEmailServiceSendHtmlMessageWithLogo() throws MessagingException {
+        String to = "test@example.com";
+        String subject = "Test Subject";
+        String htmlBody = "<h1>Test</h1>";
+        String logoPath = "path/to/logo.png";
+
+        doNothing().when(emailService).sendHtmlMessageWithLogo(to, subject, htmlBody, logoPath);
+
+        emailService.sendHtmlMessageWithLogo(to, subject, htmlBody, logoPath);
+
+        verify(emailService, times(1)).sendHtmlMessageWithLogo(to, subject, htmlBody, logoPath);
     }
 }
