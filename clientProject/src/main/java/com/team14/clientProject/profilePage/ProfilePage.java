@@ -1,8 +1,10 @@
 package com.team14.clientProject.profilePage;
 
+import com.team14.clientProject.automaticDeletion.ProfileListUpdatedEvent;
 import com.team14.clientProject.loggingSystem.CommunicationLogRepository;
 import com.team14.clientProject.loggingSystem.CommunicationLog;
 import com.team14.clientProject.loggingSystem.CommunicationLogRepositoryImpl;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.*;
 import org.springframework.ui.Model;
 import com.team14.clientProject.emailPage.mail.EmailService;
@@ -35,6 +37,13 @@ public class ProfilePage {
     private List<Profile> profileList;
     @Autowired
     private EmailService emailService;
+
+    // Modifying profileList when the ProfileListUpdatedEvent is published
+    @EventListener
+    public void handleProfileListUpdatedEvent(ProfileListUpdatedEvent event) {
+        this.profileList = profilePageRepository.getProfiles();
+    }
+
 
     public ProfilePage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -250,6 +259,7 @@ public class ProfilePage {
     }
     @PostMapping("/delete/{userID}")
     public String deleteProfile(@PathVariable int userID, RedirectAttributes redirectAttributes) {
+        this.communicationLogRepository.deleteApplicantLog(userID);
         Profile profile = profilePageRepository.getProfileById(userID);
 
         profilePageRepository.deleteProfile(userID);

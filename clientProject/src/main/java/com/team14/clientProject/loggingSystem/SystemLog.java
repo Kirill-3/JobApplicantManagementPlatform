@@ -12,7 +12,7 @@ public class SystemLog {
         this.timestamp = timestamp;
     }
 
-    public int getSystemLogId() {
+    public int getLogId() {
         return systemLogId;
     }
 

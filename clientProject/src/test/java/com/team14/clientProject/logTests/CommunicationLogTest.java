@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ class CommunicationLogTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void getLogId() {
         assertEquals(21, communicationLogRepositoryImpl.getLogs().get(0).getLogId());
     }
@@ -44,6 +46,7 @@ class CommunicationLogTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void getUserId() {
         assertEquals(1, communicationLogRepositoryImpl.getLogs().get(0).getUserId());
     }
@@ -74,6 +77,7 @@ class CommunicationLogTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void getNotes() {
         assertEquals("testing123", communicationLogRepositoryImpl.getLogs().get(0).getNotes());
     }
@@ -82,6 +86,7 @@ class CommunicationLogTest {
         assertNotNull(communicationLogRepositoryImpl.getLogs());
     }
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void testAddEmailLog() {
         List<String> myListOfUsers = new ArrayList();
         myListOfUsers.add("1");

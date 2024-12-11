@@ -4,32 +4,45 @@
     <meta charset="UTF-8">
     <title>Add New User</title>
     <link th:replace="~{fragments/header :: bootstrap-css}"/>
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<div>
-    <form th:action="@{/admin/add}" th:object="${user}" th:method="post">
-        <h1>Add New User</h1>
-        <label for="firstName">First Name: </label>
-        <input type="text" id="firstName" th:field="*{firstName}" required><br>
+<div class="addNewUsers-Container">
+    <main class="addNewUsers-wrapper">
+        <h1 class="addNewUsers-header-1">Add New User</h1>
+        <form th:action="@{/admin/add}" th:object="${user}" th:method="post" class="addNewUsers-form-group">
+            <div class="addNewUsers-form-group">
+                <label for="firstName" class="addNewUsers-label">First Name: </label>
+                <input type="text" id="firstName" th:field="*{firstName}" class="addNewUsers-input" required>
+            </div>
 
-        <label for="lastName">Last Name: </label>
-        <input type="text" id="lastName" th:field="*{lastName}" required><br>
+            <div class="addNewUsers-form-group">
+                <label for="lastName" class="addNewUsers-label">Last Name: </label>
+                <input type="text" id="lastName" th:field="*{lastName}" class="addNewUsers-input" required>
+            </div>
 
-        <label for="username">Username: </label>
-        <input type="text" id="username" th:field="*{username}" required><br>
+            <div class="addNewUsers-form-group">
+                <label for="username" class="addNewUsers-label">Username: </label>
+                <input type="text" id="username" th:field="*{username}" class="addNewUsers-input" required>
+            </div>
 
-        <label for="passwordHashed">Password: </label>
-        <input type="password" id="passwordHashed" th:field="*{password}" required><br>
+            <div class="addNewUsers-form-group">
+                <label for="passwordHashed" class="addNewUsers-label">Password: </label>
+                <input type="password" id="passwordHashed" th:field="*{password}" class="addNewUsers-input" required>
+            </div>
 
-        <label for="role">Role: </label>
-        <select id="role" th:field="*{role}" required>
-            <option value="recruiter">Recruiter</option>
-            <option value="admin">Admin</option>
-        </select><br>
+            <div class="addNewUsers-form-group">
+                <label for="role" class="addNewUsers-label">Role: </label>
+                <select id="role" th:field="*{role}" class="addNewUsers-select" required>
+                    <option value="ROLE_USER">Recruiter</option>
+                    <option value="ROLL_ADMIN">Admin</option>
+                </select>
+            </div>
 
-        <button type="submit">Add User</button>
-    </form>
+            <button type="submit" class="addNewUsers-button">Add User</button>
+        </form>
+    </main>
 </div>
 <div th:replace="~{fragments/footer :: footer-links}"></div>
 <div th:replace="~{fragments/footer :: bootstrap-js}"></div>

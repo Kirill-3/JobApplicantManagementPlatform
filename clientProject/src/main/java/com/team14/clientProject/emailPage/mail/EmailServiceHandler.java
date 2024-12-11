@@ -58,4 +58,17 @@ public class EmailServiceHandler {
         // Return the collected alert messages or a success message
         return alertMessages.length() > 0 ? alertMessages.toString() : "Emails sent successfully to selected addresses.";
     }
+
+    public void sendNewsletterEmail(String to, String subject, String htmlBody, byte[] pdfAttachment)
+            throws MessagingException {
+        emailService.sendHtmlMessageWithAttachment(to, subject, htmlBody, pdfAttachment);
+    }
+
+    public void sendBulkNewsletterEmails(List<String> emailAddresses, String subject, String htmlBody, byte[] pdfAttachment)
+            throws MessagingException {
+        for (String email : emailAddresses) {
+            sendNewsletterEmail(email, subject, htmlBody, pdfAttachment);
+        }
+    }
+
 }

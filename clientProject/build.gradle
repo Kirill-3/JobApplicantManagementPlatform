@@ -44,8 +44,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail:3.4.0'
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'
 
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 	// CSV Reader - https://opencsv.sourceforge.net/
 	implementation 'com.opencsv:opencsv:5.8'
+
+
 }
 
 tasks.named('test') {

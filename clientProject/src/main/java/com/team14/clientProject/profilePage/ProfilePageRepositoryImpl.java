@@ -208,5 +208,15 @@ public class ProfilePageRepositoryImpl implements ProfilePageRepository {
         String sql = "DELETE FROM applicants WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
+
+    public List<String> getSubscribedEmails(){
+        String sql = "SELECT a.email " +
+                "FROM applicants a " +
+                "JOIN applicantpreferences p ON a.Id = p.Id " +
+                "WHERE p.SubscribeToNewsLetter = 'yes'";
+
+        return jdbcTemplate.query(sql,(rs, rowNum) -> rs.getString("email"));
+    }
+
 }
 

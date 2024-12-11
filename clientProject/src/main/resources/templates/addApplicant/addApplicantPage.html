@@ -22,7 +22,7 @@
     <div th:if="${bindingError}" class="text-danger">
         <p>Email or Phone Number is in an invalid format</p>
     </div>
-    <form th:method="post" th:object="${applicants}">
+    <form form th:action="@{/add-applicant/manual}" th:method="post" th:object="${applicants}">
         <label class="form-label" th:for="*{firstName}">First Name: </label>
         <input name="firstName" class="form-control" placeholder="First Name" th:field="*{firstName}" type="text" required>
 
