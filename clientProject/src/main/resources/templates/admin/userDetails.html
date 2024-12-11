@@ -31,7 +31,7 @@
         </div>
         <div class="userDetails-actions">
             <form th:action="@{/admin/user/delete/{id}(id=${user.id})}" method="post" class="userDetails-delete-form">
-                <button type="submit" class="userDetails-button-delete" th:text="#{user.details.delete}"></button>
+                <button type="submit" class="userDetails-button-delete" onclick="confirmDelete()" th:text="#{user.details.delete}"></button>
             </form>
             <a th:href="@{/admin}" class="userDetails-button-back" th:text="#{user.details.back}"></a>
         </div>

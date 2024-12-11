@@ -15,11 +15,11 @@
 <br>
 <div class="email-dashboard-body">
     <form th:action="@{/email/selector}" method="get">
-        <button class="email-dashboard-button" type="submit">Send email to multiple users</button>
+        <button class="email-dashboard-button" type="submit" th:text="#{email.page.sendEmailToMultipleUsers}"></button>
     </form>
     <br>
     <form th:action="@{/email/customEmails}" method="get">
-        <button class="email-dashboard-button" type="submit">Compose and send custom email</button>
+        <button class="email-dashboard-button" th:text="#{email.page.composeAndSendCustomEmail}"></button>
     </form>
     <br>
     <form th:action="@{/email/newsletter}" method="get">
