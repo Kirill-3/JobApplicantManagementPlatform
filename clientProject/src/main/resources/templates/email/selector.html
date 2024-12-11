@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/profilePageStyling.css"/>
     <script src="/javaScript/profilePageJS.js"></script>
     <script th:inline="javascript">
-        const alertMessage = [[$,{alertMessage}]];
+        const alertMessage = [[${alertMessage}]];
         if (alertMessage) {
             alert(alertMessage);
         }
