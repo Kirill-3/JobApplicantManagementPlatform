@@ -68,4 +68,30 @@ public class EmailConfirmationTests {
         String regexPattern = "^[a-zA-Z0-9_!#$%&*+/=?`{}~^.-]+@[a-zA-Z0-9.-]+$";
         assertFalse(EmailValidation.patternMatches(emailAddress, regexPattern));
     }
+    @Test
+    public void testSendEmailInvalidRFC5322Format() throws MessagingException {
+        String userID = "1";
+        String invalidEmail = "username'@domain.com"; // Invalid RFC5322 format
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(String.class))).thenReturn(invalidEmail);
+
+        ModelAndView result = profilePage.sendEmail(userID);
+
+        verify(emailService, times(0)).sendHtmlMessageWithLogo(anyString(), anyString(), anyString(), anyString());
+        assertEquals("profilePage", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Invalid email format for user ID " + userID, result.getModel().get("alertMessage"));
+    }
+
+    @Test
+    public void testSendEmailInvalidEmailFormat() throws MessagingException {
+        String userID = "1";
+        String email = "invalid-email-format";
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(String.class))).thenReturn(email);
+
+        ModelAndView result = profilePage.sendEmail(userID);
+
+        assertEquals("profilePage", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Invalid email format for user ID " + userID, result.getModel().get("alertMessage"));
+    }
 }
