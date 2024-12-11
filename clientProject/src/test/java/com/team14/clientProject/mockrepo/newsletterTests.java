@@ -3,6 +3,7 @@ package com.team14.clientProject.mockrepo;
 import com.team14.clientProject.emailPage.EmailPage;
 import com.team14.clientProject.emailPage.mail.EmailServiceHandler;
 import com.team14.clientProject.profilePage.ProfilePageRepositoryImpl;
+import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -50,6 +51,8 @@ public class newsletterTests {
         }
     }
 
+
+    // Test for showing the newsletter page
     @Test
     public void testShowNewsletterPage() {
         // Test the GET mapping for showing the newsletter page
@@ -59,7 +62,7 @@ public class newsletterTests {
     }
 
 
-
+// Test for an Invalid File Type
     @Test
     public void testSendNewsletter_InvalidFileType() {
         MockMultipartFile invalidFile = new MockMultipartFile("newsletterFile", "newsletter.txt", "text/plain", "Text content".getBytes());
@@ -71,6 +74,8 @@ public class newsletterTests {
         assertEquals("Please upload a valid PDF file.", result.getModel().get("alertMessage"));
     }
 
+
+    // Test for no subscribers
     @Test
     public void testSendNewsletter_NoSubscribers() throws IOException {
         // Simulate no subscribers
@@ -85,5 +90,76 @@ public class newsletterTests {
         assertTrue(result.getModel().containsKey("alertMessage"));
         assertEquals("No subscribers for the newsletter.", result.getModel().get("alertMessage"));
     }
+
+
+    //test for an empty subject
+    @Test
+    public void testSendNewsletter_EmptySubject() throws IOException {
+        MockMultipartFile pdfFile = new MockMultipartFile("newsletterFile", "newsletter.pdf", "application/pdf", "PDF content".getBytes());
+
+        ModelAndView result = emailPage.sendNewsletter("", pdfFile);
+
+        assertEquals("email/Newsletter", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Subject cannot be empty.", result.getModel().get("alertMessage"));
+    }
+
+
+    //test for an empty file
+    @Test
+    public void testSendNewsletter_EmptyFile() throws IOException {
+        MockMultipartFile emptyFile = new MockMultipartFile("newsletterFile", "", "application/pdf", new byte[0]);
+
+        ModelAndView result = emailPage.sendNewsletter("Newsletter Subject", emptyFile);
+
+        assertEquals("email/Newsletter", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Please upload a valid PDF file.", result.getModel().get("alertMessage"));
+    }
+
+
+    // Test for when there is an invalid file extension
+    @Test
+    public void testSendNewsletter_InvalidFileExtension() throws IOException {
+        MockMultipartFile invalidFile = new MockMultipartFile("newsletterFile", "newsletter.docx", "application/msword", "Word content".getBytes());
+
+        ModelAndView result = emailPage.sendNewsletter("Newsletter Subject", invalidFile);
+
+        assertEquals("email/Newsletter", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Please upload a valid PDF file.", result.getModel().get("alertMessage"));
+    }
+
+
+    // Test for when the email service throws a MessagingException
+    @Test
+    public void testSendNewsletter_MessagingException() throws IOException {
+        MockMultipartFile pdfFile = new MockMultipartFile("newsletterFile", "newsletter.pdf", "application/pdf", "PDF content".getBytes());
+
+        try {
+
+            doThrow(new MessagingException("SMTP server not reachable")).when(emailServiceHandler)
+                    .sendBulkNewsletterEmails(subscribedEmails, "Newsletter Subject", "<html><body><h1>Newsletter</h1><p>Please find the attached newsletter PDF.</p></body></html>", pdfFile.getBytes());
+
+            ModelAndView result = emailPage.sendNewsletter("Newsletter Subject", pdfFile);
+
+            assertEquals("email/Newsletter", result.getViewName());
+            assertTrue(result.getModel().containsKey("alertMessage"));
+            assertEquals("Error sending newsletter: SMTP server not reachable", result.getModel().get("alertMessage"));
+        } catch (MessagingException e) {
+            fail("Exception should be handled within the method");
+        }
+    }
+
+
+    @Test
+    public void testSendNewsletter_NullFile() {
+        ModelAndView result = emailPage.sendNewsletter("Newsletter Subject", null);
+
+        assertEquals("email/Newsletter", result.getViewName());
+        assertTrue(result.getModel().containsKey("alertMessage"));
+        assertEquals("Please upload a valid PDF file.", result.getModel().get("alertMessage"));
+    }
+
 
 }
