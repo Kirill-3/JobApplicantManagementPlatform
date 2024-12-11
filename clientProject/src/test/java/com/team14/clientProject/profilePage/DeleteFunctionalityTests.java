@@ -71,4 +71,34 @@ public class DeleteFunctionalityTests {
 
         verify(jdbcTemplate, times(1)).update(sql, userId);
     }
+
+    @Test
+    void testDeleteProfileWithInvalidId() {
+        int invalidUserId = -1;
+        String sql = "DELETE FROM applicants WHERE id = ?";
+
+        when(jdbcTemplate.update(sql, invalidUserId)).thenReturn(0);
+
+        profilePageRepository.deleteProfile(invalidUserId);
+
+        verify(jdbcTemplate, times(1)).update(sql, invalidUserId);
+    }
+
+    @Test
+    void testProfileNoLongerExistsAfterDeletion() {
+        int userId = 1;
+        String deleteSql = "DELETE FROM applicants WHERE id = ?";
+        String checkSql = "SELECT * FROM applicants WHERE id = ?";
+
+        when(jdbcTemplate.update(deleteSql, userId)).thenReturn(1);
+        when(jdbcTemplate.query(checkSql, new Object[]{userId}, profileRowMapper)).thenReturn(List.of());
+
+        profilePageRepository.deleteProfile(userId);
+
+        List<Profile> profiles = jdbcTemplate.query(checkSql, new Object[]{userId}, profileRowMapper);
+
+        assertTrue(profiles.isEmpty());
+        verify(jdbcTemplate, times(1)).update(deleteSql, userId);
+        verify(jdbcTemplate, times(1)).query(checkSql, new Object[]{userId}, profileRowMapper);
+    }
 }

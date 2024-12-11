@@ -85,6 +85,22 @@ public class editFunctionalityTests {
 
         assertTrue(updatedProfile.getPreferences().isSubscribeToBulletins());
     }
+    @Test
+    public void testEditInvalidEmail() throws Exception {
+        Mvc.perform(post("/profile/edit/1")
+                        .param("firstName", "John")
+                        .param("lastName", "Doe")
+                        .param("location", "New York")
+                        .param("email", "invalid-email")
+                        .param("phoneNumber", "1234567890")
+                        .param("currentPosition", "Developer")
+                        .param("status", "Internal")
+                        .param("skill", "Java")
+                        .param("eventAttended", "Spring Boot Conference"))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
 }
 
 
