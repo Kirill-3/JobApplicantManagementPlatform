@@ -1,12 +1,15 @@
 package com.team14.clientProject.addApplicant;
 
 import jakarta.validation.Valid;
+import org.h2.engine.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -50,10 +53,51 @@ public class AddApplicantController {
                 modelAndView.addObject("errorPhone", true);
                 modelAndView.addObject("applicants", applicants);
             }
+            else if (function.equals("phoneFalse")){
+                modelAndView.addObject("errorPhone", true);
+                modelAndView.addObject("applicants", applicants);
+            }
         }
 
         return modelAndView;
 
+
+
+
+    }
+
+    @GetMapping("/add-applicant/csv")
+    public ModelAndView displayCsvPage() {
+        ModelAndView modelAndView = new ModelAndView("addApplicant/addCsvPage");
+        return modelAndView;
+    }
+
+
+
+
+
+
+    @PostMapping ("/add-applicant/csv")
+    public ModelAndView addApplicantByCsv(@RequestParam("csv") MultipartFile csv) {
+        ModelAndView modelAndView = new ModelAndView("addApplicant/addCsvPage");
+        String function = addApplicantService.csvFunction(csv);
+
+        if (function.equals("true")) {
+            modelAndView.addObject("csvSuccess", true);
+        }
+
+        else if(function.equals("ioException")) {
+            modelAndView.addObject("ioException", true);
+        }
+
+        else if(function.equals("duplicateKeyException")) {
+            modelAndView.addObject("duplicateKeyException", true);
+        }
+        else if(function.equals("invalidFile")) {
+            modelAndView.addObject("invalidFile", true);
+        }
+
+        return modelAndView;
 
     }
 }

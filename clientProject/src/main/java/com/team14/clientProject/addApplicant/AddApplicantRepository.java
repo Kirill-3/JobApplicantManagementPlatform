@@ -9,5 +9,10 @@ public interface AddApplicantRepository {
     Integer phoneNoValidation(AddApplicantForm applicants);
     void addApplicant(AddApplicantForm applicants);
 
+    Integer getRecentId();
+
+    void addApplicantFromCsv(Applicant applicant);
+    void addApplicantPreferencesFromCsv(ApplicantPreferences applicantPreferences, Integer id);
+    void addApplicantDetailsFromCsv(ApplicantDetails applicantDetails, Integer id);
     Integer getApplicantCount();
 }

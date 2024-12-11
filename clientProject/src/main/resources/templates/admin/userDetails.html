@@ -5,6 +5,14 @@
     <title>User Details</title>
     <link th:replace="~{fragments/header :: bootstrap-css}"/>
     <link rel="stylesheet" href="/css/admin.css">
+    <script>
+        function confirmDelete() {
+            if (confirm('Are you sure you want to delete this user?')) {
+                document.getElementById('deleteForm').submit();
+            }
+        }
+    </script>
+
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>

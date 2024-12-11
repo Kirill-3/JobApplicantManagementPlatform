@@ -31,13 +31,10 @@ public class User {
     @NotEmpty(message = "Last name cannot be empty")
     private String lastName;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @NotEmpty(message = "Role cannot be empty")
+    private String role;
 
     private LocalDateTime lastLogin;
     private LocalDateTime createdAt;
 
-    public enum Role {
-        recruiter, admin
-    }
 }
