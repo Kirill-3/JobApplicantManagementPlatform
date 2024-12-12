@@ -43,6 +43,7 @@
 
   <h3 th:text="#{custom.email.selectRecipients}"></h3>
   <form th:action="@{/email/sendEmails}" method="post">
+    <div class="tableContainer">
     <table id="table1" class="tableClickable">
       <thead>
       <tr>
@@ -68,6 +69,7 @@
       </tr>
       </tbody>
     </table>
+    </div>
     <button type="submit" th:text="#{custom.email.message.email.send}"></button>
   </form>
 </form>
