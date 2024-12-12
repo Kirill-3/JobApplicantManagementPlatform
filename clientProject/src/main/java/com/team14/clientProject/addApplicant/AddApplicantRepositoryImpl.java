@@ -100,6 +100,7 @@ public class AddApplicantRepositoryImpl implements AddApplicantRepository {
         return id;
     }
 
+
     public void addApplicantFromCsv(Applicant applicant) {
         String sql =
                 "INSERT INTO applicants" +

@@ -35,8 +35,8 @@ public class AddApplicantTests {
     private MockMvc mvc;
 
     @Test
-    // Database is configured to always have 20 applicants when running the application
-    public void shouldGetTwentyOneApplicantsAfterAddingAnApplicant() throws Exception {
+    // Database is configured to always have 87 applicants when running the application
+    public void shouldGetEightyEightApplicantsAfterAddingAnApplicant() throws Exception {
         // Arrange
         AddApplicantForm mockForm = new AddApplicantForm();
         mockForm.setFirstName("John");
@@ -50,7 +50,6 @@ public class AddApplicantTests {
         // Act
         addApplicantService.addApplicant(mockForm);
         Integer totalApplicants = addApplicantRepository.getApplicantCount();
-
         // Assert
         assertEquals(88, totalApplicants);
 
