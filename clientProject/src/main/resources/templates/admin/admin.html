@@ -54,7 +54,7 @@
         </thead>
         <tbody>
         <tr class="logs" th:each="log : ${logs}">
-            <td class="CommunicationLogs" th:if="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="Communication"></td>
+            <td th:if="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="Communication" class="communicationLog"></td>
             <td class="SystemLogs" th:unless="${log instanceof T(com.team14.clientProject.loggingSystem.CommunicationLog)}" th:text="System"></td>
             <td th:text="${log.getLogId()}"></td>
             <td th:text="${log.getUserId()}"></td>
