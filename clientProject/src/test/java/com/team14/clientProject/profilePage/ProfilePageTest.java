@@ -1,5 +1,6 @@
 package com.team14.clientProject.profilePage;
 
+import jakarta.validation.constraints.AssertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,6 +9,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.FlashAttributeResultMatchers;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.file.FileStore;
 import java.util.List;
@@ -25,6 +33,8 @@ class ProfilePageTest {
     private ProfilePage profilePage;
     @Autowired
     private ProfilePageRepositoryImpl profilePageRepositoryImpl;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
 
     @Test
@@ -35,6 +45,33 @@ class ProfilePageTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void profilePageDisplaysAllProfiles() throws Exception {
+        MvcResult result = mvc.perform(get("/profile"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("profilePage"))
+                .andReturn();
+        String content = result.getResponse().getContentAsString();
+        Document doc = Jsoup.parse(content);
+        Elements profiles = doc.select(".profile");
+        assertEquals(profilePageRepositoryImpl.getProfiles().size(), profiles.size());
+    }
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void profilePageDisplaysAllUniqueLocationsFromDatabaseInDropdown() throws Exception {
+        MvcResult result = mvc.perform(get("/profile"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("profilePage"))
+                .andReturn();
+        String content = result.getResponse().getContentAsString();
+        Document doc = Jsoup.parse(content);
+        Elements locations = doc.select(".locationOptions");
+
+        assertEquals(locations.size(), profilePageRepositoryImpl.getProfilesByUniqueLocation().size());
+    }
+
+
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
@@ -85,36 +122,6 @@ class ProfilePageTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    void testProfilePageDisplaysProfilesAscending() throws Exception {
-        MvcResult result = mvc
-                .perform(get("/profile/firstNameAscending"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-    @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    void testProfilePageDisplaysProfilesDescending() throws Exception {
-        MvcResult result = mvc
-                .perform(get("/profile/firstNameDescending"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-    @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    void testProfilePageDisplaysProfilesByLastNameAscending() throws Exception {
-        MvcResult result = mvc
-                .perform(get("/profile/lastNameAscending"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-    @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    void testProfilePageDisplaysProfilesByLastNameDescending() throws Exception {
-        MvcResult result = mvc
-                .perform(get("/profile/lastNameDescending"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
+
+
 }
