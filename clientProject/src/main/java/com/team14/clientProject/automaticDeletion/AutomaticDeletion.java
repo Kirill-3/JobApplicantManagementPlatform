@@ -26,7 +26,7 @@ public class AutomaticDeletion {
 
     private boolean emailSent = false;
 
-    @Scheduled(cron = "*/15 * * * * ?") // every 15 seconds
+    @Scheduled(cron = "0 0 0 * * ?")
     public void checkApplicants() throws MessagingException, InterruptedException {
         if (emailSent) {
             return;
