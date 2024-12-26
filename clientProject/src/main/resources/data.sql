@@ -5,7 +5,7 @@ insert into users (username, passwordHashed, firstName, lastName, role, lastLogi
 values
     ('admin', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'ROLE_ADMIN', NOW()),
     ('user', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Alice', 'Johnson', 'ROLE_USER', NOW()),
-    ('user2', SHA2('password2', 256), 'Bob', 'Smith', 'ROLE_USER', NOW()),
+    ('user2', '$2a$12$diNTM8P5VDcw7jQ7bETrBOpkRNgTnHYp6BNM/Ea0OnzdQTBWLjD6G', 'Bob', 'Smith', 'ROLE_USER', NOW()),
     ('user3', SHA2('password3', 256), 'Carol', 'Williams', 'ROLE_USER', NOW()),
     ('user4', SHA2('password4', 256), 'David', 'Brown', 'ROLE_USER', NOW()),
     ('user5', SHA2('password5', 256), 'Eve', 'Davis', 'ROLE_USER', NOW()),
