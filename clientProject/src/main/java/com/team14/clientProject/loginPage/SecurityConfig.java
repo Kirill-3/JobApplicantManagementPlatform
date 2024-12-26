@@ -21,7 +21,8 @@ public class SecurityConfig {
     public static final String[] ENDPOINTS_WHITELIST = {
             "/",
             "/403",
-            "/login"
+            "/login",
+            "/account/upload"
 
     };
 
@@ -32,19 +33,22 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
+                        .requestMatchers("/account/upload").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/add-applicant/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/profile/uploadCV/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .defaultSuccessUrl("/home", true)
-                        .successHandler(successHandler) // Use custom success handler
+                        .successHandler(successHandler)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .permitAll())
                 .exceptionHandling(e -> e
-                        .accessDeniedPage("/403"));
+                        .accessDeniedPage("/403"))
+                .csrf(csrf -> csrf
+                    .ignoringRequestMatchers("/account/upload"));
         return http.build();
     }
 

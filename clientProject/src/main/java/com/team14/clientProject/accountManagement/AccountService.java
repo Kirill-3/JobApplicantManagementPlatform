@@ -11,20 +11,28 @@ import java.nio.file.Paths;
 @Service
 public class AccountService {
 
-    private static final String picture_path = "src/main/resources/static/images/profile-pictures/";
-    private static final String default_picture = "default.jpg";
+    private static final String PICTURE_PATH = "uploads/images/profile-pictures/";
 
-    public void updateProfilePicture(MultipartFile file) throws IOException {
+    public void updateProfilePicture(MultipartFile file, int userId) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("Empty File...");
         }
 
-        Path filePath = Paths.get(picture_path, default_picture);
+        String fileName = "user_" + userId + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get(PICTURE_PATH, fileName);
         Files.createDirectories(filePath.getParent());
         Files.write(filePath, file.getBytes());
     }
 
-    public String getProfilePicturePath() {
-        return "/images/profile-pictures/" + default_picture;
+    public String getProfilePicturePath(int userId) {
+        try {
+            return Files.list(Paths.get(PICTURE_PATH))
+                    .filter(path -> path.getFileName().toString().startsWith("user_" + userId + "_"))
+                    .map(path -> "/uploads/images/profile-pictures/" + path.getFileName().toString())
+                    .findFirst()
+                    .orElse("/images/default.jpg");
+        } catch (IOException e) {
+            return "/images/default.jpg";
+        }
     }
 }
