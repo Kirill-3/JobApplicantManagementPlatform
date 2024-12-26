@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>My Account</title>
+    <link th:replace="fragments/header :: bootstrap-css"/>
+    <link rel="stylesheet"  href="/css/account.css"/>
 </head>
 <body>
+    <div th:replace="~{fragments/header :: header}"/>
+
+
     <h1>Hello, <span th:text="${userName}"></span></h1>
+    <img th:src="${profilePicturePath}" alt="Profile Picture" class="profile-picture">
+
+
+    <div th:replace="~{fragments/footer :: footer-links}"></div>
+    <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
 </body>
 </html>
