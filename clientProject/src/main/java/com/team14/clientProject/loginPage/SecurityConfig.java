@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Autowired
     private DataSource dataSource;
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationSuccessHandler successHandler) throws Exception {
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .defaultSuccessUrl("/home", true)
+                        .successHandler(successHandler) // Use custom success handler
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -46,6 +47,7 @@ public class SecurityConfig {
                         .accessDeniedPage("/403"));
         return http.build();
     }
+
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
