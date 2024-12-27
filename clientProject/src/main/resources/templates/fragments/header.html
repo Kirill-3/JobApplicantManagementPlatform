@@ -36,10 +36,12 @@
                     <li class="nav-item">
                         <a class = "nav-link" th:href="@{/logout}">logout</a>
                     </li>
-                    <li class="nav-item">
-                        <a class = "nav-link" th:href="@{/account}">Account</a>
-                    </li>
                 </ul>
+                <br>
+                <a th:href="@{/account}">
+                    <img th:src="@{${profilePicturePath}}" alt="Profile Picture" class="profile-picture" style="width: 60px;height: 60px;border-radius: 50%;object-fit: cover;">
+                </a>
+                <br>
                 <!-- Language selector -->
                 <form method="get" th:action="@{#}" class="d-flex">
                     <label> Select your preferred language:

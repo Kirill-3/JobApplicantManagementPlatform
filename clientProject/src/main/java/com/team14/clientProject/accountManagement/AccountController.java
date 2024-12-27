@@ -1,5 +1,6 @@
 package com.team14.clientProject.accountManagement;
 
+import com.team14.clientProject.adminPage.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,11 @@ public class AccountController {
 
         String profilePicturePath = accountService.getProfilePicturePath(userId);
         String userName = userService.getUserNameById(userId);
+        User user = userService.getUserById(userId);
 
         modelAndView.addObject("profilePicturePath", profilePicturePath);
         modelAndView.addObject("userName", userName);
+        modelAndView.addObject("user", user);
 
         return modelAndView;
     }
