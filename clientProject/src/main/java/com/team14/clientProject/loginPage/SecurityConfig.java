@@ -28,8 +28,11 @@ public class SecurityConfig {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler successHandler;
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationSuccessHandler successHandler) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()

@@ -18,6 +18,8 @@ public class AccountService {
             throw new IOException("Empty File...");
         }
 
+        deleteOldProfilePicture(userId);
+
         String fileName = "user_" + userId + "_" + file.getOriginalFilename();
         Path filePath = Paths.get(PICTURE_PATH, fileName);
         Files.createDirectories(filePath.getParent());
@@ -34,5 +36,17 @@ public class AccountService {
         } catch (IOException e) {
             return "/images/default.jpg";
         }
+    }
+
+    private void deleteOldProfilePicture(int userId) throws IOException {
+        Files.list(Paths.get(PICTURE_PATH))
+                .filter(path -> path.getFileName().toString().startsWith("user_" + userId + "_"))
+                .forEach(path -> {
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 }
