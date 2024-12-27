@@ -20,7 +20,7 @@ public class AccountService {
 
         deleteOldProfilePicture(userId);
 
-        String fileName = "user_" + userId + "_profile_picture";
+        String fileName = "user_" + userId + "_" + file.getOriginalFilename();
         Path filePath = Paths.get(PICTURE_PATH, fileName);
         Files.createDirectories(filePath.getParent());
         Files.write(filePath, file.getBytes());
@@ -29,7 +29,7 @@ public class AccountService {
     public String getProfilePicturePath(int userId) {
         try {
             return Files.list(Paths.get(PICTURE_PATH))
-                    .filter(path -> path.getFileName().toString().startsWith("user_" + userId + "_profile_picture"))
+                    .filter(path -> path.getFileName().toString().startsWith("user_" + userId + "_"))
                     .map(path -> "/uploads/images/profile-pictures/" + path.getFileName().toString())
                     .findFirst()
                     .orElse("/images/default.jpg");
@@ -48,5 +48,8 @@ public class AccountService {
                         e.printStackTrace();
                     }
                 });
+    }
+    public void removeProfilePicture(int userId) throws IOException {
+        deleteOldProfilePicture(userId);
     }
 }

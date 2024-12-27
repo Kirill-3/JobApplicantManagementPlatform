@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .exceptionHandling(e -> e
                         .accessDeniedPage("/403"))
                 .csrf(csrf -> csrf
-                    .ignoringRequestMatchers("/account/upload"));
+                    .ignoringRequestMatchers("/account/upload","/account/remove"));
         return http.build();
     }
 

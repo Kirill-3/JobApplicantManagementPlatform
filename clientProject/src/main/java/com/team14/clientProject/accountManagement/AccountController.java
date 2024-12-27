@@ -50,4 +50,16 @@ public class AccountController {
 
         return "redirect:/account?success";
     }
+
+    @PostMapping("/remove")
+    public String removeProfilePicture(HttpServletRequest request) {
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        try {
+            accountService.removeProfilePicture(userId);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/account?error=removeFailed";
+        }
+        return "redirect:/account?success";
+    }
 }
