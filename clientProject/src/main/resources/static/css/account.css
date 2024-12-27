@@ -4,3 +4,12 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+.profile-container img {
+    margin-right: 10px;
+}

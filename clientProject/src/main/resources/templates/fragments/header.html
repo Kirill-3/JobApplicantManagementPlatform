@@ -38,9 +38,6 @@
                     </li>
                 </ul>
                 <br>
-                <a th:href="@{/account}">
-                    <img th:src="@{${profilePicturePath}}" alt="Profile Picture" class="profile-picture" style="width: 60px;height: 60px;border-radius: 50%;object-fit: cover;">
-                </a>
                 <br>
                 <!-- Language selector -->
                 <form method="get" th:action="@{#}" class="d-flex">
@@ -51,6 +48,9 @@
                         </select>
                     </label>
                 </form>
+                <a th:href="@{/account}">
+                    <img th:src="@{${profilePicturePath}}" alt="Profile Picture" class="profile-picture " style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-left: 50px;">
+                </a>
             </div>
         </div>
     </nav>

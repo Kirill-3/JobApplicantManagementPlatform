@@ -6,21 +6,27 @@
     <link th:replace="fragments/header :: bootstrap-css"/>
     <link rel="stylesheet" href="/css/account.css"/>
     <link rel="stylesheet" href="/css/admin.css">
+    <script src="/javaScript/accountManagement.js"></script>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"/>
 
-<h1>Hello, <span th:text="${userName}"></span></h1>
-<img th:src="@{${profilePicturePath}}" alt="Profile Picture" class="profile-picture">
-
-<form action="/account/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept="image/*" required>
+<div class = "profile-container">
+    <img th:src="@{${profilePicturePath}}" alt="Profile Picture" class="profile-picture">
+    <h1>Hello, <span th:text="${userName}"></span>! </h1>
+</div>
+<br>
+<br>
+<form id="uploadForm" action="/account/upload" method="post" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="file" accept="image/*" required>
     <button type="submit">Upload</button>
 </form>
+<br>
 
 <form action="/account/remove" method="post">
     <button type="submit">Remove Profile Picture</button>
 </form>
+<br>
 
 <div class="userDetails-container">
     <main class="userDetails-wrapper">
