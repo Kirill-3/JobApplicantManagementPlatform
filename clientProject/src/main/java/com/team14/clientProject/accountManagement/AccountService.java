@@ -13,6 +13,21 @@ public class AccountService {
 
     private static final String PICTURE_PATH = "uploads/images/profile-pictures/";
 
+    public AccountService() {
+        createDirectories();
+    }
+
+    private void createDirectories() {
+        try {
+            Path path = Paths.get(PICTURE_PATH);
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to create directories: " + e.getMessage(), e);
+        }
+    }
+
     public void updateProfilePicture(MultipartFile file, int userId) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("Empty File...");
