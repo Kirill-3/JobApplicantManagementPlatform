@@ -21,31 +21,40 @@ public class SecurityConfig {
     public static final String[] ENDPOINTS_WHITELIST = {
             "/",
             "/403",
-            "/login"
+            "/login",
+            "/account/upload"
 
     };
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler successHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
+                        .requestMatchers("/account/upload").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/add-applicant/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/profile/uploadCV/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .defaultSuccessUrl("/home", true)
+                        .successHandler(successHandler)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .permitAll())
                 .exceptionHandling(e -> e
-                        .accessDeniedPage("/403"));
+                        .accessDeniedPage("/403"))
+                .csrf(csrf -> csrf
+                    .ignoringRequestMatchers("/account/upload","/account/remove"));
         return http.build();
     }
+
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {

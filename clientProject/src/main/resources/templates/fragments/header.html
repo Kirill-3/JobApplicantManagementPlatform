@@ -37,6 +37,8 @@
                         <a class = "nav-link" th:href="@{/logout}">logout</a>
                     </li>
                 </ul>
+                <br>
+                <br>
                 <!-- Language selector -->
                 <form method="get" th:action="@{#}" class="d-flex">
                     <label> Select your preferred language:
@@ -46,6 +48,9 @@
                         </select>
                     </label>
                 </form>
+                <a th:href="@{/account}">
+                    <img th:src="@{${profilePicturePath}}" alt="Profile Picture" class="profile-picture " style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-left: 50px;">
+                </a>
             </div>
         </div>
     </nav>
