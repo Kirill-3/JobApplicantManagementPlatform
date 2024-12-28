@@ -15,15 +15,17 @@
     <img th:src="@{${profilePicturePath}}" alt="Profile Picture" class="profile-picture">
     <h1>Hello, <span th:text="${userName}"></span>! </h1>
 </div>
-<br>
-<br>
-<form id="uploadForm" action="/account/upload" method="post" enctype="multipart/form-data">
+
+<br><br>
+
+<form id="uploadForm" th:action="@{/account/upload}" method="post" enctype="multipart/form-data">
     <input type="file" id="fileInput" name="file" accept="image/*" required>
     <button type="submit">Upload</button>
 </form>
+
 <br>
 
-<form action="/account/remove" method="post">
+<form th:action="@{/account/remove}" method="post">
     <button type="submit">Remove Profile Picture</button>
 </form>
 <br>
