@@ -42,6 +42,12 @@ public class AccountController {
     public String uploadProfilePicture(MultipartFile file, HttpServletRequest request) {
         Integer userId = (Integer) request.getSession().getAttribute("userId");
         try {
+            if (file.getSize() > 2 * 1024 * 1024) {
+                return "redirect:/account?error=uploadFailed";
+            }
+            if (!(file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/png"))) {
+                return "redirect:/account?error=uploadFailed";
+            }
             accountService.updateProfilePicture(file, userId);
         } catch (IOException e) {
             e.printStackTrace();
